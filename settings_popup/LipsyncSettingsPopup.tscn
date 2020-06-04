@@ -1,0 +1,234 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/LipsyncImporterTheme.tres" type="Theme" id=1]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/interface/Titlebar.tscn" type="PackedScene" id=2]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/icons/icon_expand.png" type="Texture" id=3]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/icons/icon_warning.png" type="Texture" id=4]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/settings_popup/RhubarbPathHBox.gd" type="Script" id=5]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/settings_popup/LipsyncSettingsPopup.gd" type="Script" id=6]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/icons/icon_settings.png" type="Texture" id=7]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/settings_popup/RecognizerHBox.gd" type="Script" id=8]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/settings_popup/TempFolderHBox.gd" type="Script" id=9]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/settings_popup/TempCleanHBox.gd" type="Script" id=10]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/interface/RectHandlerContainer.tscn" type="PackedScene" id=11]
+
+[node name="LipsyncSettingsPopup" type="Popup"]
+visible = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 1 )
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+margin_right = 650.0
+margin_bottom = 400.0
+rect_min_size = Vector2( 650, 400 )
+rect_clip_content = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBox" type="VBoxContainer" parent="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 20.0
+margin_top = 10.0
+margin_right = -20.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TitleBar" parent="Panel/VBox" instance=ExtResource( 2 )]
+margin_right = 610.0
+margin_bottom = 40.0
+mouse_filter = 0
+title_name = "Settings"
+icon_texture = ExtResource( 7 )
+window_path = NodePath("../..")
+
+[node name="HSeparator" type="HSeparator" parent="Panel/VBox"]
+margin_top = 50.0
+margin_right = 610.0
+margin_bottom = 54.0
+
+[node name="WarningHBox" type="HBoxContainer" parent="Panel/VBox"]
+margin_top = 64.0
+margin_right = 610.0
+margin_bottom = 107.0
+
+[node name="Label" type="Label" parent="Panel/VBox/WarningHBox"]
+margin_right = 610.0
+margin_bottom = 43.0
+size_flags_horizontal = 3
+text = "This plugin requires that you download Rhubarb Lipsync and call its path externally. (any path should probably work)"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RhubarbPathHBox" type="HBoxContainer" parent="Panel/VBox"]
+margin_top = 117.0
+margin_right = 610.0
+margin_bottom = 157.0
+rect_clip_content = true
+script = ExtResource( 5 )
+
+[node name="Label" type="Label" parent="Panel/VBox/RhubarbPathHBox"]
+margin_top = 10.0
+margin_right = 170.0
+margin_bottom = 30.0
+text = "Rhubarb.exe File:"
+
+[node name="Button" type="Button" parent="Panel/VBox/RhubarbPathHBox"]
+margin_left = 174.0
+margin_right = 566.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+text = "Rhubarb Binary File not found at path"
+clip_text = true
+
+[node name="WarningIcon" type="TextureRect" parent="Panel/VBox/RhubarbPathHBox"]
+margin_left = 570.0
+margin_right = 610.0
+margin_bottom = 40.0
+hint_tooltip = "Can't proceed. Rhubarb binary doesnt exist at path "
+texture = ExtResource( 4 )
+
+[node name="RecognizerHBox" type="HBoxContainer" parent="Panel/VBox"]
+margin_top = 167.0
+margin_right = 610.0
+margin_bottom = 191.0
+script = ExtResource( 8 )
+
+[node name="Label" type="Label" parent="Panel/VBox/RecognizerHBox"]
+margin_top = 2.0
+margin_right = 110.0
+margin_bottom = 22.0
+text = "Recognizer:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MenuButton" type="MenuButton" parent="Panel/VBox/RecognizerHBox"]
+margin_left = 114.0
+margin_right = 610.0
+margin_bottom = 24.0
+hint_tooltip = "PocketSphinx: recommended for English audios.
+phonetic: recommended for non-English audios."
+size_flags_horizontal = 3
+text = "pocketSphinx"
+icon = ExtResource( 3 )
+flat = false
+expand_icon = true
+items = [ "pocketSphinx", null, 0, true, false, 0, 0, null, "", false, "phonetic", null, 0, false, false, 1, 0, null, "", false ]
+
+[node name="WarningIcon" type="TextureRect" parent="Panel/VBox/RecognizerHBox"]
+visible = false
+margin_left = 586.0
+margin_right = 610.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 24, 24 )
+hint_tooltip = "babababacu is not a valid Speech Recognizer. Save settings to fix."
+texture = ExtResource( 4 )
+expand = true
+
+[node name="HSeparator2" type="HSeparator" parent="Panel/VBox"]
+margin_top = 201.0
+margin_right = 610.0
+margin_bottom = 205.0
+
+[node name="TempFolderHBox" type="HBoxContainer" parent="Panel/VBox"]
+margin_top = 215.0
+margin_right = 610.0
+margin_bottom = 235.0
+rect_clip_content = true
+script = ExtResource( 9 )
+
+[node name="Label" type="Label" parent="Panel/VBox/TempFolderHBox"]
+margin_right = 130.0
+margin_bottom = 20.0
+text = "Temp Folder: "
+
+[node name="Button" type="Button" parent="Panel/VBox/TempFolderHBox"]
+margin_left = 134.0
+margin_right = 610.0
+margin_bottom = 20.0
+hint_tooltip = "Please note that some files in the directory may get overwritten or deleted, so it's recommended you select an empty folder."
+size_flags_horizontal = 3
+text = "res://addons/rhubarb_lipsync_integration/_temp/"
+clip_text = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WarningIcon" type="TextureRect" parent="Panel/VBox/TempFolderHBox"]
+visible = false
+margin_left = 586.0
+margin_right = 610.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 24, 24 )
+hint_tooltip = "babababacu is not a valid Speech Recognizer. Save settings to fix."
+texture = ExtResource( 4 )
+expand = true
+
+[node name="TempCleanHBox" type="HBoxContainer" parent="Panel/VBox"]
+margin_top = 245.0
+margin_right = 610.0
+margin_bottom = 311.0
+script = ExtResource( 10 )
+
+[node name="Label" type="Label" parent="Panel/VBox/TempCleanHBox"]
+margin_right = 303.0
+margin_bottom = 66.0
+size_flags_horizontal = 3
+text = "When is Rhubarb for Godot plugin supposed to cleanup used lipsync files?"
+autowrap = true
+
+[node name="MenuButton" type="MenuButton" parent="Panel/VBox/TempCleanHBox"]
+margin_left = 307.0
+margin_top = 21.0
+margin_right = 610.0
+margin_bottom = 45.0
+hint_tooltip = "If you use this plugin a lot there may be a lot of used lipsync data that you don't need anymore."
+size_flags_horizontal = 3
+size_flags_vertical = 4
+text = "Never."
+icon = ExtResource( 3 )
+flat = false
+expand_icon = true
+
+[node name="OkButton" type="Button" parent="Panel/VBox"]
+margin_left = 185.0
+margin_top = 321.0
+margin_right = 425.0
+margin_bottom = 361.0
+rect_min_size = Vector2( 240, 40 )
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Save Settings."
+
+[node name="RectHandlerContainer" parent="Panel" instance=ExtResource( 11 )]
+_windowRect = NodePath("..")
+
+[node name="FileDialog" type="FileDialog" parent="."]
+margin_left = 19.0
+margin_top = 33.0
+margin_right = 496.0
+margin_bottom = 433.0
+rect_min_size = Vector2( 400, 400 )
+window_title = "Open a File"
+mode = 0
+access = 2
+current_dir = "/Users/Sonic/Documents/!Godot Game Projects/Animation/rhubarb lipsync tp integration for godot"
+current_path = "/Users/Sonic/Documents/!Godot Game Projects/Animation/rhubarb lipsync tp integration for godot/"
+__meta__ = {
+"_edit_use_anchors_": false
+}

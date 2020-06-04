@@ -1,0 +1,545 @@
+[gd_scene load_steps=42 format=2]
+
+[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/lipsync default mouthshapes/rest.png" type="Texture" id=1]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/interface/NodeMenu.tscn" type="PackedScene" id=2]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/interface/MouthIcon.tscn" type="PackedScene" id=3]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/RhubarbLipsyncImporter/MouthTexturesVBox.gd" type="Script" id=4]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/JetBrainsMono-Bold.ttf" type="DynamicFontData" id=5]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/interface/Titlebar.tscn" type="PackedScene" id=6]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/RhubarbLipsyncImporter/MouthLibraryHBox.gd" type="Script" id=7]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/JetBrainsMono-Bold.tres" type="DynamicFont" id=8]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/lipsync default mouthshapes/FV.png" type="Texture" id=9]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/icons/icon_warning.png" type="Texture" id=10]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/RhubarbLipsyncImporter/LipsyncImporterPopup.gd" type="Script" id=11]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/icons/icon_settings.png" type="Texture" id=12]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/RhubarbLipsyncImporter/AnimationNameHBox.gd" type="Script" id=13]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/lipsync default mouthshapes/MBP.png" type="Texture" id=14]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/lipsync default mouthshapes/AI.png" type="Texture" id=15]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/lipsync default mouthshapes/E.png" type="Texture" id=16]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/lipsync default mouthshapes/U.png" type="Texture" id=17]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/lipsync default mouthshapes/L.png" type="Texture" id=18]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/lipsync default mouthshapes/O.png" type="Texture" id=19]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/icons/icon_save.png" type="Texture" id=20]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/icons/icon_new.png" type="Texture" id=21]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/icons/icon_delete.png" type="Texture" id=22]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/LipsyncImporterTheme.tres" type="Theme" id=23]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/icons/icon_rename.png" type="Texture" id=24]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/icons/icon_expand.png" type="Texture" id=25]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/RhubarbLipsyncImporter/MouthLibraryMenuButton.gd" type="Script" id=26]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/RhubarbLipsyncImporter/InfoHBox.gd" type="Script" id=27]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/RhubarbLipsyncImporter/boxes/AudioKeyHBox.gd" type="Script" id=28]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/RhubarbLipsyncImporter/boxes/AudioTrackHBox.gd" type="Script" id=29]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/RhubarbLipsyncImporter/boxes/MouthSpriteHBox.gd" type="Script" id=30]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/RhubarbLipsyncImporter/boxes/AnimationPlayerHBox.gd" type="Script" id=31]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/icons/icon_not.png" type="Texture" id=32]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/settings_popup/LipsyncSettingsPopup.tscn" type="PackedScene" id=33]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/RhubarbLipsyncImporter/SettingsButton.gd" type="Script" id=34]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/interface/RectHandlerContainer.tscn" type="PackedScene" id=35]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/interface/ResizableWindow.gd" type="Script" id=36]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/icons/icon_about.png" type="Texture" id=37]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/RhubarbLipsyncImporter/AboutButton.gd" type="Script" id=38]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/LipsyncAboutPopup/LipsyncAboutPopup.tscn" type="PackedScene" id=39]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.490196, 0.490196, 0.615686, 1 )
+
+[sub_resource type="DynamicFont" id=2]
+font_data = ExtResource( 5 )
+
+[node name="LipsyncImporterPopup" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 23 )
+script = ExtResource( 11 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false,
+"_editor_description_": "[X]OptionButton selects node.
+[X]Empty editedscene doesn't provoke error.
+[X]LineEdit checks if animationPlayer path is valid.
+[X]LineEdit checks if animationPlayer has animationame.
+[X]Application recognizes lipsync data file.
+[X]Reads timestamps succesfully.
+[X]AnimateButton generates lipsync animation succesfully.
+[  ]Add config file.
+[  ]Load config file everytime plugin is called.
+[O]Add UI for mouthsprite libraries.
+[  ]Make UI Symbols for mouthshape libraries.
+[  ]Make mouthsprite libraries work.
+[  ]NodeMenus get node icon when node_type is selected."
+}
+
+[node name="Panel" type="Panel" parent="."]
+margin_right = 794.0
+margin_bottom = 606.0
+rect_min_size = Vector2( 480, 250 )
+rect_clip_content = true
+mouse_filter = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 36 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBox" type="VBoxContainer" parent="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 20.0
+margin_right = -10.0
+margin_bottom = -20.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 15
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TitleBar" parent="Panel/VBox" instance=ExtResource( 6 )]
+margin_right = 774.0
+margin_bottom = 40.0
+grow_horizontal = 0
+grow_vertical = 0
+alignment = 2
+title_name = "Rhubarb Lipsync T.P. Integration for Godot"
+icon_texture = ExtResource( 18 )
+window_path = NodePath("../..")
+
+[node name="HSeparator" type="HSeparator" parent="Panel/VBox"]
+margin_top = 55.0
+margin_right = 774.0
+margin_bottom = 59.0
+
+[node name="InfoHBox" type="HBoxContainer" parent="Panel/VBox"]
+margin_top = 74.0
+margin_right = 774.0
+margin_bottom = 114.0
+alignment = 2
+script = ExtResource( 27 )
+
+[node name="AboutButton" type="TextureButton" parent="Panel/VBox/InfoHBox"]
+margin_right = 40.0
+margin_bottom = 40.0
+texture_normal = ExtResource( 37 )
+script = ExtResource( 38 )
+SCN_LipsyncAboutPopup = ExtResource( 39 )
+
+[node name="AboutLabel" type="Label" parent="Panel/VBox/InfoHBox"]
+margin_left = 44.0
+margin_top = 10.0
+margin_right = 104.0
+margin_bottom = 30.0
+text = "About."
+
+[node name="SettingsButton" type="TextureButton" parent="Panel/VBox/InfoHBox"]
+margin_left = 108.0
+margin_right = 148.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+size_flags_vertical = 3
+texture_normal = ExtResource( 12 )
+expand = true
+stretch_mode = 4
+script = ExtResource( 34 )
+SCN_LipsyncSettingsPopup = ExtResource( 33 )
+
+[node name="WarningIcon" type="TextureRect" parent="Panel/VBox/InfoHBox"]
+visible = false
+margin_left = 44.0
+margin_right = 84.0
+margin_bottom = 43.0
+hint_tooltip = "Can't proceed. Rhubarb binary doesnt exist at path "
+texture = ExtResource( 10 )
+
+[node name="Label" type="Label" parent="Panel/VBox/InfoHBox"]
+margin_left = 152.0
+margin_top = 10.0
+margin_right = 774.0
+margin_bottom = 30.0
+size_flags_horizontal = 3
+text = "Settings."
+autowrap = true
+
+[node name="MouthLibraryHBox" type="HBoxContainer" parent="Panel/VBox"]
+margin_top = 129.0
+margin_right = 774.0
+margin_bottom = 169.0
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Panel/VBox/MouthLibraryHBox"]
+margin_top = 10.0
+margin_right = 200.0
+margin_bottom = 30.0
+text = "Mouthshape Library: "
+
+[node name="MenuButton" type="MenuButton" parent="Panel/VBox/MouthLibraryHBox"]
+margin_left = 204.0
+margin_right = 598.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+text = "Default"
+icon = ExtResource( 25 )
+flat = false
+expand_icon = true
+items = [ "default", null, 0, false, false, 0, 0, null, "", false ]
+script = ExtResource( 26 )
+
+[node name="SaveButton" type="TextureButton" parent="Panel/VBox/MouthLibraryHBox"]
+margin_left = 602.0
+margin_right = 642.0
+margin_bottom = 40.0
+hint_tooltip = "Saves current textures to selected Mouthshape  Library."
+texture_normal = ExtResource( 20 )
+
+[node name="RenameButton" type="TextureButton" parent="Panel/VBox/MouthLibraryHBox"]
+margin_left = 646.0
+margin_right = 686.0
+margin_bottom = 40.0
+hint_tooltip = "Renames selected Mouthshape Library."
+texture_normal = ExtResource( 24 )
+
+[node name="NewButton" type="TextureButton" parent="Panel/VBox/MouthLibraryHBox"]
+margin_left = 690.0
+margin_right = 730.0
+margin_bottom = 40.0
+hint_tooltip = "Creates a new Mouthshape Library."
+texture_normal = ExtResource( 21 )
+
+[node name="DeleteButton" type="TextureButton" parent="Panel/VBox/MouthLibraryHBox"]
+margin_left = 734.0
+margin_right = 774.0
+margin_bottom = 40.0
+hint_tooltip = "Deletes current Mouthshape Library."
+texture_normal = ExtResource( 22 )
+
+[node name="MouthPanel" type="Panel" parent="Panel/VBox"]
+margin_top = 184.0
+margin_right = 774.0
+margin_bottom = 308.0
+rect_min_size = Vector2( 96, 96 )
+rect_clip_content = true
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 1 )
+
+[node name="MouthTextures" type="VBoxContainer" parent="Panel/VBox/MouthPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_clip_content = true
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+custom_constants/separation = 25
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+_temp_texture = ExtResource( 32 )
+
+[node name="TopHBox" type="HBoxContainer" parent="Panel/VBox/MouthPanel/MouthTextures"]
+margin_right = 774.0
+margin_bottom = 49.0
+grow_vertical = 0
+size_flags_vertical = 3
+
+[node name="RestMouth" parent="Panel/VBox/MouthPanel/MouthTextures/TopHBox" instance=ExtResource( 3 )]
+margin_right = 151.0
+margin_bottom = 49.0
+mouth_shape = "rest"
+default_mouth = ExtResource( 1 )
+
+[node name="MBPMouth" parent="Panel/VBox/MouthPanel/MouthTextures/TopHBox" instance=ExtResource( 3 )]
+margin_left = 155.0
+margin_right = 306.0
+margin_bottom = 49.0
+mouth_shape = "MBP"
+default_mouth = ExtResource( 14 )
+
+[node name="FVMouth" parent="Panel/VBox/MouthPanel/MouthTextures/TopHBox" instance=ExtResource( 3 )]
+margin_left = 310.0
+margin_right = 461.0
+margin_bottom = 49.0
+mouth_shape = "FV"
+default_mouth = ExtResource( 9 )
+
+[node name="OMouth" parent="Panel/VBox/MouthPanel/MouthTextures/TopHBox" instance=ExtResource( 3 )]
+margin_left = 465.0
+margin_right = 616.0
+margin_bottom = 49.0
+mouth_shape = "O"
+default_mouth = ExtResource( 19 )
+
+[node name="UMouth" parent="Panel/VBox/MouthPanel/MouthTextures/TopHBox" instance=ExtResource( 3 )]
+margin_left = 620.0
+margin_right = 774.0
+margin_bottom = 49.0
+mouth_shape = "U"
+default_mouth = ExtResource( 17 )
+
+[node name="BottomVBox" type="HBoxContainer" parent="Panel/VBox/MouthPanel/MouthTextures"]
+margin_top = 74.0
+margin_right = 774.0
+margin_bottom = 124.0
+grow_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="EtcMouth" parent="Panel/VBox/MouthPanel/MouthTextures/BottomVBox" instance=ExtResource( 3 )]
+margin_right = 190.0
+margin_bottom = 50.0
+mouth_shape = "etc"
+
+[node name="EMouth" parent="Panel/VBox/MouthPanel/MouthTextures/BottomVBox" instance=ExtResource( 3 )]
+margin_left = 194.0
+margin_right = 384.0
+margin_bottom = 50.0
+mouth_shape = "E"
+default_mouth = ExtResource( 16 )
+
+[node name="LMouth" parent="Panel/VBox/MouthPanel/MouthTextures/BottomVBox" instance=ExtResource( 3 )]
+margin_left = 388.0
+margin_right = 578.0
+margin_bottom = 50.0
+mouth_shape = "L"
+default_mouth = ExtResource( 18 )
+
+[node name="AIMouth" parent="Panel/VBox/MouthPanel/MouthTextures/BottomVBox" instance=ExtResource( 3 )]
+margin_left = 582.0
+margin_right = 774.0
+margin_bottom = 50.0
+mouth_shape = "AI"
+default_mouth = ExtResource( 15 )
+
+[node name="MouthSpriteHBox" type="HBoxContainer" parent="Panel/VBox"]
+margin_top = 323.0
+margin_right = 774.0
+margin_bottom = 347.0
+grow_horizontal = 0
+rect_clip_content = true
+size_flags_vertical = 4
+script = ExtResource( 30 )
+
+[node name="Label" type="Label" parent="Panel/VBox/MouthSpriteHBox"]
+margin_top = 2.0
+margin_right = 250.0
+margin_bottom = 22.0
+custom_fonts/font = ExtResource( 8 )
+text = "NodePath to mouth Sprite:"
+
+[node name="Button" parent="Panel/VBox/MouthSpriteHBox" instance=ExtResource( 2 )]
+margin_right = 746.0
+margin_bottom = 24.0
+text = "Please select a Sprite node."
+icon = ExtResource( 25 )
+expand_icon = true
+NO_NODE_FOUND = "No node found at tree."
+owner_reference = "anim_mouthSprite"
+node_type = "Sprite"
+
+[node name="WarningIcon" type="TextureRect" parent="Panel/VBox/MouthSpriteHBox"]
+margin_left = 750.0
+margin_right = 774.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 24, 24 )
+hint_tooltip = "No Sprite node selected. Can't proceed"
+size_flags_horizontal = 0
+texture = ExtResource( 10 )
+expand = true
+
+[node name="AnimationPlayerHBox" type="HBoxContainer" parent="Panel/VBox"]
+margin_top = 362.0
+margin_right = 774.0
+margin_bottom = 386.0
+grow_horizontal = 0
+alignment = 2
+script = ExtResource( 31 )
+
+[node name="Label" type="Label" parent="Panel/VBox/AnimationPlayerHBox"]
+margin_top = 2.0
+margin_right = 280.0
+margin_bottom = 22.0
+custom_fonts/font = SubResource( 2 )
+text = "NodePath to AnimationPlayer:"
+
+[node name="Button" parent="Panel/VBox/AnimationPlayerHBox" instance=ExtResource( 2 )]
+margin_left = 284.0
+margin_right = 746.0
+margin_bottom = 24.0
+text = "Please select an AnimationPlayer node."
+icon = ExtResource( 25 )
+expand_icon = true
+NO_NODE_FOUND = "No node found at tree."
+owner_reference = "anim_animationPlayer"
+node_type = "AnimationPlayer"
+
+[node name="WarningIcon" type="TextureRect" parent="Panel/VBox/AnimationPlayerHBox"]
+margin_left = 750.0
+margin_right = 774.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 24, 24 )
+hint_tooltip = "No AnimationPlayer node selected. Can't proceed"
+texture = ExtResource( 10 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationNameHBox" type="HBoxContainer" parent="Panel/VBox"]
+margin_top = 401.0
+margin_right = 774.0
+margin_bottom = 425.0
+rect_clip_content = true
+script = ExtResource( 13 )
+
+[node name="Label" type="Label" parent="Panel/VBox/AnimationNameHBox"]
+margin_top = 2.0
+margin_right = 150.0
+margin_bottom = 22.0
+custom_fonts/font = SubResource( 2 )
+text = "Animation Name:"
+
+[node name="MenuButton" type="MenuButton" parent="Panel/VBox/AnimationNameHBox"]
+margin_left = 154.0
+margin_right = 746.0
+margin_bottom = 24.0
+rect_clip_content = true
+size_flags_horizontal = 3
+text = "Please select an AnimationPlayer above before selecting animation."
+icon = ExtResource( 25 )
+flat = false
+clip_text = true
+align = 0
+expand_icon = true
+
+[node name="WarningIcon" type="TextureRect" parent="Panel/VBox/AnimationNameHBox"]
+margin_left = 750.0
+margin_right = 774.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 24, 24 )
+hint_tooltip = "No AnimationPlayer node selected. Can't proceed"
+texture = ExtResource( 10 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AudioTrackHBox" type="HBoxContainer" parent="Panel/VBox"]
+margin_top = 440.0
+margin_right = 774.0
+margin_bottom = 464.0
+script = ExtResource( 29 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Panel/VBox/AudioTrackHBox"]
+margin_top = 2.0
+margin_right = 300.0
+margin_bottom = 22.0
+text = "Nodepath to AudioStreamPlayer:"
+
+[node name="Button" parent="Panel/VBox/AudioTrackHBox" instance=ExtResource( 2 )]
+margin_left = 304.0
+margin_right = 746.0
+margin_bottom = 24.0
+text = "Please select an AudioStreamPlayer node."
+icon = ExtResource( 25 )
+expand_icon = true
+NO_NODE_FOUND = "No node found at tree."
+owner_reference = "anim_audioPlayer"
+node_type = "AudioStreamPlayer"
+
+[node name="WarningIcon" type="TextureRect" parent="Panel/VBox/AudioTrackHBox"]
+margin_left = 750.0
+margin_right = 774.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 24, 24 )
+hint_tooltip = "No AudioStreamPlayer node selected. Can't proceed"
+texture = ExtResource( 10 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AudioKeyHBox" type="HBoxContainer" parent="Panel/VBox"]
+margin_top = 479.0
+margin_right = 774.0
+margin_bottom = 503.0
+script = ExtResource( 28 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Panel/VBox/AudioKeyHBox"]
+margin_top = 2.0
+margin_right = 200.0
+margin_bottom = 22.0
+text = "Audio Keyframe Clip:"
+
+[node name="Button" type="MenuButton" parent="Panel/VBox/AudioKeyHBox"]
+margin_left = 204.0
+margin_right = 746.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Please select AudioStreamPlayer, AnimationPlayer and An..."
+icon = ExtResource( 25 )
+flat = false
+clip_text = true
+align = 0
+expand_icon = true
+
+[node name="WarningIcon" type="TextureRect" parent="Panel/VBox/AudioKeyHBox"]
+margin_left = 750.0
+margin_right = 774.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 24, 24 )
+hint_tooltip = "No AnimationPlayer node selected."
+texture = ExtResource( 10 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimateButton" type="Button" parent="Panel/VBox"]
+margin_left = 237.0
+margin_top = 518.0
+margin_right = 537.0
+margin_bottom = 566.0
+rect_min_size = Vector2( 300, 48 )
+size_flags_horizontal = 6
+text = "Generate Lipsync Animation"
+
+[node name="RectHandlers" parent="Panel" instance=ExtResource( 35 )]
+_windowRect = NodePath("..")
+
+[node name="HandlerTop" parent="Panel/RectHandlers" index="0"]
+margin_right = 794.0
+_windowRect = NodePath("../..")
+
+[node name="HandlerBottom" parent="Panel/RectHandlers" index="1"]
+margin_top = 596.0
+margin_right = 794.0
+margin_bottom = 606.0
+_windowRect = NodePath("../..")
+
+[node name="HandlerLeft" parent="Panel/RectHandlers" index="2"]
+modulate = Color( 1, 1, 1, 1 )
+margin_bottom = 606.0
+_windowRect = NodePath("../..")
+
+[node name="HandlerRight" parent="Panel/RectHandlers" index="3"]
+modulate = Color( 1, 1, 1, 1 )
+margin_left = 784.0
+margin_right = 794.0
+margin_bottom = 606.0
+_windowRect = NodePath("../..")
+[connection signal="pressed" from="Panel/VBox/AnimateButton" to="." method="_on_AnimateButton_pressed"]
+
+[editable path="Panel/RectHandlers"]
