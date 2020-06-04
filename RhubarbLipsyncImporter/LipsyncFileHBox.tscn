@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/rhubarb_lipsync_importer/RhubarbLipsyncImporter/TsvFileButton.gd" type="Script" id=1]
+
+[node name="LipsyncFileHBox" type="HBoxContainer"]
+margin_top = 475.0
+margin_right = 843.0
+margin_bottom = 495.0
+grow_horizontal = 0
+rect_clip_content = true
+
+[node name="Label" type="Label" parent="."]
+margin_right = 390.0
+margin_bottom = 20.0
+text = "FilePath to Rhubarb Lipsync data file: "
+
+[node name="Button" type="Button" parent="."]
+margin_left = 394.0
+margin_right = 843.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "No TSV file selected."
+script = ExtResource( 1 )
+[connection signal="pressed" from="Button" to="Button" method="_on_Button_pressed"]
