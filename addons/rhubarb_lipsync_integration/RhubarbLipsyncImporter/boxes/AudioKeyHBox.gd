@@ -11,13 +11,15 @@ const STR_AUDIOPLAYER_NOT_SELECTED :String = "Please select an AudioStreaamPlaye
 var is_safe_to_load :bool= false
 var clip_path :PoolStringArray= []
 
+var last_index :int= -1
+
 onready var button :MenuButton= $Button
 onready var popupMenu :PopupMenu
 onready var warningIcon :TextureRect= $WarningIcon
 
 func _ready() -> void:
 	popupMenu = button.get_popup()
-	if popupMenu.get_current_index() == -1:
+	if last_index == -1:
 		enable_warning("No AnimationPlayer node selected.")
 	
 	owner.connect("updated_reference", self, "_on_owner_reference_updated")

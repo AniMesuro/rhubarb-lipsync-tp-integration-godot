@@ -39,7 +39,6 @@ func _enter_tree():
 	_fix_pathplugin()
 #	var scr :Script= get_script()
 #	path_plugin = scr.resource_path.get_base_dir()+'/'
-	print('enter_tree pathplugin =',path_plugin)
 	load_settings()
 	
 	if !get_tree().has_group(group_plugin):
@@ -59,15 +58,10 @@ func _do_cleaning_routine(event :int):
 		load_settings()
 	
 	if Settings.output.clean_mode != event:
-		print(event,' !=',Settings.output.clean_mode)
 		return
 	
-	var Dir :Directory= Directory.new()
-	if !Dir.dir_exists(Settings.output.path):
-		Settings.bombom = {}
-		Settings.bombom.ataque = "atalho n existe"
-		save_settings()
-		return
+	
+	
 	
 	
 	match event:
@@ -77,16 +71,53 @@ func _do_cleaning_routine(event :int):
 			Settings.cleaning = {}
 			Settings.cleaning.batoto = "OpenPlugin"
 			print('plugin_opened')
+			
+			_clean_files()
+			
 			save_settings()
 		CleanMode.ClosePlugin:
+#			Dir
+#			Settings.output.path
+			
 			Settings.cleaning = {}
 			Settings.cleaning.batata = "ClosePlugin"
 			print('plugin_closed')
+			
+			_clean_files()
+#			print(Settings.cleaning)
 			save_settings()
+	
+func _clean_files():
+	var Dir :Directory= Directory.new()
+	if !Dir.dir_exists(Settings.output.path):
+		Settings.bombom = {}
+		Settings.bombom.chocolate = "atalho n existe"
+		save_settings()
+		Dir.make_dir(Settings.output.path)
+		return
+	
+	var files :PoolStringArray = PoolStringArray([])
+	if Dir.open(Settings.output.path) == OK:
+		Dir.list_dir_begin(false, true)
+		
+		var file_path :String= Dir.get_next()
+		while file_path != "":
+			files.append(file_path)
+			file_path = Dir.get_next()
+		Dir.list_dir_end()
+		
+		for i in files.size():
+			if files[i].get_extension() == "tsv":
+				Dir.remove(files[i])
+#				Settings.cleaning['file'+str(i)] = files[i]
+	else:
+		return
+		
 	
 	
 func _notification(what: int) -> void:
 	match what:
+		#Called when you quit to Godot Project List or call close project window (doesn't have to be confirmed quit)
 		NOTIFICATION_WM_QUIT_REQUEST:
 			_do_cleaning_routine(CleanMode.ClosePlugin)
 
@@ -116,10 +147,14 @@ func load_settings():
 #	print('Settings =',Settings)
 
 func _fix_pathplugin():
+	if !is_inside_tree():
+		yield(self, "tree_entered")
 	var scr :Script= get_script()
 	path_plugin = scr.resource_path.get_base_dir()+'/'
 
 func load_default_settings(keys :PoolStringArray= PoolStringArray([])):
+	if path_plugin == "":
+		_fix_pathplugin()
 	var _default_settings :Dictionary= {
 		'rhubarb_lipsync': {
 			'path': "",
@@ -186,8 +221,8 @@ func _input(event: InputEvent) -> void:
 		for child in get_children():
 			if !child.is_queued_for_deletion():
 				child.queue_free()
-#		if is_instance_valid(lipflapAnimatorPopup):
-#			lipflapAnimatorPopup.queue_free()
+#		if is_instance_valid(rhubarbTimer):
+#			rhubarbTimer.queue_free()
 
 func _exit_tree():
 #	remove_custom_type("LipsyncImporter")
@@ -253,15 +288,16 @@ func run_rhubarb_lipsync(path_input_audio :String, are_paths_absolute :bool= fal
 #	print('root =',get_tree().root)
 	get_tree().root.add_child(rhubarbTimer)
 	
-	var call_length :int= length*2.5
+#	var call_length :int= length * 2.5
 #	if length >= 5.0:
 #		call_length = ceil(length)
 #	else:
 #		call_length = 5
-	var timer_max_calls :int= ceil(call_length * .6) #0.2 = portions of 5sec | * 3 = .6
-	timer_max_calls = clamp(timer_max_calls, 12, 84) #12 calls = 1min | 84= 7min
-#	print('timer_max_calls =',timer_max_calls)
-	var timer_sec :int= 5
+	var timer_max_calls :int= ceil(length * 0.33 * 2.5) #0.2 = portions of 5sec | 0.33 portions of 3sec
+	timer_max_calls = clamp(timer_max_calls, 20, 84) #20 calls = 1min | 84= 7min
+	print('length =',length)
+	print('timer_max_calls =',timer_max_calls)
+	var timer_sec :int= 3
 	print("Rhubarb is generating lipsync... This may take up to a few minutes. (NOT A ESTIMATE) Plugin will wait for max. "+str(timer_sec * timer_max_calls)+' sec')
 	
 	rhubarbTimer.start(timer_sec)
@@ -334,33 +370,61 @@ func import_deferred_lipsync(
  animationPlayer :AnimationPlayer,
  anim_name :String,
  mouthDB :Dictionary
+ ): #override_region :bool= false
+#	var anim :Animation= animationPlayer.get_animation(anim_name)
+#	var editedSceneRoot :Node= get_tree().edited_scene_root
+#	var anim_root :Node= animationPlayer.get_node(animationPlayer.root_node)
+#
+#	var tr_mouth_texture :int= anim.find_track(str(anim_root.get_path_to(mouthSprite))+':texture')
+#	var tr_audio :int= anim.find_track(anim_root.get_path_to(audioPlayer))
+#
+#	if tr_mouth_texture == -1: #If mouthSprite:texture track doesn't exist, create one.
+#		tr_mouth_texture = anim.add_track(Animation.TYPE_VALUE)
+#		anim.track_set_path(tr_mouth_texture, str(anim_root.get_path_to(mouthSprite))+':texture')
+	var anim = animationPlayer.get_animation(anim_name)
+	print('import called on plugin script.')
+	yield(self, "finished_generating_lipsync_data")
+	import_lipsync(
+		anim,
+		animationPlayer,
+		audiokey,
+		audioPlayer,
+		mouthDB,
+		mouthSprite
+	)
+	print("Importing Lipsync to selected Animation...")
+	
+	
+
+#Not implemented yet.
+#This will import lipsync files by code.
+func import_lipsync(
+ anim :Animation,
+ animationPlayer :AnimationPlayer,
+ audiokey :Dictionary,
+ audioPlayer :AudioStreamPlayer,
+ mouthDB :Dictionary,
+ mouthSprite :Sprite
  ):
-	var anim :Animation= animationPlayer.get_animation(anim_name)
-	var editedSceneRoot :Node= get_tree().edited_scene_root
 	var anim_root :Node= animationPlayer.get_node(animationPlayer.root_node)
 	
 	var tr_mouth_texture :int= anim.find_track(str(anim_root.get_path_to(mouthSprite))+':texture')
 	var tr_audio :int= anim.find_track(anim_root.get_path_to(audioPlayer))
 	
-	
-	print('import called on plugin script.')
-	yield(self, "finished_generating_lipsync_data")
-#	import_lipsync() ---------------
-	print("Importing Lipsync to selected Animation...")
+	if tr_mouth_texture == -1: #If mouthSprite:texture track doesn't exist, create one.
+		tr_mouth_texture = anim.add_track(Animation.TYPE_VALUE)
+		anim.track_set_path(tr_mouth_texture, str(anim_root.get_path_to(mouthSprite))+':texture')
 	
 	
 	var lipsync_filepath = Settings.output.path + audiokey.stream.resource_path.get_basename().get_file()+'.tsv'
 	var f = File.new()
 	if !f.file_exists(lipsync_filepath):
-		print("Importing process started, but lipsync file was not found.")
+		print("Importing tried to start, but lipsync file was not found.")
 		return
 	f.open(lipsync_filepath, f.READ)
 	var ls_text :String= f.get_as_text() #lipsync_data
 	f.close()
 	
-	if tr_mouth_texture == -1: #If mouthSprite:texture track doesn't exist, create one.
-		tr_mouth_texture = anim.add_track(Animation.TYPE_VALUE)
-		anim.track_set_path(tr_mouth_texture, str(anim_root.get_path_to(mouthSprite))+':texture')
 	
 	var ls_line :PoolStringArray= ls_text.split("\n")
 #	print(ls_line)
@@ -389,10 +453,3 @@ func import_deferred_lipsync(
 		 mouthshape, 0)
 	
 	print('Importing finished.')
-	
-
-#Not implemented yet.
-#This will import lipsync files by code.
-func import_lipsync():
-	pass
-#func 

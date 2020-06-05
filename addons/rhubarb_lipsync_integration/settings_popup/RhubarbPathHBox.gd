@@ -43,13 +43,33 @@ func check_for_warnings():
 		enable_warning("Can't proceed. Rhubarb binary doesnt exist at path " + Settings.rhubarb_lipsync.path)
 		return
 	
-	if Settings.rhubarb_lipsync.path.get_extension() == OS.get_executable_path().get_extension(): # '.exe' = '.exe' in windows
-#		print('filepath to rhubarb is binary')
-		var rhubarb_dir :String= Settings.rhubarb_lipsync.path.get_base_dir()
-		if !Dir.dir_exists(rhubarb_dir+'/res/'):
-			enable_warning("'res' folder comes with Rhubarb release and is needed for Rhubarb to work. Please drop it at the same path as Rhubarb Binary.")
-			button.text = "Rhubarb Binary found but can't call 'res' folder."
-			return
+	var file_basename :String= Settings.rhubarb_lipsync.path.get_basename().get_file()
+	if file_basename != 'rhubarb':
+		enable_warning("Please select the rhubarb file from Rhubarb Lipsync github releases page.")
+		button.text = Settings.rhubarb_lipsync.path
+		return
+	
+	var user_os :String = OS.get_name()
+	match user_os:
+		'X11': #Linux ?
+			var rhubarb_dir :String= Settings.rhubarb_lipsync.path.get_base_dir()
+			button.hint_tooltip = "It seems you're running a Linux distro. Plugin can't tell if file is binary as Rhubarb's release for linux doesn't have an extension."
+			if !Dir.dir_exists(rhubarb_dir+'/res'):
+				enable_warning("'res' folder comes with Rhubarb release and is needed for Rhubarb to work. Please drop it at the same path as Rhubarb Binary.")
+				button.text = "Rhubarb Binary found but can't call 'res' folder."
+				return
+		_: # Others
+			if Settings.rhubarb_lipsync.path.get_extension() == OS.get_executable_path().get_extension(): # '.exe' = '.exe' in windows
+		#		print('filepath to rhubarb is binary')
+				var rhubarb_dir :String= Settings.rhubarb_lipsync.path.get_base_dir()
+				if !Dir.dir_exists(rhubarb_dir+'/res'):
+					enable_warning("'res' folder comes with Rhubarb release and is needed for Rhubarb to work. Please drop it at the same path as Rhubarb Binary.")
+					button.text = "Rhubarb Binary found but can't call 'res' folder."
+					return
+			else:
+				enable_warning("Rhubarb file doesn't seem to be a Binary File. Please select the Rhubarb binary file specific to your OS.")
+				button.text = Settings.rhubarb_lipsync.path
+				return
 	disable_warning()
 	button.text = Settings.rhubarb_lipsync.path
 

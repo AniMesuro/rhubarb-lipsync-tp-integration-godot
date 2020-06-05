@@ -161,7 +161,8 @@ text = "Temp Folder: "
 margin_left = 134.0
 margin_right = 610.0
 margin_bottom = 20.0
-hint_tooltip = "Please note that some files in the directory may get overwritten or deleted, so it's recommended you select an empty folder."
+hint_tooltip = "Please note that some files in the directory may get overwritten or deleted, so it's recommended you select an empty folder.
+If the directory isn't valid id will be set to '_temp'"
 size_flags_horizontal = 3
 text = "res://addons/rhubarb_lipsync_integration/_temp/"
 clip_text = true
@@ -200,7 +201,7 @@ margin_bottom = 45.0
 hint_tooltip = "If you use this plugin a lot there may be a lot of used lipsync data that you don't need anymore."
 size_flags_horizontal = 3
 size_flags_vertical = 4
-text = "Never."
+text = "Never"
 icon = ExtResource( 3 )
 flat = false
 expand_icon = true
@@ -227,8 +228,8 @@ rect_min_size = Vector2( 400, 400 )
 window_title = "Open a File"
 mode = 0
 access = 2
-current_dir = "/Users/Sonic/Documents/!Godot Game Projects/Animation/rhubarb lipsync tp integration for godot"
-current_path = "/Users/Sonic/Documents/!Godot Game Projects/Animation/rhubarb lipsync tp integration for godot/"
+current_dir = "C:/Users/Sonic/Documents/!Godot Game Projects/Animation/rhubarb lipsync tp integration for godot"
+current_path = "C:/Users/Sonic/Documents/!Godot Game Projects/Animation/rhubarb lipsync tp integration for godot/"
 __meta__ = {
 "_edit_use_anchors_": false
 }

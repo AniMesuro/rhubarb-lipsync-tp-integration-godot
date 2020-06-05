@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/icon_rename.png-c5efd5fa709efa5f3d90d07f6b627dc7.stex"
+path="res://.import/icon_rename.png-c2502c031a426fbf8e949209c5b2baef.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/rhubarb_lipsync_integration/assets/icons/icon_rename.png"
-dest_files=[ "res://.import/icon_rename.png-c5efd5fa709efa5f3d90d07f6b627dc7.stex" ]
+source_file="res://assets/icons/icon_rename.png"
+dest_files=[ "res://.import/icon_rename.png-c2502c031a426fbf8e949209c5b2baef.stex" ]
 
 [params]
 

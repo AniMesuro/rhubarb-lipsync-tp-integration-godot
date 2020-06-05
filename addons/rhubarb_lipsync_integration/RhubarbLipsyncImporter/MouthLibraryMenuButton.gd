@@ -28,7 +28,9 @@ func _ready() -> void:
 	
 	if !is_inside_tree():
 		yield(self, "tree_entered")
-		SCN_AskNamePopup = load(owner.path_plugin + "interface/AskNamePopup.tscn")
+	SCN_AskNamePopup = load(owner.pluginInstance.path_plugin + "interface/AskNamePopup.tscn")
+##################
+
 
 func update_PopupMenu_items():
 	popupMenu.clear()

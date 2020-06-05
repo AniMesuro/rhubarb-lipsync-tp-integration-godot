@@ -7,6 +7,9 @@ const STR_ANIMATIONPLAYER_NOT_SELECTED :String = "Please select an AnimationPlay
 #const TEX_icon_not :StreamTexture= preload("res://addons/rhubarb_lipsync_importer/assets/icons/icon_not.png")
 #const TEX_icon_yes :StreamTexture= preload("res://addons/rhubarb_lipsync_importer/assets/icons/icon_yes.png")
 
+
+var last_index :int= -1
+
 onready var warningIcon :TextureRect= $WarningIcon
 onready var menuButton :MenuButton= $MenuButton
 var popupMenu :PopupMenu
@@ -20,7 +23,8 @@ func _ready() -> void:
 	menuButton.connect( "pressed", self, "_on_MenuButton_pressed")
 	popupMenu.connect( "id_pressed", self, "_on_PopupMenu_item_selected")
 	owner.connect("updated_reference", self, "_on_owner_reference_updated")
-	if popupMenu.get_current_index() == -1:
+	
+	if last_index == -1:
 		enable_warning("No AnimationPlayer node selected. Can't proceed")
 	
 	
@@ -36,6 +40,7 @@ func _on_MenuButton_pressed():
 	
 
 func _on_PopupMenu_item_selected(id :int):
+	last_index = id
 	if id != -1:
 		disable_warning()
 	owner.anim_name = popupMenu.get_item_text(id)

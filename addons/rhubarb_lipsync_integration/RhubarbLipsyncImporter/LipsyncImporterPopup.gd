@@ -3,6 +3,8 @@ extends Control
 
 signal updated_reference (reference_name)
 
+const STR_ERROR_not_enough_references :String= "Can't proceed. Some references are missing."
+
 var handlerTop :ReferenceRect
 var handlerBottom :ReferenceRect
 var handlerLeft :ReferenceRect
@@ -72,8 +74,11 @@ func _ready() -> void:
 #	print('parent =',get_parent(),'='+get_parent().name)
 	path_plugin = pluginInstance.path_plugin
 #	print("lipsyncpopup ready pluginInstance ",str(pluginInstance))
-	if get_tree().edited_scene_root != self:
-		print("Please do not change scene in editor while this window is open.")
+
+
+	####	#For some reason this major bug was fixed and I didn't even touch it... Ok.
+#	if get_tree().edited_scene_root != self:
+#		print("Please do not change scene in editor while this window is open.")
 
 func get_relevant_children() -> Array:
 	var editedSceneRoot = get_tree().edited_scene_root
@@ -132,25 +137,36 @@ func _on_AnimateButton_pressed() -> void:
 	
 	
 	if !is_instance_valid(pluginInstance):
-		print("Can't Proceed. Failed to call Plugin Instance.")
+		print("Error. Plugin reference not valid.")
+		queue_free()
 		return
 		
 #	Makes sure all references are called.
 	
 	if !is_instance_valid(anim_mouthSprite):
+		print(STR_ERROR_not_enough_references)
+		queue_free()
 		return
 	if !is_instance_valid(anim_animationPlayer):
+		print(STR_ERROR_not_enough_references)
+		queue_free()
 		return
 	if !is_instance_valid(anim_audioPlayer):
+		print(STR_ERROR_not_enough_references)
+		queue_free()
 		return
 	if !anim_animationPlayer.has_animation(anim_name):
+		print(STR_ERROR_not_enough_references)
+		queue_free()
 		return
 	if anim_audiokey == {}:
+		print(STR_ERROR_not_enough_references)
+		queue_free()
 		return
 	
 	pluginInstance.load_settings()
 	var path_audioclip = anim_audiokey.stream.resource_path
-	pluginInstance.run_rhubarb_lipsync(path_audioclip)
+	pluginInstance.run_rhubarb_lipsync(path_audioclip, false, anim_audiokey.stream.get_length())
 	
 	
 #	print("starting to import lipsync")
@@ -158,7 +174,7 @@ func _on_AnimateButton_pressed() -> void:
 	pluginInstance.import_deferred_lipsync(anim_audiokey, anim_mouthSprite, anim_audioPlayer, anim_animationPlayer, anim_name, mouthTextures.mouthDB)
 	queue_free()
 	return
-#	TEMPORARY RETURN
+#	END
 
 
 
