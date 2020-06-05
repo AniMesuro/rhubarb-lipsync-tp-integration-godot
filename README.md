@@ -1,10 +1,11 @@
 Rhubarb Lipsync Third Party Integration for Godot
-==
+---
 <img src="https://i.imgur.com/Cb16Smg.png" width="250">
-==
-## Rhubarb Lipsync TPI for Godot is a Godot Engine addon that integrates Rhubarb Lipsync's command-line program into a more user friendly popup-window optimized for use in Godot. 
 
-## [Rhubarb Lipsync](https://github.com/DanielSWolf/rhubarb-lip-sync/) is a tool created by Daniel S. Wolf that allows for an automated alternative to producing lipsync animations. You can use it for animating speech in computer games, animated cartoons, or any similar project.
+
+Rhubarb Lipsync TPI for Godot is a Godot Engine addon that integrates Rhubarb Lipsync's command-line program into a more user friendly popup-window optimized for use in Godot. 
+
+[Rhubarb Lipsync](https://github.com/DanielSWolf/rhubarb-lip-sync/) is a tool created by Daniel S. Wolf that allows for an automated alternative to producing lipsync animations. You can use it for animating speech in computer games, animated cartoons, or any similar project.
 
 ---
 
