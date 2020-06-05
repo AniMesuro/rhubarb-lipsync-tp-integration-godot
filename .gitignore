@@ -5,6 +5,9 @@ export.cfg
 export_presets.cfg
 *.import
 
+#This project specific ignores
+*.tsv
+
 # Mono-specific ignores
 .mono/
 data_*/

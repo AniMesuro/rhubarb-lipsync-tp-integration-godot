@@ -9,7 +9,7 @@ onready var warningIcon :TextureRect= $WarningIcon
 
 func _ready() -> void:
 	popupMenu = button.get_popup()
-	if popupMenu.get_current_index() == -1:
+	if button.last_index == -1:
 		enable_warning("No AudioStreamPlayer node selected. Can't proceed")
 	
 	popupMenu.connect("id_pressed", self, '_on_PopupMenu_item_selected')

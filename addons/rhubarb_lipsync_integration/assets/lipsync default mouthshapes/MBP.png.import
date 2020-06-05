@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/MBP.png-d8fc83779d38202dbfc4152cb7674b54.stex"
+path="res://.import/MBP.png-8944bc6c92d21eb75e01fdab76c51ad7.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/lipsync default mouthshapes/MBP.png"
-dest_files=[ "res://.import/MBP.png-d8fc83779d38202dbfc4152cb7674b54.stex" ]
+source_file="res://addons/rhubarb_lipsync_integration/assets/lipsync default mouthshapes/MBP.png"
+dest_files=[ "res://.import/MBP.png-8944bc6c92d21eb75e01fdab76c51ad7.stex" ]
 
 [params]
 

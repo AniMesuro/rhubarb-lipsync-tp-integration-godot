@@ -41,6 +41,8 @@ func _enter_tree():
 #	path_plugin = scr.resource_path.get_base_dir()+'/'
 	load_settings()
 	
+	
+	
 	if !get_tree().has_group(group_plugin):
 		add_to_group(group_plugin)
 #	get_groups()
@@ -215,6 +217,8 @@ func _on_importLipsync_Run(event) -> void:
 	lipsyncImporterPopup.find_node('Panel').rect_position = OS.window_position + OS.window_size*.5 - lipsyncImporterPopup.find_node('Panel').rect_size*.5
 	lipsyncImporterPopup.pluginInstance = self
 
+func get_plugin_name() -> String:
+	return "rhubarb_lipsync_tpi"
 
 func _input(event: InputEvent) -> void:
 	if Input.is_key_pressed(KEY_ESCAPE):
@@ -256,7 +260,8 @@ func run_rhubarb_lipsync(path_input_audio :String, are_paths_absolute :bool= fal
 	var gpath_output_data :String= ProjectSettings.globalize_path(Settings.output.path + input_filename + '.tsv')
 #	return
 	
-#	print('going to execute rhubarb at', gpath_rhubarb)
+	
+	#Seems a bit innaccessible for Linux systems as Godot doesn't start with a Debug Console like in Windows.
 	var pid = OS.execute(
 		gpath_rhubarb,[
 			"-o",
@@ -271,7 +276,7 @@ func run_rhubarb_lipsync(path_input_audio :String, are_paths_absolute :bool= fal
 	if pid == -1:
 		print("Error. Rhubarb binary file didn't execute successfully.")
 		return
-	print('Rhubarb binary file executed succesfully. Check Debug Console for Progress or Errors. Please DO NOT change scene while rhubarb is running as node references might get confused.')
+	print('Rhubarb binary file executed succesfully. Check Debug Console for Progress or Errors. ')#Please DO NOT change scene while rhubarb is running as node references might get confused.')
 	
 #	Gross and hacky workaround, ideally the progress bar should show in the Editor
 #	or at least printed also on the Editor Console.
