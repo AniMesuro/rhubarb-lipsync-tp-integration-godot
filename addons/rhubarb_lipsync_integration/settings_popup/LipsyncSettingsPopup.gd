@@ -29,7 +29,6 @@ func _enter_tree() -> void:
 	
 	pluginInstance = _get_pluginInstance()
 	pluginInstance.load_settings()
-#	owner = self
 	
 	fileDialog = $FileDialog
 	if get_tree().edited_scene_root == self:
@@ -40,9 +39,8 @@ func _get_pluginInstance() -> EditorPlugin:
 		var plugin_group :Array= get_tree().get_nodes_in_group(GROUP_PLUGIN)
 		for node in plugin_group:
 			if node is EditorPlugin:
-				return node
 				path_plugin = node.path_plugin
-				break
+				return node
 	return null
 
 func _on_OkButton_pressed():

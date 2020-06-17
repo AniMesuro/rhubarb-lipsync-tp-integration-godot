@@ -1,6 +1,10 @@
 tool
 extends EditorPlugin
 
+#---------------------------------------------------------------------------------------------------------------#
+#   Please note that Rhubarb Lipsync is a command line tool by DanielSWolf that this plugin integrates to Godot.
+#---------------------------------------------------------------------------------------------------------------#
+
 signal finished_generating_lipsync_data
 
 const FILENAME_SETTINGS :String= "settings.ini"
@@ -27,9 +31,6 @@ var timer_remainingcalls :int= 0
 
 var lipsyncImporterPopup :Control
 
-#---------------------------------------------------------------------------------------------------------------#
-#   Please note that Rhubarb Lipsync is a command line tool by DanielSWolf that this plugin integrates to Godot.
-#---------------------------------------------------------------------------------------------------------------#
 
 
 func _enter_tree():

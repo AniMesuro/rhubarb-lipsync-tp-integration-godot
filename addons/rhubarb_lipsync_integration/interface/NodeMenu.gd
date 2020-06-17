@@ -9,7 +9,6 @@ export var node_type :String= 'Node'
 
 var editedSceneRoot
 
-#onready var button :MenuButton= $Button
 onready var popup :PopupMenu= get_popup()
 
 func _ready() -> void:
@@ -33,7 +32,6 @@ func _on_Button_pressed() -> void:
 
 func _on_PopupMenu_item_selected(id :int):
 	last_index = id
-#	print(owner_reference,' last index= '+str(last_index))
 	var item_name :String= popup.get_item_text(id)
 	text = item_name
 	
@@ -41,4 +39,3 @@ func _on_PopupMenu_item_selected(id :int):
 	icon = owner.pluginInstance.get_editor_interface().get_inspector().get_icon(node_type, "EditorIcons")
 	owner.set(owner_reference, editedSceneRoot.get_node(item_name))
 	owner.emit_signal("updated_reference", owner_reference)
-#	print('owner ', owner_reference, ' =',owner.get(owner_reference))

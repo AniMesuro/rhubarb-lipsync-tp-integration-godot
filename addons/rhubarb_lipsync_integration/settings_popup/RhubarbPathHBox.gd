@@ -18,20 +18,15 @@ func check_for_warnings():
 	label = $Label
 	button = $Button
 	warningIcon = $WarningIcon
-#	yield(get_tree(), "idle_frame")
-#	disable_warning()
 	var Settings :Dictionary= owner.pluginInstance.Settings
 	if Settings == {}:
-#		print(get_name(),'; Settings dict =',Settings)
 		return
 	
 	if !Settings.has('rhubarb_lipsync'):
-#		print('ib settings dict has not rhubarb_lipsync section')
 		enable_warning("Settings Dictionary is empty.")
 		button.text = "Settings File has not been correctly loaded."
 		return
 	if !Settings.rhubarb_lipsync.has('path'):
-#		print('ib settings.rhubarb_lipsync dict has not path key')
 		enable_warning("Settings path key not set in Settings file")
 		button.text = STR_DEFAULT
 		return
@@ -51,7 +46,7 @@ func check_for_warnings():
 	
 	var user_os :String = OS.get_name()
 	match user_os:
-		'X11','OSX': #Linux ?
+		'X11','OSX': #Linux ? Mac ?
 			var rhubarb_dir :String= Settings.rhubarb_lipsync.path.get_base_dir()
 			button.hint_tooltip = "It seems you're running a Linux distro/Mac OS. Plugin can't tell if file is binary as Rhubarb's release for linux/mac doesn't have an extension."
 			if !Dir.dir_exists(rhubarb_dir+'/res'):
@@ -89,7 +84,6 @@ func _on_button_pressed():
 	var global_pluginpath = ProjectSettings.globalize_path(owner.pluginInstance.path_plugin) 
 	print("pathplugin = ", global_pluginpath)
 	fileDialog.current_dir = global_pluginpath
-#	fileDialog.current_path = global_pluginpath
 	print("currentdir = ",fileDialog.current_dir)
 	
 	fileDialog.connect("file_selected", self, '_on_fileDialog_file_selected')

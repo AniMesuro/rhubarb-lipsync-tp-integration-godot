@@ -87,25 +87,26 @@ script = ExtResource( 12 )
 [node name="RhubarbPathHBox" type="HBoxContainer" parent="Panel/VBox"]
 margin_top = 146.0
 margin_right = 610.0
-margin_bottom = 186.0
+margin_bottom = 166.0
 rect_clip_content = true
 script = ExtResource( 5 )
 
 [node name="Label" type="Label" parent="Panel/VBox/RhubarbPathHBox"]
-margin_top = 10.0
 margin_right = 170.0
-margin_bottom = 30.0
+margin_bottom = 20.0
 text = "Rhubarb.exe File:"
 
 [node name="Button" type="Button" parent="Panel/VBox/RhubarbPathHBox"]
 margin_left = 174.0
-margin_right = 566.0
-margin_bottom = 40.0
+margin_right = 610.0
+margin_bottom = 20.0
+hint_tooltip = "c:/git/rhubarb-lipsync-tp-integration-godot/.rhubarb_lipsync/rhubarb.exe"
 size_flags_horizontal = 3
-text = "Rhubarb Binary File not found at path"
+text = "c:/git/rhubarb-lipsync-tp-integration-godot/.rhubarb_lipsync/rhubarb.exe"
 clip_text = true
 
 [node name="WarningIcon" type="TextureRect" parent="Panel/VBox/RhubarbPathHBox"]
+visible = false
 margin_left = 570.0
 margin_right = 610.0
 margin_bottom = 40.0
@@ -113,9 +114,9 @@ hint_tooltip = "Can't proceed. Rhubarb binary doesnt exist at path "
 texture = ExtResource( 4 )
 
 [node name="RecognizerHBox" type="HBoxContainer" parent="Panel/VBox"]
-margin_top = 196.0
+margin_top = 176.0
 margin_right = 610.0
-margin_bottom = 220.0
+margin_bottom = 200.0
 script = ExtResource( 8 )
 
 [node name="Label" type="Label" parent="Panel/VBox/RecognizerHBox"]
@@ -151,14 +152,14 @@ texture = ExtResource( 4 )
 expand = true
 
 [node name="HSeparator2" type="HSeparator" parent="Panel/VBox"]
-margin_top = 230.0
+margin_top = 210.0
 margin_right = 610.0
-margin_bottom = 234.0
+margin_bottom = 214.0
 
 [node name="TempFolderHBox" type="HBoxContainer" parent="Panel/VBox"]
-margin_top = 244.0
+margin_top = 224.0
 margin_right = 610.0
-margin_bottom = 264.0
+margin_bottom = 244.0
 rect_clip_content = true
 script = ExtResource( 9 )
 
@@ -191,9 +192,9 @@ texture = ExtResource( 4 )
 expand = true
 
 [node name="TempCleanHBox" type="HBoxContainer" parent="Panel/VBox"]
-margin_top = 274.0
+margin_top = 254.0
 margin_right = 610.0
-margin_bottom = 340.0
+margin_bottom = 320.0
 script = ExtResource( 10 )
 
 [node name="Label" type="Label" parent="Panel/VBox/TempCleanHBox"]
@@ -218,9 +219,9 @@ expand_icon = true
 
 [node name="OkButton" type="Button" parent="Panel/VBox"]
 margin_left = 185.0
-margin_top = 350.0
+margin_top = 330.0
 margin_right = 425.0
-margin_bottom = 390.0
+margin_bottom = 370.0
 rect_min_size = Vector2( 240, 40 )
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -239,9 +240,8 @@ rect_min_size = Vector2( 400, 400 )
 window_title = "Open a File"
 mode = 0
 access = 2
-current_dir = "C:/Users/Sonic/Documents/!Godot Game Projects/Animation/rhubarb lipsync tp integration for godot"
-current_file = "r"
-current_path = "C:/Users/Sonic/Documents/!Godot Game Projects/Animation/rhubarb lipsync tp integration for godot/r"
+current_dir = "c:/git"
+current_path = "c:/git/"
 script = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
