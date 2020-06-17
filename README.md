@@ -20,6 +20,10 @@ You can use the user interface window by browsing in Godot **`[Project > Tools >
 - [Mouth Libraries](#mouth-libraries)
 - [Cleaning Routine](#cleaning-routine)
 - [Screenshots](#screenshots)
+	- [Main Window](#main-window)
+	- [About Window](#about-window)
+	- [Settings Window](#settings-window)
+	- [Result](#result)
 - [Calling functions by Code.](#calling-functions-by-code)
 - [Function Usage](#function-usage)
 - [Bug Report](#bug-report)
@@ -98,6 +102,21 @@ These events are:
 
 # Screenshots
 
+## Main Window
+
+![Imgur](https://i.imgur.com/aAOgMjm.png)
+
+## About Window
+![Imgur](https://i.imgur.com/td7izxn.png)
+
+
+## Settings Window
+
+![Imgur](https://i.imgur.com/HD0BQoZ.png)
+
+## Result
+
+![Imgur](https://i.imgur.com/ipR4dvy.png)
 
 # Calling functions by Code.
 
