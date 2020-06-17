@@ -15,7 +15,6 @@ func _ready() -> void:
 	button.connect( "pressed", self, "_on_Button_pressed")
 	
 	path_plugin = owner.pluginInstance.path_plugin
-#	print('path_plugin =',path_plugin)
 	ForbiddenDirectory = {
 		'project': "res://",
 		'import': "res://.import",
@@ -53,6 +52,8 @@ func _on_Button_pressed():
 	
 	fileDialog.mode = FileDialog.MODE_OPEN_DIR
 	fileDialog.access = FileDialog.ACCESS_RESOURCES
+	fileDialog.current_dir = owner.pluginInstance.Settings.output.path
+	
 	fileDialog.connect( "dir_selected", self, "_on_FileDialog_dir_selected")
 	fileDialog.connect( "hide", self, "_on_FileDialog_hide")
 
@@ -73,7 +74,6 @@ func _on_FileDialog_dir_selected(dir :String):
 	if is_dir_forbidden(dir):
 		enable_warning("Selected directory is forbidden, please selected a safer folder.")
 		button.text = STR_DEFAULT
-#		print('defualt path =',owner.pluginInstance.load_default_settings(['output','path']))
 		owner.pluginInstance.Settings.output.path = owner.pluginInstance.load_default_settings(['output','path'])
 		return
 	button.text = dir
@@ -82,7 +82,6 @@ func _on_FileDialog_dir_selected(dir :String):
 	
 
 func _on_FileDialog_hide():
-	print('filedial hidden')
 	fileDialog.disconnect("dir_selected", self, '_on_FileDialog_dir_selected')
 	fileDialog.disconnect("hide", self, '_on_FileDialog_hide')
 
@@ -91,7 +90,6 @@ func enable_warning(message :String):
 	warningIcon.hint_tooltip = message
 
 func is_dir_forbidden(directory :String):
-	
 	for forbidden_dir in ForbiddenDirectory.keys():
 		if directory == ForbiddenDirectory[forbidden_dir]:
 			return true

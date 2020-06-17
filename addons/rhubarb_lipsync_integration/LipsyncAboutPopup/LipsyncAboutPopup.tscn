@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://addons/rhubarb_lipsync_integration/assets/LipsyncImporterTheme.tres" type="Theme" id=1]
 [ext_resource path="res://addons/rhubarb_lipsync_integration/LipsyncAboutPopup/LipsyncAboutPopup.gd" type="Script" id=2]
@@ -8,6 +8,8 @@
 [ext_resource path="res://addons/rhubarb_lipsync_integration/assets/JetBrainsMono-Bold.ttf" type="DynamicFontData" id=6]
 [ext_resource path="res://addons/rhubarb_lipsync_integration/LipsyncAboutPopup/InfoRTLabel.gd" type="Script" id=7]
 [ext_resource path="res://addons/rhubarb_lipsync_integration/assets/icons/icon_warning.png" type="Texture" id=8]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/icons/plugin_icon/icon_plugin.png" type="Texture" id=9]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/LipsyncAboutPopup/ReportBugButton.gd" type="Script" id=10]
 
 [sub_resource type="DynamicFont" id=1]
 size = 28
@@ -39,13 +41,12 @@ __meta__ = {
 }
 
 [node name="VBox" type="VBoxContainer" parent="Panel"]
-anchor_left = 0.08
-anchor_right = 0.913
+anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -32.56
-margin_top = 16.0
-margin_right = 37.809
-margin_bottom = -16.0
+margin_left = 20.0
+margin_top = 10.0
+margin_right = -20.0
+margin_bottom = -10.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 15
@@ -54,24 +55,45 @@ __meta__ = {
 }
 
 [node name="TitleBar" parent="Panel/VBox" instance=ExtResource( 4 )]
-margin_right = 576.0
+margin_right = 567.0
 margin_bottom = 40.0
 title_name = "About"
 icon_texture = ExtResource( 5 )
 window_path = NodePath("../..")
 
-[node name="NameLabel" type="Label" parent="Panel/VBox"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBox"]
 margin_top = 55.0
-margin_right = 576.0
-margin_bottom = 128.0
+margin_right = 567.0
+margin_bottom = 175.0
+size_flags_vertical = 0
+
+[node name="NameLabel" type="Label" parent="Panel/VBox/HBoxContainer"]
+margin_right = 375.0
+margin_bottom = 111.0
+size_flags_horizontal = 3
+size_flags_vertical = 0
 custom_fonts/font = SubResource( 1 )
 text = "Rhubarb Lipsync Third Party Integration for Godot"
 autowrap = true
 
+[node name="PluginLogo" type="TextureRect" parent="Panel/VBox/HBoxContainer"]
+margin_left = 379.0
+margin_right = 567.0
+margin_bottom = 120.0
+rect_min_size = Vector2( 120, 120 )
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
+texture = ExtResource( 9 )
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="VersionLabel" type="Label" parent="Panel/VBox"]
-margin_top = 143.0
-margin_right = 576.0
-margin_bottom = 163.0
+margin_top = 190.0
+margin_right = 567.0
+margin_bottom = 210.0
 custom_colors/font_color = Color( 0.227451, 0.380392, 0.505882, 1 )
 text = "Version: 1.0"
 __meta__ = {
@@ -79,9 +101,9 @@ __meta__ = {
 }
 
 [node name="InfoRTLabel" type="RichTextLabel" parent="Panel/VBox"]
-margin_top = 178.0
-margin_right = 576.0
-margin_bottom = 409.0
+margin_top = 225.0
+margin_right = 567.0
+margin_bottom = 421.0
 focus_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -90,31 +112,32 @@ custom_colors/default_color = Color( 0.597818, 0.597818, 0.757631, 1 )
 bbcode_enabled = true
 bbcode_text = "[b][color=white][url=https://github.com/DanielSWolf/rhubarb-lip-sync]Rhubarb Lip Sync[/url][/color][/b] is an open-source command-line program made by Daniel S. Wolf that allows you to quickly create 2D mouth animation from voice recordings. You can use it for animating speech in computer games, animated cartoons, or any similar project.
 
-[b][color=white][url=http://localhost/]Rhubarb Lipsync T.P. Integration for Godot[/url][/color][/b] is a Rhubarb Lipsync Integration plugin for Godot Engine made by AniMesuro. You can use it by opening the user interface [color=grey][u][b]Project > Tools > Rhubarb Lipsync TPI[/b][/u][/color] or using the functions directly by calling the plugin instance. [color=grey](see github page)[/color]"
+[b][color=white][url=https://github.com/AniMesuro/rhubarb-lipsync-tp-integration-godot]Rhubarb Lipsync T.P. Integration for Godot[/url][/color][/b] is a Rhubarb Lipsync Integration plugin for Godot Engine made by AniMesuro. You can use it by opening the user interface [color=grey][u][b]Project > Tools > Rhubarb Lipsync TPI[/b][/u][/color] or using the functions directly by calling the plugin instance. [color=grey](see github page)[/color]"
 text = "Rhubarb Lip Sync is an open-source command-line program made by Daniel S. Wolf that allows you to quickly create 2D mouth animation from voice recordings. You can use it for animating speech in computer games, animated cartoons, or any similar project.
 
 Rhubarb Lipsync T.P. Integration for Godot is a Rhubarb Lipsync Integration plugin for Godot Engine made by AniMesuro. You can use it by opening the user interface Project > Tools > Rhubarb Lipsync TPI or using the functions directly by calling the plugin instance. (see github page)"
 selection_enabled = true
 script = ExtResource( 7 )
 
-[node name="Button" type="Button" parent="Panel/VBox"]
-margin_left = 197.0
-margin_top = 424.0
-margin_right = 377.0
-margin_bottom = 448.0
+[node name="ReportBugButton" type="Button" parent="Panel/VBox"]
+margin_left = 193.0
+margin_top = 436.0
+margin_right = 373.0
+margin_bottom = 460.0
 rect_min_size = Vector2( 180, 24 )
 size_flags_horizontal = 4
 text = "Report a Bug"
 icon = ExtResource( 8 )
 expand_icon = true
+script = ExtResource( 10 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Label" type="Label" parent="Panel/VBox"]
-margin_top = 463.0
-margin_right = 576.0
-margin_bottom = 496.0
+margin_top = 475.0
+margin_right = 567.0
+margin_bottom = 508.0
 size_flags_horizontal = 3
 custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0.254902, 0.258824, 0.27451, 1 )
@@ -130,6 +153,7 @@ _windowRect = NodePath("..")
 [node name="HandlerTop" parent="Panel/RectHandlers" index="0"]
 modulate = Color( 1, 1, 1, 1 )
 margin_right = 607.0
+handler_direction = 0
 _windowRect = NodePath("../..")
 
 [node name="HandlerBottom" parent="Panel/RectHandlers" index="1"]

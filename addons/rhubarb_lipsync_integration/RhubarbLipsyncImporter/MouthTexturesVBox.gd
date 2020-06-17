@@ -4,8 +4,6 @@ extends VBoxContainer
 export var _temp_texture :StreamTexture
 var mouthDB :Dictionary
 var mouthIconDB :Dictionary= {}
-#var has_mouthDB_loaded :bool= false
-#var path_plugin
 
 func reload_mouthshape_textures(library :Dictionary):
 	for mouthshape in library:
@@ -13,7 +11,6 @@ func reload_mouthshape_textures(library :Dictionary):
 		mouthIconDB[mouthshape].textureButton.texture_normal = load(library[mouthshape])
 
 func _enter_tree() -> void:
-#	_temp_texture = load(owner.path_plugin+"assets/icons/icon_not.png")#StreamTexture.new()
 	mouthDB = {
 		'rest': _temp_texture,
 		'MBP': _temp_texture,
@@ -26,21 +23,10 @@ func _enter_tree() -> void:
 		'AI': _temp_texture
 	}
 
-#func _ready() -> void:
-#	if !is_inside_tree():
-#		yield(self, "tree_entered")
-#	yield(get_tree(), "idle_frame")
-#	print('owner d',owner.name)
-#	print('owner dpathplugin =',owner.path_plugin)
-	
-#	has_mouthDB_loaded = true
-	
-	
-#	print('mouthDB ', mouthDB)
 
 var fileDialog :FileDialog
 
-##
+
 func _on_MouthIcon_pressed(mouthIcon :VBoxContainer) -> void:
 	var button :TextureButton= mouthIcon.textureButton
 #	ask_for_filepath(textureButton)

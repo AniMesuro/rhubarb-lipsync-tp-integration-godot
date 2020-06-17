@@ -22,57 +22,30 @@ var last_mouse_position :Vector2
 var last_size :Vector2
 
 var _visible :bool= false setget set_pseudovisible
-#var window_distance_tl :Vector2
-#var window_distance_br :Vector2
+#var window_distance_tl :Vector2 #topleft
+#var window_distance_br :Vector2 #bottomright
 
 var handlerContainer :Control
 export var _windowRect :NodePath setget _set_windowRect
 var windowRect :Control 
 
 func _ready() -> void:
-#	return
 	connect( "gui_input", self, "_on_RectHandler_gui_input")
 	connect( "visibility_changed", self, "_on_visibility_changed")
-#	_set_windowRect(_windowRect)
 
 func _enter_tree() -> void:
-#	visible = false
-#	if is_inside_tree():
-#		print('hi, im inside tree')
-#		if is_instance_valid(self):
-#			print(self,' is valid')
-#	yield(get_tree(), "idle_frame")
-#	_set_windowRect()
-#	if !is_instance_valid(windowRect):
-#		yield(get_tree(), "idle_frame")
-#		windowRect = get_node(_windowRect)
-#		print('path to window node is null')
-#		return
-	
-##	self.windowRect = get_node_or_null(_windowRect)
-#	if !is_instance_valid(windowRect):
-#		print('entertree windowrect not valid')
-#		yield(get_tree(), "idle_frame")
-#		if !is_instance_valid(windowRect):
-#			print('deferred enter tree windowrect is valid')
-#	print('windowrect =',windowRect)
-	
 	if get_tree().edited_scene_root == self:
 		self._visible = true
 		return
+		
 	if is_instance_valid(windowRect):
 		if handler_size == 0: handler_size = 10
 		_fix_handler_rect(handler_direction)
 		if get_tree().edited_scene_root == windowRect.owner:
-#			modulate = Color.white
 			set_process(false)
 			return
 
 func _set_handler_direction(value :int):
-#	if value == null:
-#		print('script_changed?')
-#		return
-	
 	handler_direction = value
 	if _windowRect == null:
 		print(name,' path to window node is null')
@@ -91,7 +64,6 @@ func _fix_handler_rect(direction :int):
 		yield(self, "tree_entered")
 	if !is_instance_valid(windowRect):
 		return
-	
 	
 	
 	match direction:
@@ -141,7 +113,6 @@ func _set_windowRect(value :NodePath= _windowRect):
 		return
 	
 	var _window = get_node_or_null(value)
-#	print('pathtowindow =',get_path_to(_window))
 	
 	if !is_instance_valid(_window):
 		return
@@ -161,7 +132,6 @@ func _set_windowRect(value :NodePath= _windowRect):
 		DIRECTION.TOP:
 			if _is_in_RectContainer():
 				handlerContainer.handlerTop = self
-#				return
 			elif "handlerTop" in windowRect:
 				handlerContainer.handlerTop = self
 			else:
@@ -206,7 +176,6 @@ func _on_RectHandler_gui_input(event :InputEvent):
 			
 			last_mouse_position = get_global_mouse_position() 
 			last_size = windowRect.rect_size #+ mouse_offset
-			#Just found a bug with this, use signal mouse_entered/exited instead.
 			following = !following
 
 func _is_in_RectContainer() -> bool:
@@ -270,22 +239,10 @@ func set_pseudovisible(value :bool):
 		modulate = Color.transparent
 
 func _on_visibility_changed():
-#	if visible: 
-#		if get_tree().edited_scene_root == windowRect.owner:
-##			if modulate == Color.transparent:
-#			modulate = Color.white
 	if !is_instance_valid(self):
 		return
 	if is_connected( "visibility_changed", self, "_on_visibility_changed"):
 		disconnect( "visibility_changed", self, "_on_visibility_changed")
-#	print('visible ',visible)
 	self._visible = !_visible
 	if !visible: visible = true
 	connect( "visibility_changed", self, "_on_visibility_changed")
-#	if !visible:
-#		print('visible')
-#		self._visible
-#	elif visible:
-#		print('inivisible')
-#		if !_visible:
-#			set_pseudovisible(true)

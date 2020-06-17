@@ -51,6 +51,8 @@ func set_handler_size(value :int):
 		child.handler_size = value
 		
 
+#Istead of making the handlers visible/invisible, it will make the modulate alpha 0
+#ReferenceRect doesn't appear to execute when invisible.
 func set_pseudovisible(value :bool):
 	var windowRect = get_node(_windowRect)
 	if !is_inside_tree():

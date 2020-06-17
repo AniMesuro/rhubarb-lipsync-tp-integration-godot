@@ -3,6 +3,12 @@
 .import/
 export.cfg
 export_presets.cfg
+*.import
+
+#This project specific ignores
+*.tsv
+*.clip
+*.psd
 
 # Mono-specific ignores
 .mono/

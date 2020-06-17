@@ -1,7 +1,6 @@
 tool
 extends HBoxContainer
 
-#MouthSpriteHBox
 
 onready var button :MenuButton= $Button
 onready var popupMenu :PopupMenu
@@ -9,8 +8,8 @@ onready var warningIcon :TextureRect= $WarningIcon
 
 func _ready() -> void:
 	popupMenu = button.get_popup()
-#	print('spritehboxw ',popupMenu.get_current_index())
-	if popupMenu.get_current_index() == -1:
+	# private var last_index instead of get_current_index() function makes it accessible for Godot 3.2 Stable
+	if button.last_index == -1: 
 		enable_warning("No Sprite node selected. Can't proceed")
 	
 	popupMenu.connect("id_pressed", self, '_on_PopupMenu_item_selected')

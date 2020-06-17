@@ -25,9 +25,9 @@ func _on_PopupMenu_item_pressed(id :int):
 	menuButton.text = owner.pluginInstance.Settings.rhubarb_lipsync.recognizer
 	validate_setting()
 
-func _on_MenuButton_pressed():
-#	popupMenu.clear()
-	pass
+#func _on_MenuButton_pressed():
+##	popupMenu.clear()
+#	pass
 	
 
 func _enter_tree() -> void:
@@ -39,11 +39,9 @@ func validate_setting():
 	var Settings :Dictionary= owner.pluginInstance.Settings
 	
 	if !Settings.has("rhubarb_lipsync"):
-#		owner.pluginInstance.load_settings()
 		enable_warning("'rhubarb_lipsync' section not found at Settings Dict.")
 		return
 	if !Settings.rhubarb_lipsync.has("recognizer"):
-#		owner.pluginInstance.load_settings()
 		enable_warning("'recognizer' key not found at Settings Dict.")
 		return
 	
