@@ -7,6 +7,8 @@ export_presets.cfg
 
 #This project specific ignores
 *.tsv
+*.clip
+*.psd
 
 # Mono-specific ignores
 .mono/
