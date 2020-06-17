@@ -44,7 +44,6 @@ func _on_PopupMenu_item_selected(id :int):
 	menuButton.icon = owner.pluginInstance.get_editor_interface().get_inspector().get_icon("Animation", "EditorIcons")
 	menuButton.text = owner.anim_name
 	owner.emit_signal("updated_reference", 'anim_name')
-	print('owneranimname ',owner.anim_name)
 
 
 func _on_owner_reference_updated(owner_reference :String):

@@ -261,6 +261,7 @@ size_flags_vertical = 3
 [node name="RestMouth" parent="Panel/VBox/MouthPanel/MouthTextures/TopHBox" instance=ExtResource( 3 )]
 margin_right = 151.0
 margin_bottom = 49.0
+mouth_shape = "rest"
 default_mouth = ExtResource( 1 )
 
 [node name="MBPMouth" parent="Panel/VBox/MouthPanel/MouthTextures/TopHBox" instance=ExtResource( 3 )]
@@ -347,6 +348,7 @@ margin_bottom = 24.0
 text = "Please select a Sprite node."
 icon = ExtResource( 25 )
 expand_icon = true
+NO_NODE_FOUND = "No node found at tree."
 owner_reference = "anim_mouthSprite"
 node_type = "Sprite"
 
@@ -382,6 +384,7 @@ margin_bottom = 24.0
 text = "Please select an AnimationPlayer node."
 icon = ExtResource( 25 )
 expand_icon = true
+NO_NODE_FOUND = "No node found at tree."
 owner_reference = "anim_animationPlayer"
 node_type = "AnimationPlayer"
 
@@ -458,6 +461,7 @@ margin_bottom = 24.0
 text = "Please select an AudioStreamPlayer node."
 icon = ExtResource( 25 )
 expand_icon = true
+NO_NODE_FOUND = "No node found at tree."
 owner_reference = "anim_audioPlayer"
 node_type = "AudioStreamPlayer"
 
@@ -528,6 +532,7 @@ _windowRect = NodePath("..")
 [node name="HandlerTop" parent="Panel/RectHandlers" index="0"]
 modulate = Color( 1, 1, 1, 1 )
 margin_right = 794.0
+handler_direction = 0
 _windowRect = NodePath("../..")
 
 [node name="HandlerBottom" parent="Panel/RectHandlers" index="1"]

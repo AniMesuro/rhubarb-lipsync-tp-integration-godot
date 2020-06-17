@@ -51,8 +51,6 @@ func _on_PopupMenu_item_selected(id :int):
 	}
 	
 	owner.emit_signal("updated_reference", 'anim_audiokey')
-	print('audiokey =',owner.anim_audiokey)
-	print('audiokey length = ', owner.anim_audiokey.stream.get_length())
 
 func _clear_clip_path_array():
 	for i in clip_path.size():
