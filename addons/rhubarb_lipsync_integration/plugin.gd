@@ -19,7 +19,7 @@ enum CleanMode {
 	ClosePlugin
 }
 
-var path_plugin :String
+var path_plugin :String= "" setget ,get_pathplugin#Maybe better as a setget getter?
 
 var group_plugin :String= "plugin rhubarb_lipsync_integration"
 
@@ -36,7 +36,7 @@ var lipsyncImporterPopup :Control
 
 
 func _enter_tree():
-	_fix_pathplugin()
+#	_fix_pathplugin()
 #	var scr :Script= get_script()
 #	path_plugin = scr.resource_path.get_base_dir()+'/'
 	load_settings()
@@ -127,11 +127,11 @@ func _notification(what: int) -> void:
 func load_settings():
 	load_default_settings()
 	
-	if path_plugin == "":
-		_fix_pathplugin()
+#	if path_plugin == "":
+#		_fix_pathplugin()
 #	print('pathplugin =',path_plugin)
 	var configFile :ConfigFile= ConfigFile.new()
-	var err = configFile.load(path_plugin + FILENAME_SETTINGS)
+	var err = configFile.load(self.path_plugin + FILENAME_SETTINGS)
 	if err == OK:
 		for section in configFile.get_sections():
 			Settings[section] = {}
@@ -148,22 +148,24 @@ func load_settings():
 		save_settings()
 #	print('Settings =',Settings)
 
-func _fix_pathplugin():
+#_fix_pathplugin()
+func get_pathplugin():
 	if !is_inside_tree():
 		yield(self, "tree_entered")
 	var scr :Script= get_script()
 	path_plugin = scr.resource_path.get_base_dir()+'/'
+	return path_plugin
 
 func load_default_settings(keys :PoolStringArray= PoolStringArray([])):
-	if path_plugin == "":
-		_fix_pathplugin()
+#	if path_plugin == "":
+#		_fix_pathplugin()
 	var _default_settings :Dictionary= {
 		'rhubarb_lipsync': {
 			'path': "",
 			'recognizer': SpeechRecognizer.pocketSphinx
 		},
 		'output': {
-			'path': path_plugin+'_temp/',
+			'path': self.path_plugin+'_temp/',
 			'clean_mode': CleanMode.Never
 		}
 	}
@@ -197,28 +199,53 @@ func load_default_settings(keys :PoolStringArray= PoolStringArray([])):
 		#get(str_default_settings)
 
 func save_settings():
-	if path_plugin == "":
-		_fix_pathplugin()
+#	if path_plugin == "":
+#		_fix_pathplugin()
 	var configFile = ConfigFile.new()
-	var err = configFile.load(path_plugin + FILENAME_SETTINGS)
+	var err = configFile.load(self.path_plugin + FILENAME_SETTINGS)
 	if err == OK or err == ERR_FILE_NOT_FOUND:
 		for section in Settings:
 			for key in Settings[section]:
 				configFile.set_value(section, key, Settings[section][key])
 #	print("trying to save at ",path_plugin + FILENAME_SETTINGS)
-	configFile.save(path_plugin + FILENAME_SETTINGS)
+	configFile.save(self.path_plugin + FILENAME_SETTINGS)
 	
 
 func _on_importLipsync_Run(event) -> void:
-	if path_plugin == "":
-		_fix_pathplugin()
-	lipsyncImporterPopup = load(path_plugin + "RhubarbLipsyncImporter/LipsyncImporterPopup.tscn").instance()
+#	if path_plugin == "":
+#		_fix_pathplugin()
+	lipsyncImporterPopup = load(self.path_plugin + "RhubarbLipsyncImporter/LipsyncImporterPopup.tscn").instance()
 	add_child(lipsyncImporterPopup)
 	lipsyncImporterPopup.find_node('Panel').rect_position = OS.window_position + OS.window_size*.5 - lipsyncImporterPopup.find_node('Panel').rect_size*.5
 	lipsyncImporterPopup.pluginInstance = self
 
 func get_plugin_name() -> String:
 	return "rhubarb_lipsync_tpi"
+
+#Returns a mouthDB using the mouth library as input.
+func get_mouthDB(mouth_library :String) -> Dictionary:
+#	if path_plugin == "":
+#		_fix_pathplugin()
+	
+	var f :ConfigFile= ConfigFile.new() 
+	var err :int= f.load(self.path_plugin + "mouthshape_libraries.ini")
+	
+	var _mouthDB :Dictionary = {}
+	match err:
+		OK:
+			if f.has_section(mouth_library):
+				if f.has_section_key(mouth_library, "AI"):
+					for shape in f.get_section_keys(mouth_library):
+						_mouthDB[shape] = f.get_value(mouth_library, shape)
+					return _mouthDB
+			else:
+				return {}
+		ERR_FILE_NOT_FOUND:
+			return {}
+		_:
+			return {}
+	
+	return {}
 
 func _input(event: InputEvent) -> void:
 	if Input.is_key_pressed(KEY_ESCAPE):

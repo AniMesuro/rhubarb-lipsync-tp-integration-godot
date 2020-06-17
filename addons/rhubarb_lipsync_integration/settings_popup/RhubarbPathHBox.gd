@@ -51,9 +51,9 @@ func check_for_warnings():
 	
 	var user_os :String = OS.get_name()
 	match user_os:
-		'X11': #Linux ?
+		'X11','OSX': #Linux ?
 			var rhubarb_dir :String= Settings.rhubarb_lipsync.path.get_base_dir()
-			button.hint_tooltip = "It seems you're running a Linux distro. Plugin can't tell if file is binary as Rhubarb's release for linux doesn't have an extension."
+			button.hint_tooltip = "It seems you're running a Linux distro/Mac OS. Plugin can't tell if file is binary as Rhubarb's release for linux/mac doesn't have an extension."
 			if !Dir.dir_exists(rhubarb_dir+'/res'):
 				enable_warning("'res' folder comes with Rhubarb release and is needed for Rhubarb to work. Please drop it at the same path as Rhubarb Binary.")
 				button.text = "Rhubarb Binary found but can't call 'res' folder."
@@ -86,9 +86,15 @@ func _on_button_pressed():
 	fileDialog.mode = FileDialog.MODE_OPEN_FILE
 	fileDialog.access = FileDialog.ACCESS_FILESYSTEM
 	
+	var global_pluginpath = ProjectSettings.globalize_path(owner.pluginInstance.path_plugin) 
+	print("pathplugin = ", global_pluginpath)
+	fileDialog.current_dir = global_pluginpath
+#	fileDialog.current_path = global_pluginpath
+	print("currentdir = ",fileDialog.current_dir)
+	
 	fileDialog.connect("file_selected", self, '_on_fileDialog_file_selected')
 	fileDialog.connect("hide", self, '_on_fileDialog_hide')
-	pass
+
 
 func _on_fileDialog_file_selected(filepath :String):
 	print('filedial file selected ',filepath)
