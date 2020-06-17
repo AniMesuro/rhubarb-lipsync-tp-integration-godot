@@ -5,25 +5,11 @@ const PATH_MOUTHLIBRARIES :String= ""#res://addons/rhubarb_lipsync_importer/"
 const FILENAME_MOUTHLIBRARIES :String= "mouthshape_libraries.ini"
 
 var default_mouthtexture :PoolStringArray
-#var has_default_mouthtexture_array_loaded :bool=false
-#'''
-#= PoolStringArray([
-#"res://addons/rhubarb_lipsync_importer/assets/lipsync default mouthshapes/rest.png",
-#"res://addons/rhubarb_lipsync_importer/assets/lipsync default mouthshapes/MBP.png",
-#"res://addons/rhubarb_lipsync_importer/assets/lipsync default mouthshapes/O.png",
-#"res://addons/rhubarb_lipsync_importer/assets/lipsync default mouthshapes/U.png",
-#"res://addons/rhubarb_lipsync_importer/assets/lipsync default mouthshapes/etc.png",
-#"res://addons/rhubarb_lipsync_importer/assets/lipsync default mouthshapes/FV.png",
-#"res://addons/rhubarb_lipsync_importer/assets/lipsync default mouthshapes/E.png",
-#"res://addons/rhubarb_lipsync_importer/assets/lipsync default mouthshapes/L.png",
-#"res://addons/rhubarb_lipsync_importer/assets/lipsync default mouthshapes/AI.png"
-#])'''
 
 var mouthLibraryDB :Dictionary= {}
 
 onready var menuButton :MenuButton= $MenuButton
 var popupMenu :PopupMenu
-#var pluginInstance :EditorPlugin
 
 func _enter_tree() -> void:
 	yield(get_tree(), "idle_frame")
@@ -42,14 +28,11 @@ func _ready() -> void:
 	menuButton.update_PopupMenu_items()
 	
 	
-#	print('mouthlibrary ready ti path=', path_plugin)
-	
 
 func _load_default_mouthtexture_paths():
 	var path_plugin :String= owner.path_plugin
 	if path_plugin == "":
 		path_plugin = "res://addons/rhubarb_lipsync_integration/"
-#	print('pathplugin mouthlibrary =', path_plugin, "assets/lipsync default mouthshapes/rest.png")
 	default_mouthtexture = PoolStringArray([
 		path_plugin + "assets/lipsync default mouthshapes/rest.png",
 		path_plugin + "assets/lipsync default mouthshapes/MBP.png",
@@ -73,12 +56,10 @@ func load_mouthshape_library_file():
 #	if mouthLibraryDB != {}: mouthLibraryDB = {}
 	create_new_mouthshape_library('default')
 	var library_file :ConfigFile= ConfigFile.new()
-#	print('owner ',owner,' mouthlib load path =',owner.path_plugin + PATH_MOUTHLIBRARIES + FILENAME_MOUTHLIBRARIES)
 	
 	var err = library_file.load(owner.path_plugin + PATH_MOUTHLIBRARIES + FILENAME_MOUTHLIBRARIES)
 	if err == OK:
 		if !library_file.has_section('default'):
-#			create_new_mouthshape_library('default')
 			save_mouthshape_library('default')
 			
 		for section in library_file.get_sections():
@@ -96,14 +77,10 @@ func load_mouthshape_library_file():
 		
 		
 	elif err == ERR_FILE_NOT_FOUND:
-#		create_new_mouthshape_library('default')
 		save_mouthshape_library('default')
 
 #Creates a new library in the library database with given name
 func create_new_mouthshape_library(library :String):
-#	if default_mouthtexture.size() == 0:
-#		_load_default_mouthtexture_paths()
-	
 	mouthLibraryDB[library] = {
 	'rest': default_mouthtexture[0],
 	'MBP': default_mouthtexture[1],
@@ -114,7 +91,6 @@ func create_new_mouthshape_library(library :String):
 	'E': default_mouthtexture[6],
 	'L': default_mouthtexture[7],
 	'AI': default_mouthtexture[8]
-	
 	}
 
 func delete_mouthshape_library(library :String):
@@ -126,16 +102,12 @@ func delete_mouthshape_library(library :String):
 			library_file.save(owner.path_plugin +PATH_MOUTHLIBRARIES + FILENAME_MOUTHLIBRARIES)
 
 func save_mouthshape_library(library :String):
-#	if !is_inside_tree():
-#		yield(self, "tree_entered")
-	
 	var library_file :ConfigFile= ConfigFile.new()
 	var err = library_file.load(owner.path_plugin +PATH_MOUTHLIBRARIES + FILENAME_MOUTHLIBRARIES)
 	if err == OK or err == ERR_FILE_NOT_FOUND:
 		if library_file.has_section(library):
 			pass
 		
-#		print('mouthLibraryDB[library] =',mouthLibraryDB[library])
 		for mouthshape in mouthLibraryDB[library]:
 			library_file.set_value(library, mouthshape, mouthLibraryDB[library][mouthshape])
 	
