@@ -92,17 +92,17 @@ rect_clip_content = true
 script = ExtResource( 5 )
 
 [node name="Label" type="Label" parent="Panel/VBox/RhubarbPathHBox"]
-margin_right = 170.0
+margin_right = 200.0
 margin_bottom = 20.0
-text = "Rhubarb.exe File:"
+text = "Rhubarb binary File:"
 
 [node name="Button" type="Button" parent="Panel/VBox/RhubarbPathHBox"]
-margin_left = 174.0
+margin_left = 204.0
 margin_right = 610.0
 margin_bottom = 20.0
-hint_tooltip = "c:/git/rhubarb-lipsync-tp-integration-godot/.rhubarb_lipsync/rhubarb.exe"
+hint_tooltip = "c:/git/rhubarb-lipsync-tp-integration-godot/addons/rhubarb_lipsync_integration/.rhubarb-lip-sync-1.10.0-win32/rhubarb.exe"
 size_flags_horizontal = 3
-text = "c:/git/rhubarb-lipsync-tp-integration-godot/.rhubarb_lipsync/rhubarb.exe"
+text = "c:/git/rhubarb-lipsync-tp-integration-godot/addons/rhubarb_lipsync_integration/.rhubarb-lip-sync-1.10.0-win32/rhubarb.exe"
 clip_text = true
 
 [node name="WarningIcon" type="TextureRect" parent="Panel/VBox/RhubarbPathHBox"]
@@ -135,7 +135,7 @@ margin_bottom = 24.0
 hint_tooltip = "PocketSphinx: recommended for English audios.
 phonetic: recommended for non-English audios."
 size_flags_horizontal = 3
-text = "pocketSphinx"
+text = "phonetic"
 icon = ExtResource( 3 )
 flat = false
 expand_icon = true
@@ -231,7 +231,6 @@ text = "Save Settings."
 _windowRect = NodePath("..")
 
 [node name="FileDialog" type="FileDialog" parent="."]
-visible = true
 margin_left = 1.31516
 margin_top = 58.8471
 margin_right = 478.315

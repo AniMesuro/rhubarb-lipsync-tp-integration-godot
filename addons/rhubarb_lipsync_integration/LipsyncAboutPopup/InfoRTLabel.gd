@@ -6,5 +6,4 @@ func _ready() -> void:
 
 func _on_meta_clicked(meta :String):
 	OS.shell_open(meta)
-	print(meta)
 

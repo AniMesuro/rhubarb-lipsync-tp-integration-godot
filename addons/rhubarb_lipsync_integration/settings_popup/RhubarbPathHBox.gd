@@ -82,25 +82,23 @@ func _on_button_pressed():
 	fileDialog.access = FileDialog.ACCESS_FILESYSTEM
 	
 	var global_pluginpath = ProjectSettings.globalize_path(owner.pluginInstance.path_plugin) 
-	print("pathplugin = ", global_pluginpath)
 	fileDialog.current_dir = global_pluginpath
-	print("currentdir = ",fileDialog.current_dir)
 	
 	fileDialog.connect("file_selected", self, '_on_fileDialog_file_selected')
 	fileDialog.connect("hide", self, '_on_fileDialog_hide')
 
 
 func _on_fileDialog_file_selected(filepath :String):
-	print('filedial file selected ',filepath)
+	
 	
 	var f :File= File.new()
 	if !f.file_exists(filepath):
-		print("File not found from filepath.")
+		enable_warning("File not found from filepath.")
 		return
 	
 	var bin_extension :String= OS.get_executable_path().get_extension()
 	if filepath.get_extension() != bin_extension:
-		print('Selected file is not a binary file.')
+		enable_warning('Selected file is not a binary file.')
 		return
 	
 	if owner.pluginInstance.Settings == {}:
@@ -112,7 +110,6 @@ func _on_fileDialog_file_selected(filepath :String):
 	owner.emit_signal('updated_settings')
 
 func _on_fileDialog_hide():
-	print('filedial hidden')
 	fileDialog.disconnect("file_selected", self, '_on_fileDialog_file_selected')
 	fileDialog.disconnect("hide", self, '_on_fileDialog_hide')
 

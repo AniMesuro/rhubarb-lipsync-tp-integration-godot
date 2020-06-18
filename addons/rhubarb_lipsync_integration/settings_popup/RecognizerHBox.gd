@@ -9,7 +9,7 @@ func _ready() -> void:
 	menuButton = $MenuButton
 	popupMenu = menuButton.get_popup()
 	
-	menuButton.connect("pressed", self, '_on_MenuButton_pressed')
+#	menuButton.connect("pressed", self, '_on_MenuButton_pressed')
 	popupMenu.connect("id_pressed", self, '_on_PopupMenu_item_pressed')
 	
 func _on_PopupMenu_item_pressed(id :int):
