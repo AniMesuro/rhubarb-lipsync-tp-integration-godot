@@ -9,6 +9,8 @@ export_presets.cfg
 *.tsv
 *.clip
 *.psd
+addons/rhubarb_lipsync_integration/settings.ini
+addons/rhubarb_lipsync_integration/mouthshape_libraries.ini
 
 # Mono-specific ignores
 .mono/

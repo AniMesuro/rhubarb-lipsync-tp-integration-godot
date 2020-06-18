@@ -52,7 +52,9 @@ func _on_Button_pressed():
 	
 	fileDialog.mode = FileDialog.MODE_OPEN_DIR
 	fileDialog.access = FileDialog.ACCESS_RESOURCES
-	fileDialog.current_dir = owner.pluginInstance.Settings.output.path
+	fileDialog.current_path = owner.pluginInstance.Settings.output.path
+	
+#	fileDialog.current_path
 	
 	fileDialog.connect( "dir_selected", self, "_on_FileDialog_dir_selected")
 	fileDialog.connect( "hide", self, "_on_FileDialog_hide")
