@@ -27,6 +27,7 @@ You can use the user interface window by browsing in Godot **`[Project > Tools >
 - [Videos](#videos)
 - [Calling functions by Code.](#calling-functions-by-code)
 - [Function Usage](#function-usage)
+- [Disclaimer](#disclaimer)
 - [Bug Report](#bug-report)
 
 # Usage
@@ -206,6 +207,12 @@ Requires that rhubarb lipsync is run aswell, otherwise it yields forever and cau
 |argument|type|description|
 |-|-|-|
 |mouth_library|String|Section in the ``mouthshape_libraries.ini`` config file|
+
+# Disclaimer
+
+Rhubarb Lipsync Third Party Integration for Godot does has no warranty for any eventual issue and bug that may break your project. It is always advisable that you backup your project.
+I don't assume any responsibility for any possible corruption of your files.
+Please notice this addon doesn't come with Rhubarb Lipsync's binary. It's advisable you only download Rhubarb from the official Rhubarb Lipsync Github releases page. The plugin currently has no way to determine if the file is valid.
 
 # Bug Report
 
