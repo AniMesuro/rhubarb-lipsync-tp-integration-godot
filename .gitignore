@@ -5,12 +5,13 @@ export.cfg
 export_presets.cfg
 *.import
 
-#This project specific ignores
+# This project specific ignores
 *.tsv
 *.clip
 *.psd
 addons/rhubarb_lipsync_integration/settings.ini
 addons/rhubarb_lipsync_integration/mouthshape_libraries.ini
+addons/rhubarb_lipsync_integration/_temp/
 
 # Mono-specific ignores
 .mono/
