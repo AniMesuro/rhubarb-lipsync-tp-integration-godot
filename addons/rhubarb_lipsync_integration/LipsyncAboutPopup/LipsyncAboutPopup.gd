@@ -10,6 +10,27 @@ func _enter_tree() -> void:
 		
 func _ready() -> void:
 	connect("hide", self, "_on_hide")
+	
+	if !is_inside_tree():
+		yield(self, "tree_entered")
+		
+	
+	$"Panel/VBox/VersionLabel".text = "Version: " + get_plugin_version()
+
+func get_plugin_version() -> String:
+	if !is_instance_valid(self):
+		yield(get_tree(), "idle_frame")
+	pluginInstance = _get_pluginInstance()
+	
+	var pluginConfig :ConfigFile= ConfigFile.new()
+	var err = pluginConfig.load(pluginInstance.path_plugin+"plugin.cfg")
+	var version :String= "x.x.x"
+	if err == OK:
+		if !pluginConfig.has_section("plugin"):
+			return version
+			
+		version = pluginConfig.get_value("plugin", "version", "1.0")
+	return version
 
 func _on_hide():
 	if get_tree().edited_scene_root == self:
