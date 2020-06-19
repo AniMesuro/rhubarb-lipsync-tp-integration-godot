@@ -24,6 +24,7 @@ You can use the user interface window by browsing in Godot **`[Project > Tools >
 	- [About Window](#about-window)
 	- [Settings Window](#settings-window)
 	- [Result](#result)
+- [Videos](#videos)
 - [Calling functions by Code.](#calling-functions-by-code)
 - [Function Usage](#function-usage)
 - [Bug Report](#bug-report)
@@ -72,7 +73,7 @@ By default, Rhubarb Lipsync TPI uses pocketSphinx as the recognizer for Rhubarb 
 |pocketSphinx|recommended for English voice recordings.|
 |phonetic|recommended for any non-English voice recordings.|
 
-Speech Recognizers are not used directly through this plugin, but as an argument for executing Rhubarb Lipsync. For more information about Recognizers, see [Rhubarb Lipsync's section on Rcognizers](https://github.com/DanielSWolf/rhubarb-lip-sync/#Recognizers)
+Speech Recognizers are not used directly through this plugin, but as an argument for executing Rhubarb Lipsync. For more information about Recognizers, see [Rhubarb Lipsync's section on Recognizers](https://github.com/DanielSWolf/rhubarb-lip-sync/#Recognizers)
 
 # Mouth Libraries
 
@@ -118,13 +119,20 @@ These events are:
 
 ![Imgur](https://i.imgur.com/ipR4dvy.png)
 
+# Videos
+
+[<img src="https://img.youtube.com/vi/qPWBWRkcFjY/hqdefault.jpg" height = "420">]("https://www.youtube.com/watch?v=qPWBWRkcFjY")
+</br>Video tutorial on how to use Rhubarb Lipsync TPI's basic functionality
+
 # Calling functions by Code.
 
 Rhubarb Lipsync T.P. Integration for Godot allows you to use the functions that communicate with Rhubarb Lipsync directly by gdscript.
 For that you need to call the plugin instance first. The addon uses Godot's group to easily call the plugin path from anywhere.
+> But please note this is experimental, there's no guarantee something will not break.
+> This was only tested on tool scripts.
 
 For example, create an empty scene and attach this script to a Control node:
-```py
+```gdscript
 tool
 extends Control
 
@@ -148,7 +156,7 @@ After you have called the Rhubarb Lipsync TPI plugin you can use these functions
 |-|-|
 |run_rhubarb_lipsync()|Executes Rhubarb Lipsync in Godot|
 |import_lipsync()|Imports a Lipsync TSV (tab-separated-value) file into an Animation resource.|
-|import_deferred_lipsync()|Uses import lipsync but waits for  (be careful with this as it yields until Rhubarb Lipsync finishes generating lipsync)|
+|import_deferred_lipsync()|Imports lipsync to Animation but only after Rhubarb Lipsync has finished generating the output lipsync file (be careful with this as it yields until Rhubarb Lipsync finishes generating lipsync)|
 |get_prestonblair_mouthtexture()|Returns a StreamTexture from a Rhubarb Lipsync mouthshape input|
 |get_mouthDB()|Returns a Dictionary with Mouthshape database from a mouthshape library
 
@@ -186,6 +194,7 @@ are_paths_absolute|bool|False for a relative path ``("res://")`` </br> True for 
 |anim_name|String|Animation resource's name from AnimationPlayer|
 |mouthDB|Dictionary|Mouthshape database|
 
+Requires that rhubarb lipsync is run aswell, otherwise it yields forever and causes memory leak.
 
 >## get_prestonblair_mouthtexture( )
 |argument|type|description|
