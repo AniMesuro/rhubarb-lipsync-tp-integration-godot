@@ -30,7 +30,6 @@ var fileDialog :FileDialog
 func _on_MouthIcon_pressed(mouthIcon :VBoxContainer) -> void:
 	var button :TextureButton= mouthIcon.textureButton
 #	ask_for_filepath(textureButton)
-	print('image pressed')
 	fileDialog = FileDialog.new()
 	fileDialog.connect("popup_hide", self, "_on_FileDialog_popup_hide")
 	owner.pluginInstance.add_child(fileDialog)
