@@ -198,7 +198,7 @@ text = "Default"
 icon = ExtResource( 25 )
 flat = false
 expand_icon = true
-items = [ "default", null, 0, false, false, 0, 0, null, "", false, "boob", null, 0, false, false, 1, 0, null, "", false ]
+items = [ "default", null, 0, false, false, 0, 0, null, "", false, "my_mouthlibrary", null, 0, false, false, 1, 0, null, "", false ]
 script = ExtResource( 26 )
 
 [node name="SaveButton" type="TextureButton" parent="Panel/VBox/MouthLibraryHBox"]
@@ -261,7 +261,6 @@ size_flags_vertical = 3
 [node name="RestMouth" parent="Panel/VBox/MouthPanel/MouthTextures/TopHBox" instance=ExtResource( 3 )]
 margin_right = 151.0
 margin_bottom = 49.0
-mouth_shape = "rest"
 default_mouth = ExtResource( 1 )
 
 [node name="MBPMouth" parent="Panel/VBox/MouthPanel/MouthTextures/TopHBox" instance=ExtResource( 3 )]

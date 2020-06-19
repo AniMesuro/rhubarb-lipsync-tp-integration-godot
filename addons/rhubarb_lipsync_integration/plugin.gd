@@ -57,17 +57,13 @@ func _do_cleaning_routine(event :int):
 		CleanMode.Never:
 			return
 		CleanMode.OpenPlugin:
-			Settings.cleaning = {}
-			Settings.cleaning.batoto = "OpenPlugin"
-			print('plugin_opened')
+#			print('plugin_opened')
 			
 			_clean_files()
 			
 			save_settings()
 		CleanMode.ClosePlugin:
-			Settings.cleaning = {}
-			Settings.cleaning.batata = "ClosePlugin"
-			print('plugin_closed')
+#			print('plugin_closed')
 			
 			_clean_files()
 			save_settings()
@@ -75,8 +71,6 @@ func _do_cleaning_routine(event :int):
 func _clean_files():
 	var Dir :Directory= Directory.new()
 	if !Dir.dir_exists(Settings.output.path):
-		Settings.bombom = {}
-		Settings.bombom.chocolate = "atalho n existe"
 		save_settings()
 		Dir.make_dir(Settings.output.path)
 		return
