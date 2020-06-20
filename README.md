@@ -122,7 +122,7 @@ These events are:
 
 # Videos
 
-[<img src="https://img.youtube.com/vi/qPWBWRkcFjY/hqdefault.jpg" height = "420">]("https://www.youtube.com/watch?v=qPWBWRkcFjY")
+[![Video Tutorial](https://img.youtube.com/vi/qPWBWRkcFjY/hqdefault.jpg)](https://www.youtube.com/watch?v=qPWBWRkcFjY)
 </br>Video tutorial on how to use Rhubarb Lipsync TPI's basic functionality
 
 # Calling functions by Code.
