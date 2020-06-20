@@ -11,7 +11,7 @@ export_presets.cfg
 *.psd
 addons/rhubarb_lipsync_integration/settings.ini
 addons/rhubarb_lipsync_integration/mouthshape_libraries.ini
-addons/rhubarb_lipsync_integration/_temp/
+addons/rhubarb_lipsync_integration/_temp/*.tsv
 
 # Mono-specific ignores
 .mono/
