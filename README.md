@@ -3,9 +3,9 @@ Rhubarb Lipsync Third Party Integration for Godot
 <img src="https://i.imgur.com/Cb16Smg.png" width="250">
 
 
-Rhubarb Lipsync TPI for Godot is a Godot Engine addon made by AniMesuro that integrates Rhubarb Lipsync's command-line program into a more user friendly popup-window optimized for use in Godot. 
+Rhubarb Lipsync T.P.I. for Godot is a Godot Engine addon made by AniMesuro that integrates Rhubarb Lipsync's command-line program into a more user friendly popup-window optimized for use in Godot. 
 
-[Rhubarb Lipsync](https://github.com/DanielSWolf/rhubarb-lip-sync/) is a tool created by Daniel S. Wolf that allows for an automated alternative to producing lipsync animations. You can use it for animating speech in computer games, animated cartoons, or any similar project.
+[Rhubarb Lip Sync](https://github.com/DanielSWolf/rhubarb-lip-sync/) is a tool created by Daniel Wolf that allows for an automated alternative to producing lipsync animations. You can use it for animating speech in computer games, animated cartoons, or any similar project.
 
 ---
 
@@ -35,11 +35,11 @@ You can use the user interface window by browsing in Godot **`[Project > Tools >
 
 1. When you first install Rhubarb Lipsync TPI for Godot, you can use it by browsing in Godot **`[Project > Tools > Rhubarb Lipsync TPI]`**
 1. This should open the Plugin Popup Window. If it's your first time running it, you will see a error message `"Can't proceed. Rhubarb binary doesn't exist on path defined in Settings".` </br>So click the gear icon to open the Settings window.
-1. The Settings window should also give you a warning stating that it didn't find Rhubarb's binary at the plugin settings. </br>Click the highlighted link `"Rhubarb Lipsync"` at the top to go to Rhubarb Lipsync's releases page.
+1. The Settings window should also give you a warning stating that it didn't find Rhubarb's binary at the plugin settings. </br>Click the highlighted link `"Rhubarb Lipsync"` at the top to go to Rhubarb Lip Sync's releases page.
 1. Download the appropriate release for your operating system.
 2. Extract the contents from the zip file you downloaded to your desired directory. (We'll use the plugin directory `"res://addons/rhubarb_lipsync_integration"`)
-3. If the directory you extracted is inside the project directory, rename the Rhubarb Lipsync folder to the same name but with a dot in the beggining. ex: `".rhubarb-lip-sync-1.10.0-linux"` </br>This will make Godot ignore this folder.
-4. Go back to Godot, click the Rhubarb Path button and call Rhubarb Lipsync Binary from the folder you just extracted. *
+3. If the directory you extracted is inside the project directory, rename the Rhubarb Lip Sync folder to the same name but with a dot in the beggining. ex: `".rhubarb-lip-sync-1.10.0-linux"` </br>This will make Godot ignore this folder.
+4. Go back to Godot, click the Rhubarb Path button and call Rhubarb Lip Sync Binary from the folder you just extracted. *
 5. Hit save button.
    
 >*4 - `If you get a warning saying that the plugin didn't recognize the program as a binary file, try renaming Rhubarb's binary to the same extension as your Godot binary. ex: "rhubarb.32"`
@@ -59,22 +59,22 @@ You can use the user interface window by browsing in Godot **`[Project > Tools >
 10. Assign the Audio key containing the voice recording to be lipsynced
 11. Press Done.
 
-When all values are correctly assigned, Rhubarb Lipsync should start generating the lipsync file. You can check the progress by opening Godot's Debug Console on Windows. For other OS's you rely on Godot printing on Editor Console.
+When all values are correctly assigned, Rhubarb Lip Sync should start generating the lipsync file. You can check the progress by opening Godot's Debug Console on Windows. For other OS's you rely on Godot printing on Editor Console.
 
-When Rhubarb Lipsync has finished generating lipsync, there'll be a delay until the lipsync is imported to the Animation. 
+When Rhubarb Lip Sync has finished generating lipsync data, there'll be a delay until the lipsync is imported to the Animation. 
 
 # Speech Recognizer
 
-Speech Recognizers are speech recognition libraries used by Rhubarb Lipsync to determine what phonemes or words are being said in a voice recording
+Speech Recognizers are speech recognition libraries used by Rhubarb Lip Sync to determine what phonemes or words are being said in a voice recording
 
-By default, Rhubarb Lipsync TPI uses pocketSphinx as the recognizer for Rhubarb Lipsync, but you can change it to phonetic in Settings.
+By default, Rhubarb Lipsync TPI uses pocketSphinx as the recognizer for Rhubarb Lip Sync, but you can change it to phonetic in Settings.
 
 |Recognizer|Usecase|
 |-|-|
 |pocketSphinx|recommended for English voice recordings.|
 |phonetic|recommended for any non-English voice recordings.|
 
-Speech Recognizers are not used directly through this plugin, but as an argument for executing Rhubarb Lipsync. For more information about Recognizers, see [Rhubarb Lipsync's section on Recognizers](https://github.com/DanielSWolf/rhubarb-lip-sync/#Recognizers)
+Speech Recognizers are not used directly through this plugin, but as a parameter for executing Rhubarb Lipsync. For more information about Recognizers, see [Rhubarb Lip Sync's section on Recognizers](https://github.com/DanielSWolf/rhubarb-lip-sync/#Recognizers)
 
 # Mouth Libraries
 
@@ -127,7 +127,7 @@ These events are:
 
 # Calling functions by Code.
 
-Rhubarb Lipsync T.P. Integration for Godot allows you to use the functions that communicate with Rhubarb Lipsync directly by gdscript.
+Rhubarb Lipsync T.P. Integration for Godot allows you to use the functions that communicate with Rhubarb Lip Sync directly by gdscript.
 For that you need to call the plugin instance first. The addon uses Godot's group to easily call the plugin path from anywhere.
 > But please note this is experimental, there's no guarantee something will not break.
 > This was only tested on tool scripts.
@@ -155,10 +155,10 @@ func set_rhubarb_lipsync_tpi_plugin(value):
 After you have called the Rhubarb Lipsync TPI plugin you can use these functions to communicate with Rhubarb Lipsync TPI plugin:
 |Function|Description|
 |-|-|
-|run_rhubarb_lipsync()|Executes Rhubarb Lipsync in Godot|
+|run_rhubarb_lipsync()|Executes Rhubarb Lip Sync in Godot|
 |import_lipsync()|Imports a Lipsync TSV (tab-separated-value) file into an Animation resource.|
-|import_deferred_lipsync()|Imports lipsync to Animation but only after Rhubarb Lipsync has finished generating the output lipsync file (be careful with this as it yields until Rhubarb Lipsync finishes generating lipsync)|
-|get_prestonblair_mouthtexture()|Returns a StreamTexture from a Rhubarb Lipsync mouthshape input|
+|import_deferred_lipsync()|Imports lipsync to Animation but only after Rhubarb Lip Sync has finished generating the output lipsync file (be careful with this as it yields until Rhubarb Lip Sync finishes generating lipsync)|
+|get_prestonblair_mouthtexture()|Returns a StreamTexture from a Rhubarb Lip Sync mouthshape input|
 |get_mouthDB()|Returns a Dictionary with Mouthshape database from a mouthshape library
 
 see [below](#function-usage) for a breakthrough of the function arguments.
@@ -195,12 +195,12 @@ are_paths_absolute|bool|False for a relative path ``("res://")`` </br> True for 
 |anim_name|String|Animation resource's name from AnimationPlayer|
 |mouthDB|Dictionary|Mouthshape database|
 
-Requires that rhubarb lipsync is run aswell, otherwise it yields forever and causes memory leak.
+Requires that Rhubarb Lip Sync is run aswell, otherwise it yields forever and causes memory leak.
 
 >## get_prestonblair_mouthtexture( )
 |argument|type|description|
 |-|-|-|
-|rhubarb_shape|String|Rhubarb Lipsync mouthshape ``("A", "B", "C")``
+|rhubarb_shape|String|Rhubarb Lip Sync mouthshape ``("A", "B", "C")``
 |mouthDB|Dictionary|Mouthshape texture database
 
 >## get_mouthDB( )
@@ -210,9 +210,9 @@ Requires that rhubarb lipsync is run aswell, otherwise it yields forever and cau
 
 # Disclaimer
 
-Rhubarb Lipsync Third Party Integration for Godot does has no warranty for any eventual issue and bug that may break your project. It is always advisable that you backup your project.
-I don't assume any responsibility for any possible corruption of your files.
-Please notice this addon doesn't come with Rhubarb Lipsync's binary. It's advisable you only download Rhubarb from the official Rhubarb Lipsync Github releases page. The plugin currently has no way to determine if the file is valid.
+Rhubarb Lipsync Third Party Integration for Godot does not have warranty for any eventual issue and bug that may break your project. It is always advisable that you backup your project.
+I don't assume any responsibility for any possible corruption or deletion of your files.
+Please notice this addon doesn't come with Rhubarb Lip Sync's binary. It's advisable you only download Rhubarb from the official Rhubarb Lip Sync Github releases page. The plugin currently has no way to determine if the file is valid.
 
 # Bug Report
 
