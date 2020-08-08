@@ -107,7 +107,7 @@ grow_horizontal = 0
 grow_vertical = 0
 size_flags_vertical = 0
 alignment = 2
-title_name = "Rhubarb Lipsync T.P. Integration for Godot"
+title_name = "Rhubarb Lip Sync T.P. Integration for Godot"
 icon_texture = ExtResource( 40 )
 window_path = NodePath("../..")
 
@@ -198,7 +198,7 @@ text = "Default"
 icon = ExtResource( 25 )
 flat = false
 expand_icon = true
-items = [ "default", null, 0, false, false, 0, 0, null, "", false, "my_mouthlibrary", null, 0, false, false, 1, 0, null, "", false ]
+items = [ "default", null, 0, false, false, 0, 0, null, "", false ]
 script = ExtResource( 26 )
 
 [node name="SaveButton" type="TextureButton" parent="Panel/VBox/MouthLibraryHBox"]
@@ -261,31 +261,32 @@ size_flags_vertical = 3
 [node name="RestMouth" parent="Panel/VBox/MouthPanel/MouthTextures/TopHBox" instance=ExtResource( 3 )]
 margin_right = 151.0
 margin_bottom = 49.0
+mouth_shape = "rest"
 default_mouth = ExtResource( 1 )
 
 [node name="MBPMouth" parent="Panel/VBox/MouthPanel/MouthTextures/TopHBox" instance=ExtResource( 3 )]
 margin_left = 155.0
-margin_right = 306.0
+margin_right = 307.0
 margin_bottom = 49.0
 mouth_shape = "MBP"
 default_mouth = ExtResource( 14 )
 
 [node name="FVMouth" parent="Panel/VBox/MouthPanel/MouthTextures/TopHBox" instance=ExtResource( 3 )]
-margin_left = 310.0
-margin_right = 461.0
+margin_left = 311.0
+margin_right = 462.0
 margin_bottom = 49.0
 mouth_shape = "FV"
 default_mouth = ExtResource( 9 )
 
 [node name="OMouth" parent="Panel/VBox/MouthPanel/MouthTextures/TopHBox" instance=ExtResource( 3 )]
-margin_left = 465.0
-margin_right = 616.0
+margin_left = 466.0
+margin_right = 618.0
 margin_bottom = 49.0
 mouth_shape = "O"
 default_mouth = ExtResource( 19 )
 
 [node name="UMouth" parent="Panel/VBox/MouthPanel/MouthTextures/TopHBox" instance=ExtResource( 3 )]
-margin_left = 620.0
+margin_left = 622.0
 margin_right = 774.0
 margin_bottom = 49.0
 mouth_shape = "U"
@@ -306,20 +307,20 @@ mouth_shape = "etc"
 
 [node name="EMouth" parent="Panel/VBox/MouthPanel/MouthTextures/BottomVBox" instance=ExtResource( 3 )]
 margin_left = 194.0
-margin_right = 384.0
+margin_right = 385.0
 margin_bottom = 50.0
 mouth_shape = "E"
 default_mouth = ExtResource( 16 )
 
 [node name="LMouth" parent="Panel/VBox/MouthPanel/MouthTextures/BottomVBox" instance=ExtResource( 3 )]
-margin_left = 388.0
-margin_right = 578.0
+margin_left = 389.0
+margin_right = 579.0
 margin_bottom = 50.0
 mouth_shape = "L"
 default_mouth = ExtResource( 18 )
 
 [node name="AIMouth" parent="Panel/VBox/MouthPanel/MouthTextures/BottomVBox" instance=ExtResource( 3 )]
-margin_left = 582.0
+margin_left = 583.0
 margin_right = 774.0
 margin_bottom = 50.0
 mouth_shape = "AI"
