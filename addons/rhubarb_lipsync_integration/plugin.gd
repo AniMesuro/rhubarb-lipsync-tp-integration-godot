@@ -168,7 +168,8 @@ func save_settings():
 func _on_importLipsync_Run(event) -> void:
 	lipsyncImporterPopup = load(self.path_plugin + "RhubarbLipsyncImporter/LipsyncImporterPopup.tscn").instance()
 	add_child(lipsyncImporterPopup)
-	lipsyncImporterPopup.find_node('Panel').rect_position = OS.window_position + OS.window_size*.5 - lipsyncImporterPopup.find_node('Panel').rect_size*.5
+#	lipsyncImporterPopup.find_node('Panel').rect_position = OS.window_position + OS.window_size*.5 - lipsyncImporterPopup.find_node('Panel').rect_size*.5
+	lipsyncImporterPopup.find_node('Panel').rect_position = OS.window_size*.5 - lipsyncImporterPopup.find_node('Panel').rect_size*.5
 	lipsyncImporterPopup.pluginInstance = self
 
 func get_plugin_name() -> String:
