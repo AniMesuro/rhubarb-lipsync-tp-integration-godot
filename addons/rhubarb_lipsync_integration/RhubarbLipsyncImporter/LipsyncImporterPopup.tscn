@@ -182,6 +182,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Sprite" type="VBoxContainer" parent="Panel/VBox/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -362,9 +363,7 @@ text = "NodePath to mouth Sprite:"
 margin_right = 738.0
 margin_bottom = 24.0
 text = "Please select a Sprite node."
-icon = ExtResource( 25 )
 expand_icon = true
-NO_NODE_FOUND = "No node found at tree."
 owner_reference = "anim_mouthSprite"
 node_type = "Sprite"
 
@@ -379,13 +378,74 @@ texture = ExtResource( 10 )
 expand = true
 
 [node name="AnimatedSprite" type="VBoxContainer" parent="Panel/VBox/TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
 margin_top = 38.0
 margin_right = -4.0
 margin_bottom = -4.0
+
+[node name="AnimatedSpriteHBox" type="HBoxContainer" parent="Panel/VBox/TabContainer/AnimatedSprite"]
+margin_right = 766.0
+margin_bottom = 24.0
+
+[node name="Label" type="Label" parent="Panel/VBox/TabContainer/AnimatedSprite/AnimatedSpriteHBox"]
+margin_top = 2.0
+margin_right = 270.0
+margin_bottom = 22.0
+text = "NodePath to AnimatedSprite:"
+
+[node name="NodeButton" parent="Panel/VBox/TabContainer/AnimatedSprite/AnimatedSpriteHBox" instance=ExtResource( 2 )]
+margin_left = 274.0
+margin_right = 738.0
+margin_bottom = 24.0
+text = "Please select an AnimatedSprite."
+expand_icon = true
+NO_NODE_FOUND = "No AnimatedSprite found at tree."
+owner_reference = "anim_mouthAnimSprite"
+node_type = "AnimatedSprite"
+
+[node name="WarningIcon" type="TextureRect" parent="Panel/VBox/TabContainer/AnimatedSprite/AnimatedSpriteHBox"]
+margin_left = 742.0
+margin_right = 766.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 24, 24 )
+hint_tooltip = "No Sprite node selected. Can't proceed"
+size_flags_horizontal = 0
+texture = ExtResource( 10 )
+expand = true
+
+[node name="SpriteAnimationHBox" type="HBoxContainer" parent="Panel/VBox/TabContainer/AnimatedSprite"]
+margin_top = 28.0
+margin_right = 766.0
+margin_bottom = 52.0
+
+[node name="Label" type="Label" parent="Panel/VBox/TabContainer/AnimatedSprite/SpriteAnimationHBox"]
+margin_top = 2.0
+margin_right = 250.0
+margin_bottom = 22.0
+text = "AnimatedSprite Animation:"
+
+[node name="MenuButton" type="MenuButton" parent="Panel/VBox/TabContainer/AnimatedSprite/SpriteAnimationHBox"]
+margin_left = 254.0
+margin_right = 738.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+text = "Please select an AnimatedSprite first."
+icon = ExtResource( 25 )
+flat = false
+align = 0
+expand_icon = true
+
+[node name="WarningIcon" type="TextureRect" parent="Panel/VBox/TabContainer/AnimatedSprite/SpriteAnimationHBox"]
+margin_left = 742.0
+margin_right = 766.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 24, 24 )
+hint_tooltip = "No Sprite node selected. Can't proceed"
+size_flags_horizontal = 0
+texture = ExtResource( 10 )
+expand = true
 
 [node name="AnimationPlayerHBox" type="HBoxContainer" parent="Panel/VBox"]
 margin_top = 426.0
@@ -407,9 +467,7 @@ margin_left = 284.0
 margin_right = 746.0
 margin_bottom = 24.0
 text = "Please select an AnimationPlayer node."
-icon = ExtResource( 25 )
 expand_icon = true
-NO_NODE_FOUND = "No node found at tree."
 owner_reference = "anim_animationPlayer"
 node_type = "AnimationPlayer"
 
@@ -484,9 +542,7 @@ margin_left = 304.0
 margin_right = 746.0
 margin_bottom = 24.0
 text = "Please select an AudioStreamPlayer node."
-icon = ExtResource( 25 )
 expand_icon = true
-NO_NODE_FOUND = "No node found at tree."
 owner_reference = "anim_audioPlayer"
 node_type = "AudioStreamPlayer"
 
@@ -552,28 +608,31 @@ size_flags_horizontal = 6
 text = "Generate Lipsync Animation"
 
 [node name="RectHandlers" parent="Panel" instance=ExtResource( 35 )]
-modulate = Color( 1, 1, 1, 0 )
 _windowRect = NodePath("..")
 
 [node name="HandlerTop" parent="Panel/RectHandlers" index="0"]
+modulate = Color( 1, 1, 1, 1 )
 margin_right = 794.0
 handler_direction = 0
 _windowRect = NodePath("../..")
 
 [node name="HandlerBottom" parent="Panel/RectHandlers" index="1"]
-margin_top = 596.0
+modulate = Color( 1, 1, 1, 1 )
+margin_top = 660.0
 margin_right = 794.0
-margin_bottom = 606.0
+margin_bottom = 670.0
 _windowRect = NodePath("../..")
 
 [node name="HandlerLeft" parent="Panel/RectHandlers" index="2"]
-margin_bottom = 606.0
+modulate = Color( 1, 1, 1, 1 )
+margin_bottom = 670.0
 _windowRect = NodePath("../..")
 
 [node name="HandlerRight" parent="Panel/RectHandlers" index="3"]
+modulate = Color( 1, 1, 1, 1 )
 margin_left = 784.0
 margin_right = 794.0
-margin_bottom = 606.0
+margin_bottom = 670.0
 _windowRect = NodePath("../..")
 [connection signal="pressed" from="Panel/VBox/AnimateButton" to="." method="_on_AnimateButton_pressed"]
 

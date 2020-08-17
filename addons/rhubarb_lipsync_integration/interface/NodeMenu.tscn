@@ -1,8 +1,9 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://addons/rhubarb_lipsync_integration/interface/NodeMenu.gd" type="Script" id=1]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/icons/icon_expand.png" type="Texture" id=2]
 
-[node name="Button" type="MenuButton"]
+[node name="NodeMenu" type="MenuButton"]
 margin_left = 254.0
 margin_right = 998.0
 margin_bottom = 26.0
@@ -11,6 +12,7 @@ rect_min_size = Vector2( 0, 24 )
 rect_clip_content = true
 size_flags_horizontal = 3
 text = "Please select a node."
+icon = ExtResource( 2 )
 flat = false
 clip_text = true
 align = 0

@@ -11,8 +11,12 @@ var handlerBottom :ReferenceRect
 var handlerLeft :ReferenceRect
 var handlerRight :ReferenceRect
 
-
+# Sprite Tab
 var anim_mouthSprite :Sprite
+# AnimatedSprite Tab
+var anim_mouthAnimSprite :AnimatedSprite
+var anim_mouthAnimSprite_anim :String
+
 var anim_audioPlayer :AudioStreamPlayer
 var anim_animationPlayer :AnimationPlayer
 var anim_name :String
