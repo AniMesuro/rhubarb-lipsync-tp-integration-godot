@@ -24,10 +24,12 @@ var lipsync_data :String= ""
 var pluginInstance :EditorPlugin
 var path_plugin :String
 
-onready var mouthTextures :VBoxContainer= find_node('MouthTextures')
+# Sprite tab
+onready var mouthTextures :VBoxContainer= $Panel/VBox/TabContainer/Sprite.find_node('MouthTextures')
+onready var mouthSpriteHBox = $Panel/VBox/TabContainer/Sprite.find_node("MouthSpriteHBox")
+
 onready var animateButton = find_node("AnimateButton")
 
-onready var mouthSpriteHBox = find_node("MouthSpriteHBox")
 onready var animationPlayerHBox = find_node("AnimationPlayerHBox")
 onready var animationNameHBox = find_node("AnimationNameHBox")
 onready var audioTrackHBox = find_node("AudioTrackHBox")
