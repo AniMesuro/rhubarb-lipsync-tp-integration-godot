@@ -1,3 +1,4 @@
+tool
 extends PopupPanel
 
 signal frame_selected (id)
@@ -8,10 +9,11 @@ var animSprite :AnimatedSprite
 var anim :String
 var frame_id :int
 
-onready var marginContainer :MarginContainer= $ScrollContainer/MarginContainer
+onready var gridContainer :GridContainer= $ScrollContainer/GridContainer
 
 
-func _ready() -> void:
+func begin() -> void:
+		
 	if !is_instance_valid(animSprite):
 		queue_free()
 		return
@@ -32,8 +34,14 @@ func _ready() -> void:
 		var frameTexture :TextureButton= TextureButton.new()
 		frameTexture.texture_normal = spriteFrames.get_frame(anim, i)
 #		frameTexture.rect_min_size = Vector2(24,24)
-		marginContainer.add_child(frameTexture)
+		gridContainer.add_child(frameTexture)
 		frameTexture.connect("pressed", self, "_on_FrameTexture_pressed", [i])
+	_resize_frames()
 
 func _on_FrameTexture_pressed(id :int):
 	emit_signal("frame_selected", id)
+
+func _resize_frames():
+	var frame_size :Vector2= gridContainer.get_child(0).rect_size
+	
+	gridContainer.columns = floor(rect_size.x / (frame_size.x + 1))

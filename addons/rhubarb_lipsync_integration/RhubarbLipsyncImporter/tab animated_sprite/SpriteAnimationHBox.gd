@@ -27,12 +27,12 @@ func _ready() -> void:
 	
 
 func _on_MenuButton_pressed():
-	var animPlayer :AnimationPlayer= owner.anim_animationPlayer
-	if !is_instance_valid(animPlayer):
+	var animSprite :AnimatedSprite= owner.anim_mouthAnimSprite
+	if !is_instance_valid(animSprite):
 		return
 	
 	popupMenu.clear()
-	for animation in animPlayer.get_animation_list():
+	for animation in animSprite.frames.get_animation_names():
 		popupMenu.add_item(animation)
 	
 
@@ -40,10 +40,10 @@ func _on_PopupMenu_item_selected(id :int):
 	last_index = id
 	if id != -1:
 		disable_warning()
-	owner.anim_name = popupMenu.get_item_text(id)
+	owner.anim_mouthAnimSprite_anim = popupMenu.get_item_text(id)
 	menuButton.icon = owner.pluginInstance.get_editor_interface().get_inspector().get_icon("Animation", "EditorIcons")
-	menuButton.text = owner.anim_name
-	owner.emit_signal("updated_reference", 'anim_name')
+	menuButton.text = owner.anim_mouthAnimSprite_anim
+	owner.emit_signal("updated_reference", 'anim_mouthAnimSprite_anim')
 
 
 func _on_owner_reference_updated(owner_reference :String):

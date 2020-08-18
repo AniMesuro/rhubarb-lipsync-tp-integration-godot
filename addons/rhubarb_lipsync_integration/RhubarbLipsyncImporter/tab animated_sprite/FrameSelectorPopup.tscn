@@ -5,7 +5,7 @@
 [node name="FrameSelectorPopup" type="PopupPanel"]
 margin_right = 8.0
 margin_bottom = 8.0
-rect_min_size = Vector2( 100, 100 )
+rect_min_size = Vector2( 200, 250 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -14,13 +14,15 @@ __meta__ = {
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
 scroll_horizontal_enabled = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer"]
+[node name="GridContainer" type="GridContainer" parent="ScrollContainer"]
+margin_right = 200.0
+margin_bottom = 250.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/vseparation = 1
+custom_constants/hseparation = 1
