@@ -8,6 +8,8 @@ var mouthFrames :Control
 var textureButton :TextureButton
 
 func _ready() -> void:
+	if get_tree().edited_scene_root == self:
+		return
 	
 	textureButton = $Texture
 	
@@ -38,9 +40,14 @@ func _on_MouthIcon_pressed():
 	frameSelectorPopup = mouthFrames.SCN_FrameSelectorPopup.instance()
 	owner.pluginInstance.add_child(frameSelectorPopup)
 	frameSelectorPopup.connect("frame_selected", self, "_on_frame_selected")
+	frameSelectorPopup.popup(Rect2(get_global_mouse_position(), get_local_mouse_position()))
+	frameSelectorPopup.animSprite = owner.anim_mouthAnimSprite
+	frameSelectorPopup.anim = owner.anim_mouthAnimSprite_anim
+	frameSelectorPopup.begin()
 
 func _on_frame_selected(id :int):
-#	textureButton.texture = 
+	textureButton.texture_normal = owner.anim_mouthAnimSprite.frames.get_frame(owner.anim_mouthAnimSprite_anim, id)
+	frameSelectorPopup.queue_free()
 	print(id)
 
 func _set_mouth_shape(value):
@@ -52,8 +59,9 @@ func _set_default_mouth(new_frame :int):
 		return
 	
 	if !is_inside_tree():
-		if is_instance_valid(self):
-			yield(self, "tree_entered")
+		return
+#		if is_instance_valid(self):
+#			yield(self, "tree_entered")
 		
 	
 	default_mouth = new_frame
