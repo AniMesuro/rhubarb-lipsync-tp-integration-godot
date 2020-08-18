@@ -1,6 +1,19 @@
+tool
 extends VBoxContainer
 
 const SCN_FrameSelectorPopup :PackedScene= preload("res://addons/rhubarb_lipsync_integration/RhubarbLipsyncImporter/tab animated_sprite/FrameSelectorPopup.tscn")
+
+var mouthDB :Dictionary= {
+		'rest': 0,
+		'MBP': 0,
+		'O': 0,
+		'U': 0,
+		'etc': 0,
+		'FV': 0,
+		'E': 0,
+		'L': 0,
+		'AI': 0
+	}
 
 #var frameSelectorPopup :PopupPanel
 #

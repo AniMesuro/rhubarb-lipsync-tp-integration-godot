@@ -30,6 +30,7 @@ var path_plugin :String
 
 # Sprite tab
 onready var mouthTextures :VBoxContainer= $Panel/VBox/TabContainer/Sprite.find_node('MouthTextures')
+onready var mouthFrames :VBoxContainer= $Panel/VBox/TabContainer/AnimatedSprite.find_node('MouthFrames')
 onready var mouthSpriteHBox = $Panel/VBox/TabContainer/Sprite.find_node("MouthSpriteHBox")
 
 onready var animateButton = find_node("AnimateButton")
@@ -118,10 +119,21 @@ func _on_AnimateButton_pressed() -> void:
 		
 #	Makes sure all references are called for importing.
 	
-	if !is_instance_valid(anim_mouthSprite):
-		print(STR_ERROR_not_enough_references)
-		queue_free()
-		return
+	if $Panel/VBox/TabContainer.current_tab == 0: # Sprite Tab
+		if !is_instance_valid(anim_mouthSprite):
+			print(STR_ERROR_not_enough_references + '1')
+			queue_free()
+			return
+	elif $Panel/VBox/TabContainer.current_tab == 1: #AnimatedSprite Tab
+		if !is_instance_valid(anim_mouthAnimSprite):
+			print(STR_ERROR_not_enough_references+ '2')
+			queue_free()
+			return
+		if !anim_mouthAnimSprite.frames.has_animation(anim_mouthAnimSprite_anim):
+			print(STR_ERROR_not_enough_references+ '3')
+			queue_free()
+			return
+			
 	if !is_instance_valid(anim_animationPlayer):
 		print(STR_ERROR_not_enough_references)
 		queue_free()
@@ -143,8 +155,10 @@ func _on_AnimateButton_pressed() -> void:
 	var path_audioclip = anim_audiokey.stream.resource_path
 	pluginInstance.run_rhubarb_lipsync(path_audioclip, false, anim_audiokey.stream.get_length())
 	
-	
-	mouthDB = mouthTextures.mouthDB
-	pluginInstance.import_deferred_lipsync(anim_audiokey, anim_mouthSprite, anim_audioPlayer, anim_animationPlayer, anim_name, mouthTextures.mouthDB)
+	if $Panel/VBox/TabContainer.current_tab == 0:
+		mouthDB = mouthTextures.mouthDB
+		pluginInstance.import_deferred_lipsync(anim_audiokey, [anim_mouthSprite], anim_audioPlayer, anim_animationPlayer, anim_name, mouthTextures.mouthDB)
+	elif $Panel/VBox/TabContainer.current_tab == 1:
+		pluginInstance.import_deferred_lipsync(anim_audiokey, [anim_mouthAnimSprite, anim_mouthAnimSprite_anim], anim_audioPlayer, anim_animationPlayer, anim_name, mouthFrames.mouthDB)
 	queue_free()
 	return

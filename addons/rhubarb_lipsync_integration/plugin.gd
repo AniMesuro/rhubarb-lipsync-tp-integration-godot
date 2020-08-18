@@ -330,23 +330,46 @@ func get_prestonblair_mouthtexture(rhubarb_shape :String, mouthDB :Dictionary) -
 #it can yield forever and cause a memory leak.
 func import_deferred_lipsync(
  audiokey :Dictionary,
- mouthSprite :Sprite,
+ extraParams :Array,
+# mouthSprite :Sprite,
  audioPlayer :AudioStreamPlayer,
  animationPlayer :AnimationPlayer,
  anim_name :String,
  mouthDB :Dictionary
  ): #override_region :bool= false
-
+	var mouthSprite :Sprite
+	var mouthAnimSprite :AnimatedSprite
+	var mouthAnimSprite_anim :String
+	
+	for param in extraParams:
+		if param is Sprite:
+			mouthSprite = param
+		elif param is AnimatedSprite:
+			mouthAnimSprite = param
+		elif param is String:
+			mouthAnimSprite_anim = param
+	
 	var anim = animationPlayer.get_animation(anim_name)
 	yield(self, "finished_generating_lipsync_data")
-	import_lipsync(
-		anim,
-		animationPlayer,
-		audiokey,
-		audioPlayer,
-		mouthDB,
-		mouthSprite
-	)
+	if is_instance_valid(mouthSprite):
+		import_lipsync(
+			anim,
+			animationPlayer,
+			audiokey,
+			audioPlayer,
+			mouthDB,
+			[mouthSprite]
+		)
+	elif is_instance_valid(mouthAnimSprite):
+		import_lipsync(
+			anim,
+			animationPlayer,
+			audiokey,
+			audioPlayer,
+			mouthDB,
+			[mouthAnimSprite, mouthAnimSprite_anim]
+		)
+		
 	print("Importing Lipsync to " + anim_name + "...")
 	
 	
@@ -357,22 +380,55 @@ func import_lipsync(
  audiokey :Dictionary,
  audioPlayer :AudioStreamPlayer,
  mouthDB :Dictionary,
- mouthSprite :Sprite
+ extraParams :Array
+# mouthSprite :Sprite
  ):
+	var mouthSprite :Sprite
+	var mouthAnimSprite :AnimatedSprite
+	var mouthAnimSprite_anim :String
+	
+	for param in extraParams:
+		if param is Sprite:
+			mouthSprite = param
+		elif param is AnimatedSprite:
+			mouthAnimSprite = param
+		elif param is String:
+			mouthAnimSprite_anim = param
+	
+	if !is_instance_valid(mouthSprite) && !is_instance_valid(mouthAnimSprite):
+		print("Rhubarb Lipsync TPI didn't find a Sprite nor an AnimatedSprite to continue importing lipsync.")
+		return
+	
+	
 	var anim_root :Node= animationPlayer.get_node(animationPlayer.root_node)
 	
-	var tr_mouth_texture :int= anim.find_track(str(anim_root.get_path_to(mouthSprite))+':texture')
+	
+	var tr_mouth_anim :int= -1
+	var tr_mouth_frame :int= -1
+	var tr_mouth_texture :int= -1
 	var tr_audio :int= anim.find_track(anim_root.get_path_to(audioPlayer))
-	
-	if tr_mouth_texture == -1: #If mouthSprite:texture track doesn't exist, create one.
-		tr_mouth_texture = anim.add_track(Animation.TYPE_VALUE)
-		anim.track_set_path(tr_mouth_texture, str(anim_root.get_path_to(mouthSprite))+':texture')
-	
+	if is_instance_valid(mouthSprite):
+		tr_mouth_texture = anim.find_track(str(anim_root.get_path_to(mouthSprite))+':texture')
+		
+		if tr_mouth_texture == -1: #If mouthSprite:texture track doesn't exist, create one.
+			tr_mouth_texture = anim.add_track(Animation.TYPE_VALUE)
+			anim.track_set_path(tr_mouth_texture, str(anim_root.get_path_to(mouthSprite))+':texture')
+	elif is_instance_valid(mouthAnimSprite):
+		tr_mouth_anim = anim.find_track(str(anim_root.get_path_to(mouthAnimSprite))+':animation')
+		if tr_mouth_anim == -1:
+			tr_mouth_anim = anim.add_track(Animation.TYPE_VALUE)
+			anim.track_set_path(tr_mouth_anim, str(anim_root.get_path_to(mouthAnimSprite))+':animation')
+			anim.value_track_set_update_mode(tr_mouth_anim, Animation.UPDATE_DISCRETE)
+		tr_mouth_frame = anim.find_track(str(anim_root.get_path_to(mouthAnimSprite))+':frame')
+		if tr_mouth_frame == -1:
+			tr_mouth_frame = anim.add_track(Animation.TYPE_VALUE)
+			anim.track_set_path(tr_mouth_frame, str(anim_root.get_path_to(mouthAnimSprite))+':frame')
+			anim.value_track_set_update_mode(tr_mouth_frame, Animation.UPDATE_DISCRETE)
 	
 	var lipsync_filepath = Settings.output.path + audiokey.stream.resource_path.get_basename().get_file()+'.tsv'
 	var f = File.new()
 	if !f.file_exists(lipsync_filepath):
-		print("Rhubarb Lipsync TPI Importing tried to start, but lipsync file was not found.")
+		print("Rhubarb Lip Sync TPI Importing tried to start, but lipsync file was not found.")
 		return
 	f.open(lipsync_filepath, f.READ)
 	var ls_text :String= f.get_as_text() #lipsync_data
@@ -397,9 +453,40 @@ func import_lipsync(
 		#If key happens after the audiokey, ignore the rest of the keys.
 		if cur_time > lipsync_end_time:
 			break
-		var mouthshape :StreamTexture= get_prestonblair_mouthtexture(sample[1], mouthDB)
-		anim.track_insert_key(
-		 tr_mouth_texture,
-		 lipsync_start_time + float(sample[0]),
-		 mouthshape, 0)
+		if is_instance_valid(mouthSprite):
+			var mouthshape :StreamTexture= get_prestonblair_mouthtexture(sample[1], mouthDB)
+			anim.track_insert_key(
+			 tr_mouth_texture,
+			 lipsync_start_time + float(sample[0]),
+			 mouthshape, 0)
+		elif is_instance_valid(mouthAnimSprite):
+			var mouthshape_frame :int= 0
+			# In MouthFrames mouthDB is based on ints instead of StreamTextures
+			match sample[1]:
+				'A':
+					mouthshape_frame = mouthDB['MBP']
+				'B':
+					mouthshape_frame = mouthDB['etc']
+				'C':
+					mouthshape_frame = mouthDB['E']
+				'D':
+					mouthshape_frame = mouthDB['AI']
+				'E':
+					mouthshape_frame = mouthDB['O']
+				'F':
+					mouthshape_frame = mouthDB['U']
+				'G':
+					mouthshape_frame = mouthDB['FV']
+				'H':
+					mouthshape_frame = mouthDB['L']
+				'X':
+					mouthshape_frame = mouthDB['rest']
+				_:
+					mouthshape_frame = 0
+			
+			anim.track_insert_key( 
+			 tr_mouth_frame,
+			 lipsync_start_time + float(sample[0]),
+			 mouthshape_frame, 0
+			)
 	

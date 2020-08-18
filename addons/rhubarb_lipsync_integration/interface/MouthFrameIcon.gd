@@ -48,7 +48,7 @@ func _on_MouthIcon_pressed():
 func _on_frame_selected(id :int):
 	textureButton.texture_normal = owner.anim_mouthAnimSprite.frames.get_frame(owner.anim_mouthAnimSprite_anim, id)
 	frameSelectorPopup.queue_free()
-	print(id)
+	mouthFrames.mouthDB[mouth_shape] = id
 
 func _set_mouth_shape(value):
 	mouth_shape = value

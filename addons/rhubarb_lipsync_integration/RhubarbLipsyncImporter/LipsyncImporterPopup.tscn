@@ -63,10 +63,12 @@ __meta__ = {
 "_editor_description_": "1.x
 [X] Debug wrong popup window offset
 [X] Update UI text by renaming all \"lipsync\" to \"Lip Sync\".
-[  ] Add support for AnimatedSprites
+[X] Add support for AnimatedSprites
 [X] Separate AnimatedSprite's UI by adding a TabContainer
 [X] Add MouthFrameIcon scene
 [X] Add FrameSelectorPopup
+[X] Make AnimatedSprite tab parameters
+[X] Mouth Frame previews
 [  ] Create a sliced audio file everytime there's an offset, so Rhubarb doesn't lipsync all audio just for one section.
 
 1.0
@@ -194,7 +196,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Sprite" type="VBoxContainer" parent="Panel/VBox/TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -391,6 +392,7 @@ texture = ExtResource( 10 )
 expand = true
 
 [node name="AnimatedSprite" type="VBoxContainer" parent="Panel/VBox/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -712,25 +714,28 @@ size_flags_horizontal = 6
 text = "Generate Lipsync Animation"
 
 [node name="RectHandlers" parent="Panel" instance=ExtResource( 35 )]
-modulate = Color( 1, 1, 1, 0 )
 _windowRect = NodePath("..")
 
 [node name="HandlerTop" parent="Panel/RectHandlers" index="0"]
+modulate = Color( 1, 1, 1, 1 )
 margin_right = 794.0
 handler_direction = 0
 _windowRect = NodePath("../..")
 
 [node name="HandlerBottom" parent="Panel/RectHandlers" index="1"]
+modulate = Color( 1, 1, 1, 1 )
 margin_top = 660.0
 margin_right = 794.0
 margin_bottom = 670.0
 _windowRect = NodePath("../..")
 
 [node name="HandlerLeft" parent="Panel/RectHandlers" index="2"]
+modulate = Color( 1, 1, 1, 1 )
 margin_bottom = 670.0
 _windowRect = NodePath("../..")
 
 [node name="HandlerRight" parent="Panel/RectHandlers" index="3"]
+modulate = Color( 1, 1, 1, 1 )
 margin_left = 784.0
 margin_right = 794.0
 margin_bottom = 670.0

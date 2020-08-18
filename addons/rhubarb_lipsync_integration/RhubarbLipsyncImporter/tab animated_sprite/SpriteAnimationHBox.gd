@@ -47,9 +47,9 @@ func _on_PopupMenu_item_selected(id :int):
 
 
 func _on_owner_reference_updated(owner_reference :String):
-	if owner_reference != 'anim_animationPlayer':
+	if owner_reference != 'anim_mouthAnimSprite':
 		return
-	if !is_instance_valid(owner.anim_animationPlayer):
+	if !is_instance_valid(owner.anim_mouthAnimSprite):
 		menuButton.text = STR_ANIMATEDSPRITE_NOT_SELECTED
 		enable_warning("Selected AnimatedSprite isn't valid or failed to be called.")
 		return
