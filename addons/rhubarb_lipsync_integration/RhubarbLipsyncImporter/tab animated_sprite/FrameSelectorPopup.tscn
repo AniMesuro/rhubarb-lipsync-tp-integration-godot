@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/rhubarb_lipsync_integration/RhubarbLipsyncImporter/tab animated_sprite/FrameSelectorPopup.gd" type="Script" id=1]
+
+[node name="FrameSelectorPopup" type="PopupPanel"]
+margin_right = 8.0
+margin_bottom = 8.0
+rect_min_size = Vector2( 100, 100 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+scroll_horizontal_enabled = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer"]
