@@ -4,6 +4,8 @@ extends VBoxContainer
 export (String) var mouth_shape = "rest" setget _set_mouth_shape
 export (int) var default_mouth = 0 setget _set_default_mouth
 
+const TEX_InvalidFrame :StreamTexture= preload("res://addons/rhubarb_lipsync_integration/assets/icons/icon_warning.png")
+
 var mouthFrames :Control
 var textureButton :TextureButton
 
@@ -32,6 +34,7 @@ func _ready() -> void:
 	
 #	textureButton.connect("pressed", mouthFrames, "_on_MouthIcon_pressed")#, [self])
 	textureButton.connect("pressed", self, "_on_MouthIcon_pressed")#, [self])
+	owner.connect("updated_reference", self, "_on_owner_reference_updated")
 
 var frameSelectorPopup :PopupPanel
 func _on_MouthIcon_pressed():
@@ -58,13 +61,40 @@ func _set_default_mouth(new_frame :int):
 	if new_frame == null:
 		return
 	
-	if !is_inside_tree():
-		return
+	default_mouth = new_frame
 #		if is_instance_valid(self):
 #			yield(self, "tree_entered")
 		
 	
-	default_mouth = new_frame
-	textureButton = $Texture
-#	textureButton.texture_normal = new_frame # get_frame()
+	
+#	if !is_instance_valid(owner.anim_mouthAnimSprite):
+#		return
+#	if !is_instance_valid(owner.anim_mouthAnimSprite.frames):
+#		return
+#	if !owner.anim_mouthAnimSprite_anim.frames.has_animation(owner.anim_mouthAnimSprite_anim):
+#		return
+#
+#	textureButton.texture_normal = owner.anim_mouthAnimSprite.frames.get_frame(owner.anim_mouthAnimSprite_anim, new_frame)
+	
+func _on_owner_reference_updated(reference :String):
+#	if reference != "anim_mouthAnimSprite" or reference != "anim_mouthAnimSprite_anim":
+#		return
+	
+	if !is_instance_valid(owner.anim_mouthAnimSprite):
+		textureButton.texture_normal = TEX_InvalidFrame
+#		print(reference,":ref | animsprite not valid")
+		return
+	if !is_instance_valid(owner.anim_mouthAnimSprite.frames):
+		textureButton.texture_normal = TEX_InvalidFrame
+#		print(reference,":ref | animsprite frames not valid")
+		return
+#	print(reference,':ref ',owner.anim_mouthAnimSprite_anim)
+	if !owner.anim_mouthAnimSprite.frames.has_animation(owner.anim_mouthAnimSprite_anim):
+		textureButton.texture_normal = TEX_InvalidFrame
+#		print(reference,":ref | animsprite frames animation not valid")
+		return
+	print('default mouth ',default_mouth)
+	textureButton.texture_normal = owner.anim_mouthAnimSprite.frames.get_frame(owner.anim_mouthAnimSprite_anim, default_mouth)
+	
+	
 	

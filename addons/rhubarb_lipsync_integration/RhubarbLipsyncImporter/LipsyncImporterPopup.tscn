@@ -69,7 +69,9 @@ __meta__ = {
 [X] Add FrameSelectorPopup
 [X] Make AnimatedSprite tab parameters
 [X] Mouth Frame previews
+[  ] Automatically set default frame in FrameIcon (0,1,2,3...)
 [  ] Create a sliced audio file everytime there's an offset, so Rhubarb doesn't lipsync all audio just for one section.
+[  ] Maybe some bugs?
 
 1.0
 [X]OptionButton selects node.
@@ -196,6 +198,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Sprite" type="VBoxContainer" parent="Panel/VBox/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -392,7 +395,6 @@ texture = ExtResource( 10 )
 expand = true
 
 [node name="AnimatedSprite" type="VBoxContainer" parent="Panel/VBox/TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -502,24 +504,28 @@ margin_left = 154.0
 margin_right = 304.0
 margin_bottom = 90.0
 mouth_shape = "MBP"
+default_mouth = 1
 
 [node name="FVMouth" parent="Panel/VBox/TabContainer/AnimatedSprite/Panel/MouthFrames/TopHBox" instance=ExtResource( 43 )]
 margin_left = 308.0
 margin_right = 458.0
 margin_bottom = 90.0
 mouth_shape = "FV"
+default_mouth = 2
 
 [node name="OMouth" parent="Panel/VBox/TabContainer/AnimatedSprite/Panel/MouthFrames/TopHBox" instance=ExtResource( 43 )]
 margin_left = 462.0
 margin_right = 612.0
 margin_bottom = 90.0
 mouth_shape = "O"
+default_mouth = 3
 
 [node name="UMouth" parent="Panel/VBox/TabContainer/AnimatedSprite/Panel/MouthFrames/TopHBox" instance=ExtResource( 43 )]
 margin_left = 616.0
 margin_right = 766.0
 margin_bottom = 90.0
 mouth_shape = "U"
+default_mouth = 4
 
 [node name="BottomHBox" type="HBoxContainer" parent="Panel/VBox/TabContainer/AnimatedSprite/Panel/MouthFrames"]
 margin_top = 94.0
@@ -532,24 +538,28 @@ size_flags_vertical = 3
 margin_right = 188.0
 margin_bottom = 90.0
 mouth_shape = "etc"
+default_mouth = 5
 
 [node name="EMouth" parent="Panel/VBox/TabContainer/AnimatedSprite/Panel/MouthFrames/BottomHBox" instance=ExtResource( 43 )]
 margin_left = 192.0
 margin_right = 380.0
 margin_bottom = 90.0
 mouth_shape = "E"
+default_mouth = 6
 
 [node name="LMouth" parent="Panel/VBox/TabContainer/AnimatedSprite/Panel/MouthFrames/BottomHBox" instance=ExtResource( 43 )]
 margin_left = 384.0
 margin_right = 572.0
 margin_bottom = 90.0
 mouth_shape = "L"
+default_mouth = 7
 
 [node name="AIMouth" parent="Panel/VBox/TabContainer/AnimatedSprite/Panel/MouthFrames/BottomHBox" instance=ExtResource( 43 )]
 margin_left = 576.0
 margin_right = 766.0
 margin_bottom = 90.0
 mouth_shape = "AI"
+default_mouth = 8
 
 [node name="AnimationPlayerHBox" type="HBoxContainer" parent="Panel/VBox"]
 margin_top = 426.0
@@ -714,28 +724,25 @@ size_flags_horizontal = 6
 text = "Generate Lipsync Animation"
 
 [node name="RectHandlers" parent="Panel" instance=ExtResource( 35 )]
+modulate = Color( 1, 1, 1, 0 )
 _windowRect = NodePath("..")
 
 [node name="HandlerTop" parent="Panel/RectHandlers" index="0"]
-modulate = Color( 1, 1, 1, 1 )
 margin_right = 794.0
 handler_direction = 0
 _windowRect = NodePath("../..")
 
 [node name="HandlerBottom" parent="Panel/RectHandlers" index="1"]
-modulate = Color( 1, 1, 1, 1 )
 margin_top = 660.0
 margin_right = 794.0
 margin_bottom = 670.0
 _windowRect = NodePath("../..")
 
 [node name="HandlerLeft" parent="Panel/RectHandlers" index="2"]
-modulate = Color( 1, 1, 1, 1 )
 margin_bottom = 670.0
 _windowRect = NodePath("../..")
 
 [node name="HandlerRight" parent="Panel/RectHandlers" index="3"]
-modulate = Color( 1, 1, 1, 1 )
 margin_left = 784.0
 margin_right = 794.0
 margin_bottom = 670.0
