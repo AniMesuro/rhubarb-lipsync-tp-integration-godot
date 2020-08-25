@@ -5,6 +5,7 @@ signal updated_reference (reference_name)
 
 const STR_ERROR_not_enough_references :String= "Can't proceed. Some references are missing."
 const STR_ERROR_plugin_reference_not_valid :String= "Can't proceeed. Rhubarb Lipsync TPI Plugin Reference not valid."
+const STR_ERROR_SpriteFrames_not_enough_frames :String= "Can't proceed. SpriteFrames has no frames."
 
 var handlerTop :ReferenceRect
 var handlerBottom :ReferenceRect
@@ -121,16 +122,21 @@ func _on_AnimateButton_pressed() -> void:
 	
 	if $Panel/VBox/TabContainer.current_tab == 0: # Sprite Tab
 		if !is_instance_valid(anim_mouthSprite):
-			print(STR_ERROR_not_enough_references + '1')
+			print(STR_ERROR_not_enough_references)
 			queue_free()
 			return
 	elif $Panel/VBox/TabContainer.current_tab == 1: #AnimatedSprite Tab
 		if !is_instance_valid(anim_mouthAnimSprite):
-			print(STR_ERROR_not_enough_references+ '2')
+			print(STR_ERROR_not_enough_references)
 			queue_free()
 			return
 		if !anim_mouthAnimSprite.frames.has_animation(anim_mouthAnimSprite_anim):
-			print(STR_ERROR_not_enough_references+ '3')
+			print(STR_ERROR_not_enough_references)
+			queue_free()
+			return
+			
+		if anim_mouthAnimSprite.frames.get_frame_count(anim_mouthAnimSprite_anim) == 0:
+			print(STR_ERROR_SpriteFrames_not_enough_frames)
 			queue_free()
 			return
 			

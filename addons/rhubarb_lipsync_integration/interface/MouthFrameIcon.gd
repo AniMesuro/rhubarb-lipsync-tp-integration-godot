@@ -93,7 +93,11 @@ func _on_owner_reference_updated(reference :String):
 		textureButton.texture_normal = TEX_InvalidFrame
 #		print(reference,":ref | animsprite frames animation not valid")
 		return
-	var a:SpriteFrames
+	
+	if owner.anim_mouthAnimSprite.frames.get_frame_count(owner.anim_mouthAnimSprite_anim) == 0:
+		textureButton.texture_normal = TEX_InvalidFrame
+		return
+	
 	if default_mouth < owner.anim_mouthAnimSprite.frames.get_frame_count(owner.anim_mouthAnimSprite_anim):
 		textureButton.texture_normal = owner.anim_mouthAnimSprite.frames.get_frame(owner.anim_mouthAnimSprite_anim, default_mouth)
 	else:
