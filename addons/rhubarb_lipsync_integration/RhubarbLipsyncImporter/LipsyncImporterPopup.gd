@@ -5,14 +5,19 @@ signal updated_reference (reference_name)
 
 const STR_ERROR_not_enough_references :String= "Can't proceed. Some references are missing."
 const STR_ERROR_plugin_reference_not_valid :String= "Can't proceeed. Rhubarb Lipsync TPI Plugin Reference not valid."
+const STR_ERROR_SpriteFrames_not_enough_frames :String= "Can't proceed. SpriteFrames has no frames."
 
 var handlerTop :ReferenceRect
 var handlerBottom :ReferenceRect
 var handlerLeft :ReferenceRect
 var handlerRight :ReferenceRect
 
-
+# Sprite Tab
 var anim_mouthSprite :Sprite
+# AnimatedSprite Tab
+var anim_mouthAnimSprite :AnimatedSprite
+var anim_mouthAnimSprite_anim :String
+
 var anim_audioPlayer :AudioStreamPlayer
 var anim_animationPlayer :AnimationPlayer
 var anim_name :String
@@ -24,10 +29,13 @@ var lipsync_data :String= ""
 var pluginInstance :EditorPlugin
 var path_plugin :String
 
-onready var mouthTextures :VBoxContainer= find_node('MouthTextures')
+# Sprite tab
+onready var mouthTextures :VBoxContainer= $Panel/VBox/TabContainer/Sprite.find_node('MouthTextures')
+onready var mouthFrames :VBoxContainer= $Panel/VBox/TabContainer/AnimatedSprite.find_node('MouthFrames')
+onready var mouthSpriteHBox = $Panel/VBox/TabContainer/Sprite.find_node("MouthSpriteHBox")
+
 onready var animateButton = find_node("AnimateButton")
 
-onready var mouthSpriteHBox = find_node("MouthSpriteHBox")
 onready var animationPlayerHBox = find_node("AnimationPlayerHBox")
 onready var animationNameHBox = find_node("AnimationNameHBox")
 onready var audioTrackHBox = find_node("AudioTrackHBox")
@@ -112,10 +120,26 @@ func _on_AnimateButton_pressed() -> void:
 		
 #	Makes sure all references are called for importing.
 	
-	if !is_instance_valid(anim_mouthSprite):
-		print(STR_ERROR_not_enough_references)
-		queue_free()
-		return
+	if $Panel/VBox/TabContainer.current_tab == 0: # Sprite Tab
+		if !is_instance_valid(anim_mouthSprite):
+			print(STR_ERROR_not_enough_references)
+			queue_free()
+			return
+	elif $Panel/VBox/TabContainer.current_tab == 1: #AnimatedSprite Tab
+		if !is_instance_valid(anim_mouthAnimSprite):
+			print(STR_ERROR_not_enough_references)
+			queue_free()
+			return
+		if !anim_mouthAnimSprite.frames.has_animation(anim_mouthAnimSprite_anim):
+			print(STR_ERROR_not_enough_references)
+			queue_free()
+			return
+			
+		if anim_mouthAnimSprite.frames.get_frame_count(anim_mouthAnimSprite_anim) == 0:
+			print(STR_ERROR_SpriteFrames_not_enough_frames)
+			queue_free()
+			return
+			
 	if !is_instance_valid(anim_animationPlayer):
 		print(STR_ERROR_not_enough_references)
 		queue_free()
@@ -137,8 +161,10 @@ func _on_AnimateButton_pressed() -> void:
 	var path_audioclip = anim_audiokey.stream.resource_path
 	pluginInstance.run_rhubarb_lipsync(path_audioclip, false, anim_audiokey.stream.get_length())
 	
-	
-	mouthDB = mouthTextures.mouthDB
-	pluginInstance.import_deferred_lipsync(anim_audiokey, anim_mouthSprite, anim_audioPlayer, anim_animationPlayer, anim_name, mouthTextures.mouthDB)
+	if $Panel/VBox/TabContainer.current_tab == 0:
+		mouthDB = mouthTextures.mouthDB
+		pluginInstance.import_deferred_lipsync(anim_audiokey, [anim_mouthSprite], anim_audioPlayer, anim_animationPlayer, anim_name, mouthTextures.mouthDB)
+	elif $Panel/VBox/TabContainer.current_tab == 1:
+		pluginInstance.import_deferred_lipsync(anim_audiokey, [anim_mouthAnimSprite, anim_mouthAnimSprite_anim], anim_audioPlayer, anim_animationPlayer, anim_name, mouthFrames.mouthDB)
 	queue_free()
 	return
