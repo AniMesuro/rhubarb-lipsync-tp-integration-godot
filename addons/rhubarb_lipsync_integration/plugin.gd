@@ -460,6 +460,11 @@ func import_lipsync(
 			 lipsync_start_time + float(sample[0]),
 			 mouthshape, 0)
 		elif is_instance_valid(mouthAnimSprite):
+			anim.track_insert_key(
+					tr_mouth_anim,
+					0.0,
+					mouthAnimSprite_anim
+			)
 			var mouthshape_frame :int= 0
 			# In MouthFrames mouthDB is based on ints instead of StreamTextures
 			match sample[1]:
