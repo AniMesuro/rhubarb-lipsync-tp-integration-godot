@@ -69,7 +69,7 @@ __meta__ = {
 [X] Add FrameSelectorPopup
 [X] Make AnimatedSprite tab parameters
 [X] Mouth Frame previews
-[  ] Automatically set default frame in FrameIcon (0,1,2,3...)
+[X] Automatically set default frame in FrameIcon (0,1,2,3...)
 [  ] Create a sliced audio file everytime there's an offset, so Rhubarb doesn't lipsync all audio just for one section.
 [  ] Maybe some bugs?
 
@@ -198,7 +198,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Sprite" type="VBoxContainer" parent="Panel/VBox/TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -395,6 +394,7 @@ texture = ExtResource( 10 )
 expand = true
 
 [node name="AnimatedSprite" type="VBoxContainer" parent="Panel/VBox/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
