@@ -135,6 +135,10 @@ func load_default_settings(keys :PoolStringArray= PoolStringArray([])):
 		'output': {
 			'path': self.path_plugin+'_temp/',
 			'clean_mode': CleanMode.Never
+		},
+		'file_checks': {
+			'timer_max_calls': 200, # 10 min for 3 s.
+			'timer_sec': 3
 		}
 	}
 	
@@ -265,9 +269,9 @@ func run_rhubarb_lipsync(path_input_audio :String, are_paths_absolute :bool= fal
 
 
 	var timer_max_calls :int= ceil(length * 0.33 * 2.5) #0.2 = portions of 5sec | 0.33 portions of 3sec
-	timer_max_calls = clamp(timer_max_calls, 20, 84) #20 calls = 1min | 84= 7min
+	timer_max_calls = clamp(timer_max_calls, 20, Settings.file_checks.timer_max_calls) #20 calls = 1min | 200 calls = 10 min | 84= 7min
 	
-	var timer_sec :int= 3
+	var timer_sec :int= Settings.file_checks.timer_sec # 3 sec default
 	print("Rhubarb is generating lipsync... This may take up to a few minutes. (NOT A ESTIMATE) Plugin will wait for max. "+str(timer_sec * timer_max_calls)+' sec')
 	
 	rhubarbTimer.start(timer_sec)
