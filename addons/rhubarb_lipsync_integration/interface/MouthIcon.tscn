@@ -4,8 +4,6 @@
 [ext_resource path="res://addons/rhubarb_lipsync_integration/assets/JetBrainsMono-Bold.tres" type="DynamicFont" id=2]
 [ext_resource path="res://addons/rhubarb_lipsync_integration/interface/MouthIcon.gd" type="Script" id=3]
 
-
-
 [node name="MouthIcon" type="VBoxContainer"]
 margin_right = 246.0
 margin_bottom = 88.0

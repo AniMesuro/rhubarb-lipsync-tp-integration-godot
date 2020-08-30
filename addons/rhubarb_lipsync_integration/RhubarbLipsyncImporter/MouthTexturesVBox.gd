@@ -22,7 +22,26 @@ func _enter_tree() -> void:
 		'L': _temp_texture,
 		'AI': _temp_texture
 	}
+	
+	get_tree().connect("files_dropped", self, "_on_files_dropped")
 
+func _on_files_dropped(files :PoolStringArray, screen :int):
+	print('files dropped ',files)
+	if files.size() == 1:
+		var f:String= files[0]
+		if (f.get_extension() == 'png' or f.get_extension() == 'jpg' or f.get_extension() == 'gif'):
+			var mouse_pos :Vector2= get_global_mouse_position()
+			
+#			var a = [12,23,11] + [1,3,4]
+			var mouthIcons :Array= $TopHBox.get_children() + $BottomVBox.get_children()
+			for mouthIcon in mouthIcons:
+				var icon :Control= mouthIcon
+				if (mouse_pos > icon.rect_global_position &&
+				mouse_pos < (icon.rect_global_position + icon.rect_size)):
+					var tex_new_mouth :StreamTexture= load(f)
+					
+					icon.textureButton.texture_normal = tex_new_mouth
+					mouthDB[icon.mouth_shape] = tex_new_mouth
 
 var fileDialog :FileDialog
 
