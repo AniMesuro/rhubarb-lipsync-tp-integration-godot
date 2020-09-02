@@ -4,25 +4,29 @@
 [ext_resource path="res://addons/rhubarb_lipsync_integration/file_selector_preview/FileIcon.gd" type="Script" id=2]
 
 [node name="FileIcon" type="VBoxContainer"]
-margin_right = 80.0
-margin_bottom = 88.0
+margin_right = 81.0
+margin_bottom = 76.0
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Preview" type="TextureButton" parent="."]
-margin_left = 8.0
-margin_right = 72.0
-margin_bottom = 64.0
-size_flags_horizontal = 4
-size_flags_vertical = 4
+margin_right = 81.0
+margin_bottom = 58.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 texture_normal = ExtResource( 1 )
+expand = true
+stretch_mode = 5
 
 [node name="Label" type="Label" parent="."]
-margin_left = 13.0
-margin_top = 68.0
-margin_right = 67.0
-margin_bottom = 82.0
-size_flags_horizontal = 4
+margin_top = 62.0
+margin_right = 81.0
+margin_bottom = 76.0
+size_flags_horizontal = 5
+size_flags_vertical = 8
 text = "icon.png"
+align = 1
+valign = 2
+autowrap = true

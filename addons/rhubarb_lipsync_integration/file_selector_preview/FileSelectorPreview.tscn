@@ -1,17 +1,21 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://addons/rhubarb_lipsync_integration/interface/RectHandlerContainer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://addons/rhubarb_lipsync_integration/assets/LipsyncImporterTheme.tres" type="Theme" id=2]
 [ext_resource path="res://addons/rhubarb_lipsync_integration/interface/Titlebar.tscn" type="PackedScene" id=3]
-[ext_resource path="res://addons/rhubarb_lipsync_integration/file_selector_preview/FileIcon.tscn" type="PackedScene" id=4]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/file_selector_preview/ZoomHbox.gd" type="Script" id=4]
 [ext_resource path="res://addons/rhubarb_lipsync_integration/assets/icons/icon_expand.png" type="Texture" id=5]
 [ext_resource path="res://addons/rhubarb_lipsync_integration/assets/icons/icon_about.png" type="Texture" id=6]
 [ext_resource path="res://addons/rhubarb_lipsync_integration/file_selector_preview/PathHBox.gd" type="Script" id=7]
 [ext_resource path="res://addons/rhubarb_lipsync_integration/file_selector_preview/FileSelectorPreview.gd" type="Script" id=8]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/file_selector_preview/FileContainer.gd" type="Script" id=9]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.321569, 0.317647, 0.380392, 1 )
 
 [node name="FileSelectorPreview" type="Control"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+margin_right = 1024.0
+margin_bottom = 600.0
 theme = ExtResource( 2 )
 script = ExtResource( 8 )
 __meta__ = {
@@ -19,8 +23,10 @@ __meta__ = {
 }
 
 [node name="Panel" type="Panel" parent="."]
-margin_right = 405.0
-margin_bottom = 319.0
+margin_right = 320.0
+margin_bottom = 401.0
+rect_min_size = Vector2( 320, 251 )
+rect_clip_content = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -32,14 +38,14 @@ margin_left = 10.0
 margin_top = 10.0
 margin_right = -10.0
 margin_bottom = -10.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
+size_flags_horizontal = 2
+size_flags_vertical = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="TitleBar" parent="Panel/VBox" instance=ExtResource( 3 )]
-margin_right = 385.0
+margin_right = 300.0
 margin_bottom = 40.0
 title_name = "Select an Image File"
 icon_texture = ExtResource( 6 )
@@ -47,7 +53,7 @@ window_path = NodePath("../../..")
 
 [node name="PathHBox" type="HBoxContainer" parent="Panel/VBox"]
 margin_top = 44.0
-margin_right = 385.0
+margin_right = 300.0
 margin_bottom = 74.0
 script = ExtResource( 7 )
 
@@ -61,52 +67,68 @@ stretch_mode = 4
 
 [node name="LineEdit" type="LineEdit" parent="Panel/VBox/PathHBox"]
 margin_left = 28.0
-margin_right = 385.0
+margin_right = 300.0
 margin_bottom = 30.0
 size_flags_horizontal = 3
 text = "res://"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Panel/VBox"]
+[node name="FilePanel" type="Panel" parent="Panel/VBox"]
 margin_top = 78.0
-margin_right = 385.0
-margin_bottom = 213.0
+margin_right = 300.0
+margin_bottom = 295.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_styles/panel = SubResource( 1 )
 
-[node name="GridContainer" type="GridContainer" parent="Panel/VBox/ScrollContainer"]
-margin_right = 385.0
-margin_bottom = 135.0
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/VBox/FilePanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="FileIcon" parent="Panel/VBox/ScrollContainer/GridContainer" instance=ExtResource( 4 )]
+[node name="FileContainer" type="GridContainer" parent="Panel/VBox/FilePanel/ScrollContainer"]
+margin_right = 300.0
+margin_bottom = 217.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 3
+script = ExtResource( 9 )
 
 [node name="ZoomHbox" type="HBoxContainer" parent="Panel/VBox"]
-margin_top = 217.0
-margin_right = 385.0
-margin_bottom = 241.0
+margin_top = 299.0
+margin_right = 300.0
+margin_bottom = 323.0
+size_flags_horizontal = 3
 alignment = 2
+script = ExtResource( 4 )
 
 [node name="ZoomIcon" type="TextureRect" parent="Panel/VBox/ZoomHbox"]
-margin_left = 229.0
-margin_right = 253.0
+margin_left = 144.0
+margin_right = 168.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 24, 24 )
 texture = ExtResource( 6 )
 expand = true
 
 [node name="HSlider" type="HSlider" parent="Panel/VBox/ZoomHbox"]
-margin_left = 257.0
+margin_left = 172.0
 margin_top = 4.0
-margin_right = 385.0
+margin_right = 300.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 128, 0 )
 size_flags_vertical = 4
+min_value = 10.0
+max_value = 50.0
+value = 15.0
 
 [node name="FileHBox" type="HBoxContainer" parent="Panel/VBox"]
-margin_top = 245.0
-margin_right = 385.0
-margin_bottom = 275.0
+margin_top = 327.0
+margin_right = 300.0
+margin_bottom = 357.0
+size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="Panel/VBox/FileHBox"]
 margin_top = 5.0
@@ -116,13 +138,13 @@ text = "File:"
 
 [node name="LineEdit" type="LineEdit" parent="Panel/VBox/FileHBox"]
 margin_left = 54.0
-margin_right = 309.0
+margin_right = 224.0
 margin_bottom = 30.0
 size_flags_horizontal = 3
 
 [node name="ExtensionMenu" type="MenuButton" parent="Panel/VBox/FileHBox"]
-margin_left = 313.0
-margin_right = 385.0
+margin_left = 228.0
+margin_right = 300.0
 margin_bottom = 30.0
 rect_min_size = Vector2( 72, 24 )
 size_flags_vertical = 3
@@ -136,52 +158,56 @@ __meta__ = {
 }
 
 [node name="ButtonHBox" type="HBoxContainer" parent="Panel/VBox"]
-margin_top = 279.0
-margin_right = 385.0
-margin_bottom = 299.0
+margin_top = 361.0
+margin_right = 300.0
+margin_bottom = 381.0
 size_flags_horizontal = 3
 custom_constants/separation = 20
 
 [node name="OkButton" type="Button" parent="Panel/VBox/ButtonHBox"]
-margin_right = 182.0
+margin_right = 140.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 custom_constants/hseparation = 0
 text = "Ok"
 
 [node name="CancelButton" type="Button" parent="Panel/VBox/ButtonHBox"]
-margin_left = 202.0
-margin_right = 385.0
+margin_left = 160.0
+margin_right = 300.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 custom_constants/hseparation = 0
 text = "Cancel"
 
 [node name="RectHandlerContainer" parent="Panel" instance=ExtResource( 1 )]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
 _windowRect = NodePath("..")
 
 [node name="HandlerTop" parent="Panel/RectHandlerContainer" index="0"]
 modulate = Color( 1, 1, 1, 1 )
-margin_right = 405.0
+margin_right = 320.0
 _windowRect = NodePath("../..")
 
 [node name="HandlerBottom" parent="Panel/RectHandlerContainer" index="1"]
 modulate = Color( 1, 1, 1, 1 )
-margin_top = 309.0
-margin_right = 405.0
-margin_bottom = 319.0
+margin_top = 391.0
+margin_right = 320.0
+margin_bottom = 401.0
 _windowRect = NodePath("../..")
 
 [node name="HandlerLeft" parent="Panel/RectHandlerContainer" index="2"]
 modulate = Color( 1, 1, 1, 1 )
-margin_bottom = 319.0
+margin_bottom = 401.0
 _windowRect = NodePath("../..")
 
 [node name="HandlerRight" parent="Panel/RectHandlerContainer" index="3"]
 modulate = Color( 1, 1, 1, 1 )
-margin_left = 395.0
-margin_right = 405.0
-margin_bottom = 319.0
+margin_left = 310.0
+margin_right = 320.0
+margin_bottom = 401.0
 _windowRect = NodePath("../..")
 
 [editable path="Panel/RectHandlerContainer"]
