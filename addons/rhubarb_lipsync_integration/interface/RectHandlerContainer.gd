@@ -49,7 +49,7 @@ func set_handler_size(value :int):
 		if !child is ReferenceRect:
 			continue
 		child.handler_size = value
-		
+		child._fix_handler_rect(child.handler_direction)
 
 #Istead of making the handlers visible/invisible, it will make the modulate alpha 0
 #ReferenceRect doesn't appear to execute when invisible.
