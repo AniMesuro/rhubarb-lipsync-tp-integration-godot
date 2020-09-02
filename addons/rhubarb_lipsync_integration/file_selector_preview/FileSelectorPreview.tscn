@@ -1,0 +1,113 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://addons/rhubarb_lipsync_integration/interface/RectHandlerContainer.tscn" type="PackedScene" id=1]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/LipsyncImporterTheme.tres" type="Theme" id=2]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/interface/Titlebar.tscn" type="PackedScene" id=3]
+[ext_resource path="res://icon.png" type="Texture" id=4]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/icons/icon_expand.png" type="Texture" id=5]
+
+[node name="FileSelectorPreview" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+margin_right = 393.0
+margin_bottom = 307.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBox" type="VBoxContainer" parent="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TitleBar" parent="Panel/VBox" instance=ExtResource( 3 )]
+margin_right = 373.0
+margin_bottom = 40.0
+title_name = "Select an Image File"
+window_path = NodePath("../../..")
+
+[node name="PathHBox" type="HBoxContainer" parent="Panel/VBox"]
+margin_top = 44.0
+margin_right = 373.0
+margin_bottom = 74.0
+
+[node name="TextureButton" type="TextureButton" parent="Panel/VBox/PathHBox"]
+margin_right = 24.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 24, 24 )
+texture_normal = ExtResource( 5 )
+expand = true
+stretch_mode = 4
+
+[node name="LineEdit" type="LineEdit" parent="Panel/VBox/PathHBox"]
+margin_left = 28.0
+margin_right = 373.0
+margin_bottom = 30.0
+size_flags_horizontal = 3
+text = "res://"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/VBox"]
+margin_top = 78.0
+margin_right = 373.0
+margin_bottom = 287.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="GridContainer" type="GridContainer" parent="Panel/VBox/ScrollContainer"]
+margin_right = 373.0
+margin_bottom = 209.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="FileIcon" type="VBoxContainer" parent="Panel/VBox/ScrollContainer/GridContainer"]
+margin_right = 80.0
+margin_bottom = 88.0
+
+[node name="Preview" type="TextureButton" parent="Panel/VBox/ScrollContainer/GridContainer/FileIcon"]
+margin_right = 80.0
+margin_bottom = 64.0
+texture_normal = ExtResource( 4 )
+
+[node name="Label" type="Label" parent="Panel/VBox/ScrollContainer/GridContainer/FileIcon"]
+margin_top = 68.0
+margin_right = 80.0
+margin_bottom = 88.0
+text = "icon.png"
+
+[node name="RectHandlerContainer" parent="Panel" instance=ExtResource( 1 )]
+modulate = Color( 1, 1, 1, 0 )
+_windowRect = NodePath("..")
+
+[node name="HandlerTop" parent="Panel/RectHandlerContainer" index="0"]
+margin_right = 393.0
+_windowRect = NodePath("../..")
+
+[node name="HandlerBottom" parent="Panel/RectHandlerContainer" index="1"]
+margin_top = 297.0
+margin_right = 393.0
+margin_bottom = 307.0
+_windowRect = NodePath("../..")
+
+[node name="HandlerLeft" parent="Panel/RectHandlerContainer" index="2"]
+margin_bottom = 307.0
+_windowRect = NodePath("../..")
+
+[node name="HandlerRight" parent="Panel/RectHandlerContainer" index="3"]
+margin_left = 383.0
+margin_right = 393.0
+margin_bottom = 307.0
+_windowRect = NodePath("../..")
+
+[editable path="Panel/RectHandlerContainer"]
