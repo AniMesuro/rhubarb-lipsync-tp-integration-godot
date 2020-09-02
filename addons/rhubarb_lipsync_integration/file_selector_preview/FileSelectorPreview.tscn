@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://addons/rhubarb_lipsync_integration/interface/RectHandlerContainer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://addons/rhubarb_lipsync_integration/assets/LipsyncImporterTheme.tres" type="Theme" id=2]
@@ -6,18 +6,21 @@
 [ext_resource path="res://addons/rhubarb_lipsync_integration/file_selector_preview/FileIcon.tscn" type="PackedScene" id=4]
 [ext_resource path="res://addons/rhubarb_lipsync_integration/assets/icons/icon_expand.png" type="Texture" id=5]
 [ext_resource path="res://addons/rhubarb_lipsync_integration/assets/icons/icon_about.png" type="Texture" id=6]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/file_selector_preview/PathHBox.gd" type="Script" id=7]
+[ext_resource path="res://addons/rhubarb_lipsync_integration/file_selector_preview/FileSelectorPreview.gd" type="Script" id=8]
 
 [node name="FileSelectorPreview" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 2 )
+script = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Panel" type="Panel" parent="."]
 margin_right = 405.0
-margin_bottom = 307.0
+margin_bottom = 319.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -29,6 +32,8 @@ margin_left = 10.0
 margin_top = 10.0
 margin_right = -10.0
 margin_bottom = -10.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -44,8 +49,9 @@ window_path = NodePath("../../..")
 margin_top = 44.0
 margin_right = 385.0
 margin_bottom = 74.0
+script = ExtResource( 7 )
 
-[node name="TextureButton" type="TextureButton" parent="Panel/VBox/PathHBox"]
+[node name="ReturnButton" type="TextureButton" parent="Panel/VBox/PathHBox"]
 margin_right = 24.0
 margin_bottom = 30.0
 rect_min_size = Vector2( 24, 24 )
@@ -63,22 +69,22 @@ text = "res://"
 [node name="ScrollContainer" type="ScrollContainer" parent="Panel/VBox"]
 margin_top = 78.0
 margin_right = 385.0
-margin_bottom = 201.0
+margin_bottom = 213.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="GridContainer" type="GridContainer" parent="Panel/VBox/ScrollContainer"]
 margin_right = 385.0
-margin_bottom = 123.0
+margin_bottom = 135.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="FileIcon" parent="Panel/VBox/ScrollContainer/GridContainer" instance=ExtResource( 4 )]
 
 [node name="ZoomHbox" type="HBoxContainer" parent="Panel/VBox"]
-margin_top = 205.0
+margin_top = 217.0
 margin_right = 385.0
-margin_bottom = 229.0
+margin_bottom = 241.0
 alignment = 2
 
 [node name="ZoomIcon" type="TextureRect" parent="Panel/VBox/ZoomHbox"]
@@ -98,9 +104,9 @@ rect_min_size = Vector2( 128, 0 )
 size_flags_vertical = 4
 
 [node name="FileHBox" type="HBoxContainer" parent="Panel/VBox"]
-margin_top = 233.0
+margin_top = 245.0
 margin_right = 385.0
-margin_bottom = 263.0
+margin_bottom = 275.0
 
 [node name="Label" type="Label" parent="Panel/VBox/FileHBox"]
 margin_top = 5.0
@@ -130,9 +136,9 @@ __meta__ = {
 }
 
 [node name="ButtonHBox" type="HBoxContainer" parent="Panel/VBox"]
-margin_top = 267.0
+margin_top = 279.0
 margin_right = 385.0
-margin_bottom = 287.0
+margin_bottom = 299.0
 size_flags_horizontal = 3
 custom_constants/separation = 20
 
@@ -156,26 +162,26 @@ _windowRect = NodePath("..")
 
 [node name="HandlerTop" parent="Panel/RectHandlerContainer" index="0"]
 modulate = Color( 1, 1, 1, 1 )
-margin_right = 393.0
+margin_right = 405.0
 _windowRect = NodePath("../..")
 
 [node name="HandlerBottom" parent="Panel/RectHandlerContainer" index="1"]
 modulate = Color( 1, 1, 1, 1 )
-margin_top = 297.0
-margin_right = 393.0
-margin_bottom = 307.0
+margin_top = 309.0
+margin_right = 405.0
+margin_bottom = 319.0
 _windowRect = NodePath("../..")
 
 [node name="HandlerLeft" parent="Panel/RectHandlerContainer" index="2"]
 modulate = Color( 1, 1, 1, 1 )
-margin_bottom = 307.0
+margin_bottom = 319.0
 _windowRect = NodePath("../..")
 
 [node name="HandlerRight" parent="Panel/RectHandlerContainer" index="3"]
 modulate = Color( 1, 1, 1, 1 )
-margin_left = 383.0
-margin_right = 393.0
-margin_bottom = 307.0
+margin_left = 395.0
+margin_right = 405.0
+margin_bottom = 319.0
 _windowRect = NodePath("../..")
 
 [editable path="Panel/RectHandlerContainer"]
