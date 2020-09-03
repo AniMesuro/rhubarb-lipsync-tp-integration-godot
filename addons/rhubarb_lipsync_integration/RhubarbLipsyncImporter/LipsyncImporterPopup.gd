@@ -160,9 +160,10 @@ func _on_AnimateButton_pressed() -> void:
 	pluginInstance.load_settings()
 	
 	#Saves a sliced wav from audiokey if audio has any offset.
-	var sliced_output_filename :String
+	var sliced_output_filename :String= ""
 	if anim_audiokey.start_offset != 0 or anim_audiokey.end_offset != 0:
-		sliced_output_filename = slice_audio(anim_audiokey)
+		if anim_audiokey.stream is AudioStreamSample:
+			sliced_output_filename = slice_audio(anim_audiokey)
 	queue_free()
 	return
 	
@@ -180,34 +181,31 @@ func _on_AnimateButton_pressed() -> void:
 
 func slice_audio(anim_audiokey :Dictionary) -> String:
 	if !is_instance_valid(anim_audiokey.stream):
+		print('sample not valid')
 		return ""
-		
+	print(anim_audiokey.stream)
 	var new_stream :AudioStreamSample= AudioStreamSample.new()
 	var new_data :PoolByteArray= PoolByteArray([]) + anim_audiokey.stream.data
 	
-	if anim_audiokey.stream is AudioStreamSample:
-		new_stream.format = anim_audiokey.stream.format
-		new_stream.stereo = anim_audiokey.stream.stereo
-		new_stream.mix_rate = anim_audiokey.stream.mix_rate
-	else: # OGG
-		new_stream.format = AudioStreamSample.FORMAT_8_BITS
-		new_stream.stereo = true
-		new_stream.mix_rate = 11025#44100
+	if !anim_audiokey.stream is AudioStreamSample:
+		return ""
+	new_stream.format = anim_audiokey.stream.format
+	new_stream.stereo = anim_audiokey.stream.stereo
+	new_stream.mix_rate = anim_audiokey.stream.mix_rate
+	
 	
 	#Byte quantity
-		print(new_data.size())
-		print(new_stream.mix_rate)
-		print(new_data.size()/new_stream.mix_rate)
-		print(new_data.size()/new_stream.mix_rate/4) #64bits?
+#	print(new_data.size())
+#	print(new_stream.mix_rate)
+#	print(new_data.size()/new_stream.mix_rate)
+#	print(new_data.size()/new_stream.mix_rate/4) #64bits?
 	
 	#Slice end_offset
-	var end_offset_bytesize :int= anim_audiokey.end_offset * new_stream.mix_rate
-	if anim_audiokey.stream is AudioStreamSample: end_offset_bytesize *= 4
+	var end_offset_bytesize :int= anim_audiokey.end_offset * new_stream.mix_rate * 4
 	new_data.resize(new_data.size() - end_offset_bytesize)
 	
 	#Slice start offset
 	var start_offset_bytesize :int= anim_audiokey.start_offset * new_stream.mix_rate * 4
-	if anim_audiokey.stream is AudioStreamSample: start_offset_bytesize *= 4
 	new_data.invert()
 	new_data.resize(new_data.size() - start_offset_bytesize)
 	new_data.invert()

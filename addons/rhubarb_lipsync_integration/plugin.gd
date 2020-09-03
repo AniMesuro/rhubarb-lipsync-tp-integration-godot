@@ -111,14 +111,16 @@ func load_settings():
 			
 			for key in configFile.get_section_keys(section):
 				Settings[section][key] = configFile.get_value(section, key)
+			if Settings[section].size() > configFile.get_section_keys(section).size():
+				save_settings()
 		
 		#Check if Settings file has empty sections
 		for section in Settings:
 			if !configFile.has_section(section):
 				save_settings()
 				break
-			for key in Settings[section]:
-				print('settings:',section,':',key)
+#			for key in Settings[section]:
+#				print('settings:',section,':',key)
 #				if !configFile.has_section_key(section, )
 				
 	elif err == ERR_FILE_NOT_FOUND:
