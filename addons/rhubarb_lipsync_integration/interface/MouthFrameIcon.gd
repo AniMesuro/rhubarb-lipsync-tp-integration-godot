@@ -27,6 +27,7 @@ func _ready() -> void:
 			return
 	
 	mouthFrames.mouthDB[mouth_shape] = default_mouth
+	textureButton.hint_tooltip = "Click to change the " + mouth_shape+" mouthshape frame"
 #	if mouthFrames.get('mouthDB') == null:
 #		return
 #	mouthFrames.mouthDB[mouth_shape] = textureButton.texture_normal
