@@ -294,7 +294,6 @@ size_flags_vertical = 3
 [node name="RestMouth" parent="Panel/VBox/TabContainer/Sprite/MouthPanel/MouthTextures/TopHBox" instance=ExtResource( 3 )]
 margin_right = 150.0
 margin_bottom = 71.0
-mouth_shape = "rest"
 default_mouth = ExtResource( 1 )
 
 [node name="MBPMouth" parent="Panel/VBox/TabContainer/Sprite/MouthPanel/MouthTextures/TopHBox" instance=ExtResource( 3 )]
@@ -727,19 +726,10 @@ size_flags_horizontal = 6
 text = "Generate Lipsync Animation"
 
 [node name="RectHandlers" parent="Panel" instance=ExtResource( 35 )]
+modulate = Color( 1, 1, 1, 0 )
 
 [node name="HandlerTop" parent="Panel/RectHandlers" index="0"]
-modulate = Color( 1, 1, 1, 1 )
 handler_direction = 0
-
-[node name="HandlerBottom" parent="Panel/RectHandlers" index="1"]
-modulate = Color( 1, 1, 1, 1 )
-
-[node name="HandlerLeft" parent="Panel/RectHandlers" index="2"]
-modulate = Color( 1, 1, 1, 1 )
-
-[node name="HandlerRight" parent="Panel/RectHandlers" index="3"]
-modulate = Color( 1, 1, 1, 1 )
 [connection signal="pressed" from="Panel/VBox/AnimateButton" to="." method="_on_AnimateButton_pressed"]
 
 [editable path="Panel/RectHandlers"]

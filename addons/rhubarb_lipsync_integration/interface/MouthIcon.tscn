@@ -18,7 +18,6 @@ default_mouth = ExtResource( 1 )
 margin_right = 246.0
 margin_bottom = 64.0
 grow_horizontal = 0
-hint_tooltip = "Click to change the closed mouth frame."
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture_normal = ExtResource( 1 )

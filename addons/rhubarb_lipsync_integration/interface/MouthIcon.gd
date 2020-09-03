@@ -22,6 +22,7 @@ func _ready() -> void:
 			print("Rhubarb Lipsync TPI: MouthTextures Container not found.")
 			return
 	
+	textureButton.hint_tooltip = "Click to change the " + mouth_shape+" mouthshape texture"
 	if mouthTextures.get('mouthDB') == null:
 		return
 	mouthTextures.mouthDB[mouth_shape] = textureButton.texture_normal
