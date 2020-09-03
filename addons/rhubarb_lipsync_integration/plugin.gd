@@ -106,7 +106,9 @@ func load_settings():
 	var err = configFile.load(self.path_plugin + FILENAME_SETTINGS)
 	if err == OK:
 		for section in configFile.get_sections():
-			Settings[section] = {}
+#			Might be redundant as the default_settings already created the section
+#				Settings[section] = {}
+			
 			for key in configFile.get_section_keys(section):
 				Settings[section][key] = configFile.get_value(section, key)
 		
@@ -115,6 +117,10 @@ func load_settings():
 			if !configFile.has_section(section):
 				save_settings()
 				break
+			for key in Settings[section]:
+				print('settings:',section,':',key)
+#				if !configFile.has_section_key(section, )
+				
 	elif err == ERR_FILE_NOT_FOUND:
 #		load_default_settings()
 		save_settings()
@@ -141,9 +147,12 @@ func load_default_settings(keys :PoolStringArray= PoolStringArray([])):
 			'timer_sec': 3
 		}
 	}
+#	print('_defaultsettings ',_default_settings['output']['path'])
+	
 	
 	if keys == PoolStringArray([]):
 		Settings = _default_settings
+		print('_settings ',Settings['output']['path'])
 		return
 	else:
 		var str_default_settings :String= "_default_settings"
