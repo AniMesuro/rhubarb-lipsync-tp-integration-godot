@@ -158,18 +158,25 @@ func _on_AnimateButton_pressed() -> void:
 		return
 	
 	pluginInstance.load_settings()
+	var path_audioclip
+	path_audioclip = anim_audiokey.stream.resource_path
 	
 	#Saves a sliced wav from audiokey if audio has any offset.
-	var sliced_output_filename :String= ""
+#	var sliced_output_filename :String= ""
 	if anim_audiokey.start_offset != 0 or anim_audiokey.end_offset != 0:
 		if anim_audiokey.stream is AudioStreamSample:
-			sliced_output_filename = slice_audio(anim_audiokey)
-	queue_free()
-	return
+			path_audioclip = slice_audio(anim_audiokey)
+			anim_audiokey.sliced_path = path_audioclip
+#			sliced_output_filename = slice_audio(anim_audiokey)
+#	queue_free()
+#	return
 	
-	
-	var path_audioclip = anim_audiokey.stream.resource_path
-	pluginInstance.run_rhubarb_lipsync(path_audioclip, false, anim_audiokey.stream.get_length())
+	var length = anim_audiokey.stream.get_length()
+	print('full len ',length)
+	if anim_audiokey.has('is_sliced'):
+		length -= anim_audiokey.start_offset + anim_audiokey.end_offset
+		print('sliced len ',length)
+	pluginInstance.run_rhubarb_lipsync(path_audioclip, false, length)
 	
 	if $Panel/VBox/TabContainer.current_tab == 0:
 		mouthDB = mouthTextures.mouthDB
@@ -213,5 +220,6 @@ func slice_audio(anim_audiokey :Dictionary) -> String:
 #		print(anim_audiokey)
 	new_stream.data = new_data
 	var output_path :String= pluginInstance.Settings.output.path + "/SLICED +"+str(stepify(anim_audiokey.start_offset, 0.01))+" -"+str(stepify(anim_audiokey.end_offset, 0.01))+" = "+anim_audiokey.stream.resource_path.get_file()
-	new_stream.save_to_wav(output_path)
-	return output_path
+	if new_stream.save_to_wav(output_path) == OK:
+		return output_path
+	return ""

@@ -26,6 +26,7 @@ func _ready() -> void:
 			print("Rhubarb Lip Sync TPI: mouthFrames Container not found.")
 			return
 	
+	mouthFrames.mouthDB[mouth_shape] = default_mouth
 #	if mouthFrames.get('mouthDB') == null:
 #		return
 #	mouthFrames.mouthDB[mouth_shape] = textureButton.texture_normal

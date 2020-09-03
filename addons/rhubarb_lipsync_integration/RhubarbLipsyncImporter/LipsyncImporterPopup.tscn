@@ -1,6 +1,5 @@
-[gd_scene load_steps=47 format=2]
+[gd_scene load_steps=39 format=2]
 
-[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/lipsync default mouthshapes/rest.png" type="Texture" id=1]
 [ext_resource path="res://addons/rhubarb_lipsync_integration/interface/NodeMenu.tscn" type="PackedScene" id=2]
 [ext_resource path="res://addons/rhubarb_lipsync_integration/interface/MouthIcon.tscn" type="PackedScene" id=3]
 [ext_resource path="res://addons/rhubarb_lipsync_integration/RhubarbLipsyncImporter/MouthTexturesVBox.gd" type="Script" id=4]
@@ -8,17 +7,10 @@
 [ext_resource path="res://addons/rhubarb_lipsync_integration/interface/Titlebar.tscn" type="PackedScene" id=6]
 [ext_resource path="res://addons/rhubarb_lipsync_integration/RhubarbLipsyncImporter/MouthLibraryHBox.gd" type="Script" id=7]
 [ext_resource path="res://addons/rhubarb_lipsync_integration/assets/JetBrainsMono-Bold.tres" type="DynamicFont" id=8]
-[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/lipsync default mouthshapes/FV.png" type="Texture" id=9]
 [ext_resource path="res://addons/rhubarb_lipsync_integration/assets/icons/icon_warning.png" type="Texture" id=10]
 [ext_resource path="res://addons/rhubarb_lipsync_integration/RhubarbLipsyncImporter/LipsyncImporterPopup.gd" type="Script" id=11]
 [ext_resource path="res://addons/rhubarb_lipsync_integration/assets/icons/icon_settings.png" type="Texture" id=12]
 [ext_resource path="res://addons/rhubarb_lipsync_integration/RhubarbLipsyncImporter/AnimationNameHBox.gd" type="Script" id=13]
-[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/lipsync default mouthshapes/MBP.png" type="Texture" id=14]
-[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/lipsync default mouthshapes/AI.png" type="Texture" id=15]
-[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/lipsync default mouthshapes/E.png" type="Texture" id=16]
-[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/lipsync default mouthshapes/U.png" type="Texture" id=17]
-[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/lipsync default mouthshapes/L.png" type="Texture" id=18]
-[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/lipsync default mouthshapes/O.png" type="Texture" id=19]
 [ext_resource path="res://addons/rhubarb_lipsync_integration/assets/icons/icon_save.png" type="Texture" id=20]
 [ext_resource path="res://addons/rhubarb_lipsync_integration/assets/icons/icon_new.png" type="Texture" id=21]
 [ext_resource path="res://addons/rhubarb_lipsync_integration/assets/icons/icon_delete.png" type="Texture" id=22]
@@ -294,35 +286,31 @@ size_flags_vertical = 3
 [node name="RestMouth" parent="Panel/VBox/TabContainer/Sprite/MouthPanel/MouthTextures/TopHBox" instance=ExtResource( 3 )]
 margin_right = 150.0
 margin_bottom = 71.0
-default_mouth = ExtResource( 1 )
+mouth_shape = "rest"
 
 [node name="MBPMouth" parent="Panel/VBox/TabContainer/Sprite/MouthPanel/MouthTextures/TopHBox" instance=ExtResource( 3 )]
 margin_left = 154.0
 margin_right = 304.0
 margin_bottom = 71.0
 mouth_shape = "MBP"
-default_mouth = ExtResource( 14 )
 
 [node name="FVMouth" parent="Panel/VBox/TabContainer/Sprite/MouthPanel/MouthTextures/TopHBox" instance=ExtResource( 3 )]
 margin_left = 308.0
 margin_right = 458.0
 margin_bottom = 71.0
 mouth_shape = "FV"
-default_mouth = ExtResource( 9 )
 
 [node name="OMouth" parent="Panel/VBox/TabContainer/Sprite/MouthPanel/MouthTextures/TopHBox" instance=ExtResource( 3 )]
 margin_left = 462.0
 margin_right = 612.0
 margin_bottom = 71.0
 mouth_shape = "O"
-default_mouth = ExtResource( 19 )
 
 [node name="UMouth" parent="Panel/VBox/TabContainer/Sprite/MouthPanel/MouthTextures/TopHBox" instance=ExtResource( 3 )]
 margin_left = 616.0
 margin_right = 766.0
 margin_bottom = 71.0
 mouth_shape = "U"
-default_mouth = ExtResource( 17 )
 
 [node name="BottomVBox" type="HBoxContainer" parent="Panel/VBox/TabContainer/Sprite/MouthPanel/MouthTextures"]
 margin_top = 96.0
@@ -342,21 +330,18 @@ margin_left = 192.0
 margin_right = 381.0
 margin_bottom = 72.0
 mouth_shape = "E"
-default_mouth = ExtResource( 16 )
 
 [node name="LMouth" parent="Panel/VBox/TabContainer/Sprite/MouthPanel/MouthTextures/BottomVBox" instance=ExtResource( 3 )]
 margin_left = 385.0
 margin_right = 573.0
 margin_bottom = 72.0
 mouth_shape = "L"
-default_mouth = ExtResource( 18 )
 
 [node name="AIMouth" parent="Panel/VBox/TabContainer/Sprite/MouthPanel/MouthTextures/BottomVBox" instance=ExtResource( 3 )]
 margin_left = 577.0
 margin_right = 766.0
 margin_bottom = 72.0
 mouth_shape = "AI"
-default_mouth = ExtResource( 15 )
 
 [node name="MouthSpriteHBox" type="HBoxContainer" parent="Panel/VBox/TabContainer/Sprite"]
 margin_top = 216.0
@@ -498,8 +483,6 @@ size_flags_vertical = 3
 [node name="RestMouth" parent="Panel/VBox/TabContainer/AnimatedSprite/Panel/MouthFrames/TopHBox" instance=ExtResource( 43 )]
 margin_right = 150.0
 margin_bottom = 90.0
-mouth_shape = "rest"
-default_mouth = 0
 
 [node name="MBPMouth" parent="Panel/VBox/TabContainer/AnimatedSprite/Panel/MouthFrames/TopHBox" instance=ExtResource( 43 )]
 margin_left = 154.0
@@ -727,9 +710,28 @@ text = "Generate Lipsync Animation"
 
 [node name="RectHandlers" parent="Panel" instance=ExtResource( 35 )]
 modulate = Color( 1, 1, 1, 0 )
+_windowRect = NodePath("..")
 
 [node name="HandlerTop" parent="Panel/RectHandlers" index="0"]
+margin_right = 794.0
 handler_direction = 0
+_windowRect = NodePath("../..")
+
+[node name="HandlerBottom" parent="Panel/RectHandlers" index="1"]
+margin_top = 660.0
+margin_right = 794.0
+margin_bottom = 670.0
+_windowRect = NodePath("../..")
+
+[node name="HandlerLeft" parent="Panel/RectHandlers" index="2"]
+margin_bottom = 670.0
+_windowRect = NodePath("../..")
+
+[node name="HandlerRight" parent="Panel/RectHandlers" index="3"]
+margin_left = 784.0
+margin_right = 794.0
+margin_bottom = 670.0
+_windowRect = NodePath("../..")
 [connection signal="pressed" from="Panel/VBox/AnimateButton" to="." method="_on_AnimateButton_pressed"]
 
 [editable path="Panel/RectHandlers"]

@@ -15,6 +15,8 @@ func _enter_tree() -> void:
 	yield(get_tree(), "idle_frame")
 	_load_default_mouthtexture_paths()
 	load_mouthshape_library_file()
+	$"../MouthPanel/MouthTextures".reload_mouthshape_textures(mouthLibraryDB[$"MenuButton".current_library])
+	
 
 func _ready() -> void:
 	if !is_inside_tree():

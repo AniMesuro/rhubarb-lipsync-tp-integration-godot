@@ -6,6 +6,7 @@ var mouthDB :Dictionary
 var mouthIconDB :Dictionary= {}
 
 func reload_mouthshape_textures(library :Dictionary):
+#	print(library)
 	for mouthshape in library:
 		mouthDB[mouthshape] = load(library[mouthshape])
 		mouthIconDB[mouthshape].textureButton.texture_normal = load(library[mouthshape])
@@ -22,6 +23,8 @@ func _enter_tree() -> void:
 		'L': _temp_texture,
 		'AI': _temp_texture
 	}
+#	var mouthLibraryHBox :HBoxContainer= $"../../MouthLibraryHBox"
+#	reload_mouthshape_textures(mouthLibraryHBox.mouthLibraryDB[mouthLibraryHBox.menuButton.current_library])
 	
 	if get_tree().edited_scene_root != owner:
 		get_tree().connect("files_dropped", self, "_on_files_dropped")

@@ -444,7 +444,11 @@ func import_lipsync(
 			anim.track_set_path(tr_mouth_frame, str(anim_root.get_path_to(mouthAnimSprite))+':frame')
 			anim.value_track_set_update_mode(tr_mouth_frame, Animation.UPDATE_DISCRETE)
 	
-	var lipsync_filepath = Settings.output.path + audiokey.stream.resource_path.get_basename().get_file()+'.tsv'
+	var lipsync_filepath :String= ""
+	if !audiokey.has('sliced_path'):
+		lipsync_filepath = Settings.output.path + audiokey.stream.resource_path.get_basename().get_file()+'.tsv'
+	else:
+		lipsync_filepath = Settings.output.path + audiokey.sliced_path.get_basename().get_file() + '.tsv'
 	var f = File.new()
 	if !f.file_exists(lipsync_filepath):
 		print("Rhubarb Lip Sync TPI Importing tried to start, but lipsync file was not found.")
@@ -457,8 +461,12 @@ func import_lipsync(
 	
 	var ls_line :PoolStringArray= ls_text.split("\n")
 	
-	var lipsync_start_time :float= audiokey.time - audiokey.start_offset
-	var lipsync_end_time :float= audiokey.time + audiokey.stream.get_length() - audiokey.start_offset - audiokey.end_offset
+	var lipsync_start_time :float= audiokey.time
+	var lipsync_end_time :float= audiokey.time + audiokey.stream.get_length()
+	if !audiokey.has('sliced_path'):
+		lipsync_start_time -= audiokey.start_offset #audiokey.time - audiokey.start_offset
+		lipsync_end_time -= audiokey.start_offset + audiokey.end_offset #audiokey.time + audiokey.stream.get_length() - audiokey.start_offset - audiokey.end_offset
+	print("lipsync offset +",lipsync_start_time," -",lipsync_end_time)
 	
 	for line in ls_line.size():
 		var sample :PoolStringArray= ls_line[line].split("	", false, 2)
@@ -466,9 +474,14 @@ func import_lipsync(
 			break
 		
 		var cur_time :float= lipsync_start_time + float(sample[0])
+		
 		#If key happens before the audiokey, ignore key.
-		if cur_time < lipsync_start_time + audiokey.start_offset:
-			continue
+		if !audiokey.has('sliced_path'):
+			if cur_time < lipsync_start_time + audiokey.start_offset:
+				continue
+		else:
+			if cur_time < lipsync_start_time:
+				continue
 		#If key happens after the audiokey, ignore the rest of the keys.
 		if cur_time > lipsync_end_time:
 			break
