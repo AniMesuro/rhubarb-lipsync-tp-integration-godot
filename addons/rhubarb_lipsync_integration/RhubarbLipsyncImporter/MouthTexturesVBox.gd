@@ -2,14 +2,17 @@ tool
 extends VBoxContainer
 
 export var _temp_texture :StreamTexture
-var mouthDB :Dictionary
+var mouthDB :Dictionary= {}
 var mouthIconDB :Dictionary= {}
 
 func reload_mouthshape_textures(library :Dictionary):
 #	print(library)
 	for mouthshape in library:
+		if !library.has(mouthshape):
+			continue
 		mouthDB[mouthshape] = load(library[mouthshape])
-		mouthIconDB[mouthshape].textureButton.texture_normal = load(library[mouthshape])
+		if is_instance_valid(mouthIconDB[mouthshape].textureButton):
+			mouthIconDB[mouthshape].textureButton.texture_normal = load(library[mouthshape])
 
 func _enter_tree() -> void:
 	mouthDB = {

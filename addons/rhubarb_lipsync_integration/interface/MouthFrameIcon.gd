@@ -23,7 +23,7 @@ func _ready() -> void:
 	if mouthFrames.name != "MouthFrames":
 		mouthFrames = get_parent().get_parent()
 		if mouthFrames.name != "MouthFrames":
-			print("Rhubarb Lip Sync TPI: mouthFrames Container not found.")
+			print("[Rhubarb Lip Sync TPI] mouthFrames Container not found.")
 			return
 	
 	mouthFrames.mouthDB[mouth_shape] = default_mouth

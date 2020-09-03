@@ -95,7 +95,7 @@ margin_top = 190.0
 margin_right = 567.0
 margin_bottom = 210.0
 custom_colors/font_color = Color( 0.227451, 0.380392, 0.505882, 1 )
-text = "Version: 1.0"
+text = "Version: 1.1"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -110,9 +110,9 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 custom_colors/default_color = Color( 0.597818, 0.597818, 0.757631, 1 )
 bbcode_enabled = true
-bbcode_text = "[b][color=white][url=https://github.com/DanielSWolf/rhubarb-lip-sync]Rhubarb Lip Sync[/url][/color][/b] is an open-source command-line program made by Daniel Wolf that allows you to quickly create 2D mouth animation from voice recordings. You can use it for animating speech in computer games, animated cartoons, or any similar project.
+bbcode_text = "[b][color=white][url=https://github.com/DanielSWolf/rhubarb-lip-sync]Rhubarb Lip Sync[/url][/color][/b] is an open-source command-line program made by [b][color=white][url=https://github.com/DanielSWolf]Daniel Wolf[/url][/color][/b] that allows you to quickly create 2D mouth animation from voice recordings. You can use it for animating speech in computer games, animated cartoons, or any similar project.
 
-[b][color=white][url=https://github.com/AniMesuro/rhubarb-lipsync-tp-integration-godot]Rhubarb Lip Sync T.P. Integration for Godot[/url][/color][/b] is a Rhubarb Lip Sync Integration plugin for Godot Engine made by AniMesuro. You can use it by opening the user interface [color=grey][u][b]Project > Tools > Rhubarb Lipsync TPI[/b][/u][/color] or using the functions directly by calling the plugin instance. [color=grey](see github page)[/color]"
+[b][color=white][url=https://github.com/AniMesuro/rhubarb-lipsync-tp-integration-godot]Rhubarb Lip Sync T.P. Integration for Godot[/url][/color][/b] is a Rhubarb Lip Sync Integration plugin for Godot Engine made by [b][color=white][url=https://github.com/AniMesuro]AniMesuro[/url][/color][/b]. You can use it by opening the user interface [color=grey][u][b]Project > Tools > Rhubarb Lipsync TPI[/b][/u][/color] or using the functions directly by calling the plugin instance. [color=grey](see github page)[/color]"
 text = "Rhubarb Lip Sync is an open-source command-line program made by Daniel Wolf that allows you to quickly create 2D mouth animation from voice recordings. You can use it for animating speech in computer games, animated cartoons, or any similar project.
 
 Rhubarb Lip Sync T.P. Integration for Godot is a Rhubarb Lip Sync Integration plugin for Godot Engine made by AniMesuro. You can use it by opening the user interface Project > Tools > Rhubarb Lipsync TPI or using the functions directly by calling the plugin instance. (see github page)"
