@@ -158,32 +158,9 @@ func _on_AnimateButton_pressed() -> void:
 		return
 	
 	#Saves a sliced wav from audiokey if audio has any offset.
+	var sliced_output_filename :String
 	if anim_audiokey.start_offset != 0 or anim_audiokey.end_offset != 0:
-		var new_stream :AudioStreamSample= AudioStreamSample.new()
-		var new_data :PoolByteArray= PoolByteArray([]) + anim_audiokey.stream.data
-		new_stream.format = anim_audiokey.stream.format
-		new_stream.stereo = anim_audiokey.stream.stereo
-		new_stream.mix_rate = anim_audiokey.stream.mix_rate
-		
-		#Byte quantity
-		print(new_data.size())
-		print(anim_audiokey.stream.mix_rate)
-		print(new_data.size()/anim_audiokey.stream.mix_rate)
-		print(new_data.size()/anim_audiokey.stream.mix_rate/4) #64bits?
-		
-		#Slice end_offset
-		var end_offset_bytesize :int= anim_audiokey.end_offset * anim_audiokey.stream.mix_rate * 4
-		new_data.resize(new_data.size() - end_offset_bytesize)
-		
-		#Slice start offset
-		var start_offset_bytesize :int= anim_audiokey.start_offset * anim_audiokey.stream.mix_rate * 4
-		new_data.invert()
-		new_data.resize(new_data.size() - start_offset_bytesize)
-		new_data.invert()
-		
-		print(anim_audiokey)
-		new_stream.data = new_data
-		new_stream.save_to_wav(pluginInstance.Settings.output.path + "/SLICED +"+str(stepify(anim_audiokey.start_offset, 0.01))+" -"+str(stepify(anim_audiokey.end_offset, 0.01))+" = "+anim_audiokey.stream.resource_path.get_file())
+		sliced_output_filename = slice_audio(anim_audiokey)
 	queue_free()
 	return
 	
@@ -199,3 +176,32 @@ func _on_AnimateButton_pressed() -> void:
 		pluginInstance.import_deferred_lipsync(anim_audiokey, [anim_mouthAnimSprite, anim_mouthAnimSprite_anim], anim_audioPlayer, anim_animationPlayer, anim_name, mouthFrames.mouthDB)
 	queue_free()
 	return
+
+func slice_audio(anim_audiokey :Dictionary) -> String:
+	var new_stream :AudioStreamSample= AudioStreamSample.new()
+	var new_data :PoolByteArray= PoolByteArray([]) + anim_audiokey.stream.data
+	new_stream.format = anim_audiokey.stream.format
+	new_stream.stereo = anim_audiokey.stream.stereo
+	new_stream.mix_rate = anim_audiokey.stream.mix_rate
+	
+	#Byte quantity
+#		print(new_data.size())
+#		print(anim_audiokey.stream.mix_rate)
+#		print(new_data.size()/anim_audiokey.stream.mix_rate)
+#		print(new_data.size()/anim_audiokey.stream.mix_rate/4) #64bits?
+	
+	#Slice end_offset
+	var end_offset_bytesize :int= anim_audiokey.end_offset * anim_audiokey.stream.mix_rate * 4
+	new_data.resize(new_data.size() - end_offset_bytesize)
+	
+	#Slice start offset
+	var start_offset_bytesize :int= anim_audiokey.start_offset * anim_audiokey.stream.mix_rate * 4
+	new_data.invert()
+	new_data.resize(new_data.size() - start_offset_bytesize)
+	new_data.invert()
+	
+#		print(anim_audiokey)
+	new_stream.data = new_data
+	var output_path :String= pluginInstance.Settings.output.path + "/SLICED +"+str(stepify(anim_audiokey.start_offset, 0.01))+" -"+str(stepify(anim_audiokey.end_offset, 0.01))+" = "+anim_audiokey.stream.resource_path.get_file()
+	new_stream.save_to_wav(output_path)
+	return output_path

@@ -133,7 +133,7 @@ func load_default_settings(keys :PoolStringArray= PoolStringArray([])):
 			'recognizer': SpeechRecognizer.pocketSphinx
 		},
 		'output': {
-			'path': self.path_plugin+'_temp/',
+			'path': self.path_plugin+'.temp/',
 			'clean_mode': CleanMode.Never
 		},
 		'file_checks': {
