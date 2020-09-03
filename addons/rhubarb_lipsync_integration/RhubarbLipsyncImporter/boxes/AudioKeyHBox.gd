@@ -74,7 +74,12 @@ func _on_Button_pressed():
 	clip_path.resize(anim.track_get_key_count(tr_audio))
 	for clip_id in anim.track_get_key_count(tr_audio):
 		var clip :AudioStream= anim.audio_track_get_key_stream(tr_audio, clip_id)
-		popupMenu.add_item(clip.resource_path.get_file())
+		
+		var _time_sec :float= stepify(anim.track_get_key_time(tr_audio, clip_id), .01)
+		var _count_min :int= floor(_time_sec / 60)
+		var _count_sec :int= int(_time_sec) % 60
+		var key_timeformatted :String= str(_count_min)+":"+str(_count_sec)
+		popupMenu.add_item("["+str(key_timeformatted)+"] " +clip.resource_path.get_file())
 		clip_path[clip_id] = clip.resource_path
 
 func enable_warning(message :String):
