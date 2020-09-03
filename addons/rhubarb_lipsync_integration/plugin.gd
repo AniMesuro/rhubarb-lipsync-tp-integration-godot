@@ -158,7 +158,6 @@ func load_default_settings(keys :PoolStringArray= PoolStringArray([])):
 	
 	if keys == PoolStringArray([]):
 		Settings = _default_settings
-		print('_settings ',Settings['output']['path'])
 		return
 	else:
 		var str_default_settings :String= "_default_settings"
@@ -265,7 +264,6 @@ func run_rhubarb_lipsync(path_input_audio :String, are_paths_absolute :bool= fal
 	if pid == -1:
 		print("Error. Rhubarb binary file didn't execute successfully.")
 		return
-	print('Rhubarb binary file executed succesfully. Check Debug Console for Progress or Errors. ')
 	
 #	Gross and hacky workaround, ideally the progress bar should show in the Editor
 #	or at least printed also on the Editor Console.
@@ -287,7 +285,7 @@ func run_rhubarb_lipsync(path_input_audio :String, are_paths_absolute :bool= fal
 	timer_max_calls = clamp(timer_max_calls, 20, Settings.file_checks.timer_max_calls) #20 calls = 1min | 200 calls = 10 min | 84= 7min
 	
 	var timer_sec :int= Settings.file_checks.timer_sec # 3 sec default
-	print("Rhubarb is generating lipsync... This may take up to a few minutes. (NOT A ESTIMATE) Plugin will wait for max. "+str(timer_sec * timer_max_calls)+' sec')
+	print("Rhubarb is generating lipsync... This may take up to a few minutes. (NOT A ESTIMATE) Plugin will wait for max. "+str(timer_sec * timer_max_calls)+" sec. Check Debug Console for Progress or Errors.")
 	
 	rhubarbTimer.start(timer_sec)
 	timer_remainingcalls = timer_max_calls
@@ -299,7 +297,6 @@ func _on_RhubarbTimer_timeout(output_filepath :String, input_filename :String, t
 		
 	var Dir :Directory= Directory.new()
 	if Dir.file_exists(output_filepath):
-		print("Rhubarb finished generating "+input_filename+".tsv file.")
 		emit_signal("finished_generating_lipsync_data")
 		rhubarbTimer.disconnect("timeout", self, "_on_RhubarbTimer_timeout")
 		if !rhubarbTimer.is_queued_for_deletion():
@@ -388,9 +385,7 @@ func import_deferred_lipsync(
 			mouthDB,
 			[mouthAnimSprite, mouthAnimSprite_anim]
 		)
-		
-	print("Importing Lipsync to " + anim_name + "...")
-	
+			
 	
 
 func import_lipsync(
@@ -453,6 +448,7 @@ func import_lipsync(
 	if !f.file_exists(lipsync_filepath):
 		print("Rhubarb Lip Sync TPI Importing tried to start, but lipsync file was not found.")
 		return
+	print("[Rhubarb Lip Sync TPI] Importing Lip Sync to " + anim.resource_name)
 	f.open(lipsync_filepath, f.READ)
 	var ls_text :String= f.get_as_text() #lipsync_data
 	f.close()
@@ -466,7 +462,7 @@ func import_lipsync(
 	if !audiokey.has('sliced_path'):
 		lipsync_start_time -= audiokey.start_offset #audiokey.time - audiokey.start_offset
 		lipsync_end_time -= audiokey.start_offset + audiokey.end_offset #audiokey.time + audiokey.stream.get_length() - audiokey.start_offset - audiokey.end_offset
-	print("lipsync offset +",lipsync_start_time," -",lipsync_end_time)
+#	print("lipsync offset +",lipsync_start_time," -",lipsync_end_time)
 	
 	for line in ls_line.size():
 		var sample :PoolStringArray= ls_line[line].split("	", false, 2)

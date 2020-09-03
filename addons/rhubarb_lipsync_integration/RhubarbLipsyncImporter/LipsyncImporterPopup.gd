@@ -172,7 +172,6 @@ func _on_AnimateButton_pressed() -> void:
 #	return
 	
 	var length = anim_audiokey.stream.get_length()
-	print('full len ',length)
 	if anim_audiokey.has('is_sliced'):
 		length -= anim_audiokey.start_offset + anim_audiokey.end_offset
 		print('sliced len ',length)
@@ -190,7 +189,6 @@ func slice_audio(anim_audiokey :Dictionary) -> String:
 	if !is_instance_valid(anim_audiokey.stream):
 		print('sample not valid')
 		return ""
-	print(anim_audiokey.stream)
 	var new_stream :AudioStreamSample= AudioStreamSample.new()
 	var new_data :PoolByteArray= PoolByteArray([]) + anim_audiokey.stream.data
 	
@@ -219,7 +217,7 @@ func slice_audio(anim_audiokey :Dictionary) -> String:
 	
 #		print(anim_audiokey)
 	new_stream.data = new_data
-	var output_path :String= pluginInstance.Settings.output.path + "/SLICED +"+str(stepify(anim_audiokey.start_offset, 0.01))+" -"+str(stepify(anim_audiokey.end_offset, 0.01))+" = "+anim_audiokey.stream.resource_path.get_file()
+	var output_path :String= pluginInstance.Settings.output.path + "SLICED +"+str(stepify(anim_audiokey.start_offset, 0.01))+" -"+str(stepify(anim_audiokey.end_offset, 0.01))+" = "+anim_audiokey.stream.resource_path.get_file()
 	if new_stream.save_to_wav(output_path) == OK:
 		return output_path
 	return ""
