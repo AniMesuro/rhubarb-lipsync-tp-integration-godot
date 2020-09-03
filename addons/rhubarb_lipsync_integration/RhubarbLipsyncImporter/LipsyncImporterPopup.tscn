@@ -545,20 +545,20 @@ default_mouth = 5
 
 [node name="EMouth" parent="Panel/VBox/TabContainer/AnimatedSprite/Panel/MouthFrames/BottomHBox" instance=ExtResource( 43 )]
 margin_left = 192.0
-margin_right = 380.0
+margin_right = 381.0
 margin_bottom = 90.0
 mouth_shape = "E"
 default_mouth = 6
 
 [node name="LMouth" parent="Panel/VBox/TabContainer/AnimatedSprite/Panel/MouthFrames/BottomHBox" instance=ExtResource( 43 )]
-margin_left = 384.0
-margin_right = 572.0
+margin_left = 385.0
+margin_right = 573.0
 margin_bottom = 90.0
 mouth_shape = "L"
 default_mouth = 7
 
 [node name="AIMouth" parent="Panel/VBox/TabContainer/AnimatedSprite/Panel/MouthFrames/BottomHBox" instance=ExtResource( 43 )]
-margin_left = 576.0
+margin_left = 577.0
 margin_right = 766.0
 margin_bottom = 90.0
 mouth_shape = "AI"
@@ -727,10 +727,10 @@ size_flags_horizontal = 6
 text = "Generate Lipsync Animation"
 
 [node name="RectHandlers" parent="Panel" instance=ExtResource( 35 )]
-modulate = Color( 1, 1, 1, 0 )
 
 [node name="HandlerTop" parent="Panel/RectHandlers" index="0"]
 modulate = Color( 1, 1, 1, 1 )
+handler_direction = 0
 
 [node name="HandlerBottom" parent="Panel/RectHandlers" index="1"]
 modulate = Color( 1, 1, 1, 1 )
