@@ -86,8 +86,12 @@ func _clean_files():
 		Dir.list_dir_end()
 		
 		for i in files.size():
+			# Remove lipsync and sliced audio files.
 			if files[i].get_extension() == "tsv":
 				Dir.remove(files[i])
+			elif files[i].get_extension() == "wav":
+				if "SLICED" in files[i]:
+					Dir.remove(files[i])
 	else:
 		return
 		
