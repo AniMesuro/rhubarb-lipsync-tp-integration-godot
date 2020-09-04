@@ -28,7 +28,15 @@ func setup(access :int):
 	
 
 func _set_current_dir(new_dir :String):
-	current_dir = new_dir
+	if current_dir.get_base_dir() == new_dir.get_base_dir():
+		$"Panel/Margin/VBox/PathHBox/LineEdit".text = current_dir
+		return
+#	var Dir :Directory= Directory.new()
+	
+	if !new_dir.ends_with('/'):
+		current_dir = new_dir.get_base_dir()+'/'
+	else:
+		current_dir = new_dir
 	_list_files()
 	$"Panel/Margin/VBox/PathHBox/LineEdit".text = current_dir
 	self.current_file = ""

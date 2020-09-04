@@ -5,12 +5,13 @@ const SCN_FileIcon :PackedScene= preload("res://addons/rhubarb_lipsync_integrati
 const TEX_IconFolder :StreamTexture= preload("res://addons/rhubarb_lipsync_integration/assets/icons/icon_folder.png")
 
 var fileSelectorPreview :Control
-var selectedFileIcon = null
+var selectedFileIcon = null setget _set_selectedFileIcon
 
 func _enter_tree() -> void:
 	fileSelectorPreview = owner
 
 func update_file_list():
+	get_parent().scroll_vertical = 0
 	#Clear children
 	for child in get_children():
 		child.queue_free()
@@ -52,16 +53,26 @@ func _on_file_selected(file_name :String):
 	owner.current_file = file_name
 #	print('current_file =',owner.current_file)
 	
-	if is_instance_valid(selectedFileIcon):
-		selectedFileIcon.selected = false
+#	if is_instance_valid(selectedFileIcon):
+#		selectedFileIcon.selected = false
 	for icon in get_children():
 		if icon.file_name == file_name:
-			icon.selected = true
-			selectedFileIcon = icon
-			break
+#			icon.selected = true
+			self.selectedFileIcon = icon
+
+func _set_selectedFileIcon(new_fileIcon :VBoxContainer):
+#	if new_fileIcon == selectedFileIcon:
+#		return
+	
+	if is_instance_valid(selectedFileIcon):
+		selectedFileIcon.selected = false
+				
+	new_fileIcon.selected = true
+	selectedFileIcon = new_fileIcon
 
 func _on_folder_selected(file_name :String):
 #	print('current_dir =',owner.current_dir)
 #	owner.Dir.change_dir(owner.current_dir + file_name)
+	
 	owner.current_dir = owner.current_dir + file_name + "/"
 	

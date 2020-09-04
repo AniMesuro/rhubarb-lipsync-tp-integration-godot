@@ -22,6 +22,24 @@ func _on_ReturnButton_pressed():
 
 func _on_text_entered(new_text :String):
 	var Dir :Directory= Directory.new()
+	
+	# If full file path is inputted, both directory and file will be selected.
+	if Dir.file_exists(new_text):
+		owner.current_dir = new_text
+		owner.current_file = new_text.get_file()
+		
+		var fileContainer :GridContainer= $"../FilePanel/ScrollContainer/FileContainer"
+#		if is_instance_valid(fileContainer.selectedFileIcon):
+#			fileContainer.selectedFileIcon.selected = false
+		for fileIcon in fileContainer.get_children():
+			if fileIcon.file_name == owner.current_file:
+#				fileIcon.selected = true
+				fileContainer.selectedFileIcon = fileIcon
+				break
+			
+		return
+	
+	
 	if Dir.open(new_text) == OK:
 		var subdir :PoolStringArray= new_text.rsplit("/", false)
 		
@@ -43,7 +61,6 @@ func _on_text_entered(new_text :String):
 					$LineEdit.text = owner.current_dir
 				
 		
-		print("<SUBDIR> = ",subdir)
 #		match owner.filesystem_access:
 #			FileDialog.ACCESS_FILESYSTEM:
 				

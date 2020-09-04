@@ -35,7 +35,6 @@ func _set_selected(value :bool):
 	else:
 		modulate = Color.white
 	selected = value
-		
 
 func _on_Preview_pressed():
 	if my_type == TYPE.file:
