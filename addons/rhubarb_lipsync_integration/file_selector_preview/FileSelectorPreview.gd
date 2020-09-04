@@ -16,6 +16,11 @@ func _ready() -> void:
 	yield(get_tree(), "idle_frame")
 	rect_size = rect_size+Vector2(1000,1000)
 
+var filesystem_access :int
+func setup(access :int):
+	filesystem_access = access
+	
+
 func _set_current_dir(new_dir :String):
 	current_dir = new_dir
 	_list_files()
