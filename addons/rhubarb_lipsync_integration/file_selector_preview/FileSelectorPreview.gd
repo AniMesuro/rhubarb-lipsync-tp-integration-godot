@@ -9,6 +9,7 @@ var dir_files :PoolStringArray= PoolStringArray()
 var dir_folders :PoolStringArray= PoolStringArray()
 
 var filters :PoolStringArray= PoolStringArray(['png','jpg'])
+var current_filter :String= "" setget _set_current_filter
 
 func _ready() -> void:
 	current_dir = starting_dir
@@ -35,6 +36,15 @@ func _set_current_dir(new_dir :String):
 func _set_current_file(new_file :String):
 	current_file = new_file
 	$"Panel/Margin/VBox/FileHBox/LineEdit".text = current_file
+
+func _set_current_filter(new_filter :String):
+	if current_filter == new_filter:
+		return
+	
+	current_filter = new_filter
+	$"Panel/Margin/VBox/FilePanel/ScrollContainer/FileContainer".update_file_list()
+	if current_filter == "*": # All filters
+		pass
 
 func _list_files():
 	var Dir :Directory

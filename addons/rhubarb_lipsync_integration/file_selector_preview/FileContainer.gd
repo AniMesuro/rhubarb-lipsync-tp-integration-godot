@@ -30,9 +30,15 @@ func update_file_list():
 		fileIcon.setup()
 		
 	for file in owner.dir_files:
-		if !file.get_extension() in owner.filters:
-#			print(file,' is ',file.get_extension(),' not ',owner.filters)
-			continue
+		if owner.current_filter != "*":
+			if !file.get_extension() == owner.current_filter:
+				continue
+	#			print(file,' is ',file.get_extension(),' not ',owner.filters)
+		else:
+			if !file.get_extension() in owner.filters:
+	#			print(file,' is ',file.get_extension(),' not ',owner.filters)
+				continue
+			
 		var fileIcon :VBoxContainer= SCN_FileIcon.instance()
 		add_child(fileIcon)
 #		fileIcon.get_node("Preview").texture_normal = load(file)
