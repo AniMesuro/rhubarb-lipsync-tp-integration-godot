@@ -18,8 +18,12 @@ func _on_FilePanel_resized():
 	_update_FileIcon_sizes()
 
 func _update_FileIcon_sizes():
+	if !is_inside_tree():
+		return
+	
 	var fileContainer :GridContainer= $"../FilePanel/ScrollContainer/FileContainer"
 	var filePanel :Panel= $"../FilePanel"
+	var hSlider :HSlider= $HSlider
 	
 	var fileIcons :Array= fileContainer.get_children() 
 	if fileIcons == []:
@@ -29,7 +33,7 @@ func _update_FileIcon_sizes():
 		var preview :TextureButton= fileIcon.get_node('Preview') 
 		
 		var zoomed_size :int= hSlider.value * 8
-		fileIcon.rect_min_size = Vector2(zoomed_size, zoomed_size)
+		fileIcon.get_node('Preview').rect_min_size = Vector2(zoomed_size, zoomed_size)
 	#	Still glitches sometimes, but it's better than the previous one.
 	var new_columns :int= floor(filePanel.rect_size.x / (fileIcons[0].rect_size.x + 2))
 	if new_columns > 0:
