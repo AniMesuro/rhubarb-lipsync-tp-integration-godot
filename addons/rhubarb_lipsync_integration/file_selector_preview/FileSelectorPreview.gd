@@ -4,7 +4,6 @@ extends Control
 var starting_dir :String= "res://"
 
 var current_dir :String setget _set_current_dir
-var Dir :Directory
 var dir_files :PoolStringArray= PoolStringArray()
 var dir_folders :PoolStringArray= PoolStringArray()
 
@@ -23,6 +22,7 @@ func _set_current_dir(new_dir :String):
 	$"Panel/Margin/VBox/PathHBox/LineEdit".text = current_dir
 
 func _list_files():
+	var Dir :Directory
 	# Get folders and files
 	dir_files = []
 	dir_folders = []

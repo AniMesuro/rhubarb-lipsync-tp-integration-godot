@@ -16,6 +16,10 @@ func update_file_list():
 	
 	# Populate FileContainer with a FileIcon for each file
 	for folder in owner.dir_folders:
+		# Ignore folder if folder special directory
+		if folder == '.' or folder == '..':
+			continue
+			
 		var fileIcon :VBoxContainer= SCN_FileIcon.instance()
 		add_child(fileIcon)
 		fileIcon.get_node("Preview").texture_normal = TEX_IconFolder
@@ -42,6 +46,6 @@ func _on_file_selected(file_name :String):
 
 func _on_folder_selected(file_name :String):
 	print('current_dir =',owner.current_dir)
-	owner.Dir.change_dir(owner.current_dir + file_name)
+#	owner.Dir.change_dir(owner.current_dir + file_name)
 	owner.current_dir = owner.current_dir + file_name + "/"
 	

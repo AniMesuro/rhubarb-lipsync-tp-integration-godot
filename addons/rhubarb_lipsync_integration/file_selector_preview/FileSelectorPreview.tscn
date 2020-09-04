@@ -16,7 +16,7 @@ bg_color = Color( 0.321569, 0.317647, 0.380392, 1 )
 [node name="FileSelectorPreview" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-mouse_filter = 1
+mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource( 2 )
@@ -26,14 +26,14 @@ __meta__ = {
 }
 
 [node name="Panel" type="Panel" parent="."]
-anchor_left = 0.335
-anchor_top = 0.296
-anchor_right = 0.335
-anchor_bottom = 0.296
-margin_left = -343.04
-margin_top = -177.6
-margin_right = 125.96
-margin_bottom = 295.4
+anchor_left = 0.229
+anchor_top = 0.394
+anchor_right = 0.229
+anchor_bottom = 0.394
+margin_left = -234.496
+margin_top = -236.4
+margin_right = 234.504
+margin_bottom = 236.6
 rect_min_size = Vector2( 281, 265 )
 rect_clip_content = true
 mouse_filter = 1
@@ -211,29 +211,29 @@ debug_mode = true
 
 [node name="HandlerTop" parent="Panel/RectHandlerContainer" index="0"]
 modulate = Color( 1, 1, 1, 1 )
-margin_right = 343.0
+margin_right = 469.0
 debug_mode = true
 _windowRect = NodePath("../..")
 
 [node name="HandlerBottom" parent="Panel/RectHandlerContainer" index="1"]
 modulate = Color( 1, 1, 1, 1 )
-margin_top = 345.0
-margin_right = 343.0
-margin_bottom = 355.0
+margin_top = 463.0
+margin_right = 469.0
+margin_bottom = 473.0
 debug_mode = true
 _windowRect = NodePath("../..")
 
 [node name="HandlerLeft" parent="Panel/RectHandlerContainer" index="2"]
 modulate = Color( 1, 1, 1, 1 )
-margin_bottom = 355.0
+margin_bottom = 473.0
 debug_mode = true
 _windowRect = NodePath("../..")
 
 [node name="HandlerRight" parent="Panel/RectHandlerContainer" index="3"]
 modulate = Color( 1, 1, 1, 1 )
-margin_left = 333.0
-margin_right = 343.0
-margin_bottom = 355.0
+margin_left = 459.0
+margin_right = 469.0
+margin_bottom = 473.0
 debug_mode = true
 _windowRect = NodePath("../..")
 
