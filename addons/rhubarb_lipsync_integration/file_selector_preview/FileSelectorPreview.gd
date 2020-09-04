@@ -15,7 +15,11 @@ func _ready() -> void:
 	_list_files()
 	
 	yield(get_tree(), "idle_frame")
-	rect_size = rect_size+Vector2(1000,1000)
+	
+	# Hacky way to get anchors to update properly.
+	rect_size = rect_size+Vector2(1,1)
+	$Panel/RectHandlerContainer.handler_size = $Panel/RectHandlerContainer.handler_size
+	
 
 var filesystem_access :int
 func setup(access :int):
