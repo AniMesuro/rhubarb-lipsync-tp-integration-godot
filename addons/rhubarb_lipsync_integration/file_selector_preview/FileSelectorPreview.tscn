@@ -14,9 +14,11 @@
 bg_color = Color( 0.321569, 0.317647, 0.380392, 1 )
 
 [node name="FileSelectorPreview" type="Control"]
-margin_right = 4024.0
-margin_bottom = 3600.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 mouse_filter = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme = ExtResource( 2 )
 script = ExtResource( 8 )
 __meta__ = {
@@ -24,15 +26,19 @@ __meta__ = {
 }
 
 [node name="Panel" type="Panel" parent="."]
-anchor_right = 0.086
-anchor_bottom = 0.084
-margin_right = -0.0640259
-margin_bottom = -1.40002
-rect_min_size = Vector2( 320, 251 )
+anchor_left = 0.335
+anchor_top = 0.296
+anchor_right = 0.335
+anchor_bottom = 0.296
+margin_left = -343.04
+margin_top = -177.6
+margin_right = -0.0400085
+margin_bottom = 177.4
+rect_min_size = Vector2( 281, 265 )
 rect_clip_content = true
 mouse_filter = 1
 __meta__ = {
-"_edit_use_anchors_": true
+"_edit_use_anchors_": false
 }
 
 [node name="Margin" type="MarginContainer" parent="Panel"]
@@ -44,15 +50,13 @@ margin_right = -10.0
 margin_bottom = -10.0
 rect_clip_content = true
 mouse_filter = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="VBox" type="VBoxContainer" parent="Panel/Margin"]
-margin_right = 326.0
-margin_bottom = 281.0
+margin_right = 323.0
+margin_bottom = 335.0
 rect_clip_content = true
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -61,7 +65,7 @@ __meta__ = {
 }
 
 [node name="TitleBar" parent="Panel/Margin/VBox" instance=ExtResource( 3 )]
-margin_right = 326.0
+margin_right = 323.0
 margin_bottom = 40.0
 title_name = "Select an Image File"
 icon_texture = ExtResource( 6 )
@@ -69,7 +73,7 @@ window_path = NodePath("../../..")
 
 [node name="PathHBox" type="HBoxContainer" parent="Panel/Margin/VBox"]
 margin_top = 44.0
-margin_right = 326.0
+margin_right = 323.0
 margin_bottom = 74.0
 script = ExtResource( 7 )
 
@@ -83,17 +87,19 @@ stretch_mode = 4
 
 [node name="LineEdit" type="LineEdit" parent="Panel/Margin/VBox/PathHBox"]
 margin_left = 28.0
-margin_right = 326.0
+margin_right = 323.0
 margin_bottom = 30.0
 size_flags_horizontal = 3
 text = "res://"
 
 [node name="FilePanel" type="Panel" parent="Panel/Margin/VBox"]
 margin_top = 78.0
-margin_right = 326.0
-margin_bottom = 195.0
+margin_right = 323.0
+margin_bottom = 249.0
+rect_clip_content = true
 size_flags_horizontal = 3
 size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
 custom_styles/panel = SubResource( 1 )
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Panel/Margin/VBox/FilePanel"]
@@ -108,31 +114,30 @@ __meta__ = {
 [node name="FileContainer" type="GridContainer" parent="Panel/Margin/VBox/FilePanel/ScrollContainer"]
 margin_right = 320.0
 margin_bottom = 320.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
+rect_clip_content = true
 columns = 3
 script = ExtResource( 9 )
 
 [node name="ZoomHbox" type="HBoxContainer" parent="Panel/Margin/VBox"]
-margin_top = 199.0
-margin_right = 326.0
-margin_bottom = 223.0
+margin_top = 253.0
+margin_right = 323.0
+margin_bottom = 277.0
 size_flags_horizontal = 3
 alignment = 2
 script = ExtResource( 4 )
 
 [node name="ZoomIcon" type="TextureRect" parent="Panel/Margin/VBox/ZoomHbox"]
-margin_left = 170.0
-margin_right = 194.0
+margin_left = 167.0
+margin_right = 191.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 24, 24 )
 texture = ExtResource( 6 )
 expand = true
 
 [node name="HSlider" type="HSlider" parent="Panel/Margin/VBox/ZoomHbox"]
-margin_left = 198.0
+margin_left = 195.0
 margin_top = 4.0
-margin_right = 326.0
+margin_right = 323.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 128, 0 )
 size_flags_vertical = 4
@@ -141,9 +146,9 @@ max_value = 50.0
 value = 13.0
 
 [node name="FileHBox" type="HBoxContainer" parent="Panel/Margin/VBox"]
-margin_top = 227.0
-margin_right = 326.0
-margin_bottom = 257.0
+margin_top = 281.0
+margin_right = 323.0
+margin_bottom = 311.0
 size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="Panel/Margin/VBox/FileHBox"]
@@ -154,13 +159,13 @@ text = "File:"
 
 [node name="LineEdit" type="LineEdit" parent="Panel/Margin/VBox/FileHBox"]
 margin_left = 54.0
-margin_right = 250.0
+margin_right = 247.0
 margin_bottom = 30.0
 size_flags_horizontal = 3
 
 [node name="ExtensionMenu" type="MenuButton" parent="Panel/Margin/VBox/FileHBox"]
-margin_left = 254.0
-margin_right = 326.0
+margin_left = 251.0
+margin_right = 323.0
 margin_bottom = 30.0
 rect_min_size = Vector2( 72, 24 )
 size_flags_vertical = 3
@@ -174,23 +179,23 @@ __meta__ = {
 }
 
 [node name="ButtonHBox" type="HBoxContainer" parent="Panel/Margin/VBox"]
-margin_top = 261.0
-margin_right = 326.0
-margin_bottom = 281.0
+margin_top = 315.0
+margin_right = 323.0
+margin_bottom = 335.0
 size_flags_horizontal = 3
 size_flags_vertical = 0
 custom_constants/separation = 20
 
 [node name="OkButton" type="Button" parent="Panel/Margin/VBox/ButtonHBox"]
-margin_right = 153.0
+margin_right = 151.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 custom_constants/hseparation = 0
 text = "Ok"
 
 [node name="CancelButton" type="Button" parent="Panel/Margin/VBox/ButtonHBox"]
-margin_left = 173.0
-margin_right = 326.0
+margin_left = 171.0
+margin_right = 323.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 custom_constants/hseparation = 0
@@ -206,31 +211,29 @@ debug_mode = true
 
 [node name="HandlerTop" parent="Panel/RectHandlerContainer" index="0"]
 modulate = Color( 1, 1, 1, 1 )
-anchor_right = 1.0
+margin_right = 343.0
 debug_mode = true
 _windowRect = NodePath("../..")
 
 [node name="HandlerBottom" parent="Panel/RectHandlerContainer" index="1"]
 modulate = Color( 1, 1, 1, 1 )
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
+margin_top = 345.0
+margin_right = 343.0
+margin_bottom = 355.0
 debug_mode = true
 _windowRect = NodePath("../..")
 
 [node name="HandlerLeft" parent="Panel/RectHandlerContainer" index="2"]
 modulate = Color( 1, 1, 1, 1 )
-anchor_bottom = 1.0
-margin_bottom = 0.0
+margin_bottom = 355.0
 debug_mode = true
 _windowRect = NodePath("../..")
 
 [node name="HandlerRight" parent="Panel/RectHandlerContainer" index="3"]
 modulate = Color( 1, 1, 1, 1 )
-anchor_left = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_bottom = 0.0
+margin_left = 333.0
+margin_right = 343.0
+margin_bottom = 355.0
 debug_mode = true
 _windowRect = NodePath("../..")
 

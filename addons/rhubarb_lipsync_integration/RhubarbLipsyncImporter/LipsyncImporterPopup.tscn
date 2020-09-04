@@ -286,6 +286,7 @@ size_flags_vertical = 3
 [node name="RestMouth" parent="Panel/VBox/TabContainer/Sprite/MouthPanel/MouthTextures/TopHBox" instance=ExtResource( 3 )]
 margin_right = 150.0
 margin_bottom = 71.0
+mouth_shape = "rest"
 
 [node name="MBPMouth" parent="Panel/VBox/TabContainer/Sprite/MouthPanel/MouthTextures/TopHBox" instance=ExtResource( 3 )]
 margin_left = 154.0
@@ -482,6 +483,8 @@ size_flags_vertical = 3
 [node name="RestMouth" parent="Panel/VBox/TabContainer/AnimatedSprite/Panel/MouthFrames/TopHBox" instance=ExtResource( 43 )]
 margin_right = 150.0
 margin_bottom = 90.0
+mouth_shape = "rest"
+default_mouth = 0
 
 [node name="MBPMouth" parent="Panel/VBox/TabContainer/AnimatedSprite/Panel/MouthFrames/TopHBox" instance=ExtResource( 43 )]
 margin_left = 154.0
@@ -708,25 +711,27 @@ size_flags_horizontal = 6
 text = "Generate Lipsync Animation"
 
 [node name="RectHandlers" parent="Panel" instance=ExtResource( 35 )]
-modulate = Color( 1, 1, 1, 0 )
 _windowRect = NodePath("..")
 
 [node name="HandlerTop" parent="Panel/RectHandlers" index="0"]
+modulate = Color( 1, 1, 1, 1 )
 margin_right = 794.0
-handler_direction = 0
 _windowRect = NodePath("../..")
 
 [node name="HandlerBottom" parent="Panel/RectHandlers" index="1"]
+modulate = Color( 1, 1, 1, 1 )
 margin_top = 660.0
 margin_right = 794.0
 margin_bottom = 670.0
 _windowRect = NodePath("../..")
 
 [node name="HandlerLeft" parent="Panel/RectHandlers" index="2"]
+modulate = Color( 1, 1, 1, 1 )
 margin_bottom = 670.0
 _windowRect = NodePath("../..")
 
 [node name="HandlerRight" parent="Panel/RectHandlers" index="3"]
+modulate = Color( 1, 1, 1, 1 )
 margin_left = 784.0
 margin_right = 794.0
 margin_bottom = 670.0
