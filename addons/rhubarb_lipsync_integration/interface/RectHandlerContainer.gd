@@ -6,6 +6,8 @@ export var _windowRect :NodePath setget _set_windowRect
 
 var _visible :bool= false setget set_pseudovisible
 
+export var debug_mode :bool= false
+
 var handlerTop :ReferenceRect
 var handlerBottom :ReferenceRect
 var handlerLeft :ReferenceRect
@@ -59,6 +61,12 @@ func set_pseudovisible(value :bool):
 		yield(self, "tree_entered")
 	if !is_instance_valid(windowRect):
 		return
+	
+	if debug_mode:
+		modulate = Color.white
+		_visible = true
+		return
+	
 	_visible = value
 	if value:
 		#If window is being edited, toggle _visible, this node should not be visible from being instanced
@@ -71,6 +79,8 @@ func set_pseudovisible(value :bool):
 
 func _on_visibility_changed():
 	if !is_instance_valid(self):
+		return
+	if !is_inside_tree():
 		return
 	if is_connected( "visibility_changed", self, "_on_visibility_changed"):
 		disconnect( "visibility_changed", self, "_on_visibility_changed")

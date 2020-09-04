@@ -20,7 +20,7 @@ func _ready() -> void:
 func _set_current_dir(new_dir :String):
 	current_dir = new_dir
 	_list_files()
-	$"Panel/VBox/PathHBox/LineEdit".text = current_dir
+	$"Panel/Margin/VBox/PathHBox/LineEdit".text = current_dir
 
 func _list_files():
 	# Get folders and files
@@ -39,4 +39,4 @@ func _list_files():
 			file_name = Dir.get_next()
 	else:
 		print('filepath not ok')
-	$"Panel/VBox/FilePanel/ScrollContainer/FileContainer".update_file_list()
+	$"Panel/Margin/VBox/FilePanel/ScrollContainer/FileContainer".update_file_list()
