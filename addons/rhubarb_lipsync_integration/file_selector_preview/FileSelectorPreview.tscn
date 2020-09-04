@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://addons/rhubarb_lipsync_integration/interface/RectHandlerContainer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://addons/rhubarb_lipsync_integration/assets/LipsyncImporterTheme.tres" type="Theme" id=2]
@@ -16,9 +16,24 @@
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.321569, 0.317647, 0.380392, 1 )
 
+[sub_resource type="Image" id=4]
+data = {
+"data": PoolByteArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 223, 223, 223, 0, 223, 223, 223, 0, 223, 223, 223, 0, 223, 223, 223, 0, 223, 223, 223, 0, 221, 221, 221, 0, 0, 0, 0, 0, 0, 0, 0, 0, 223, 223, 223, 0, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 222, 222, 222, 0, 223, 223, 223, 57, 223, 223, 223, 177, 223, 223, 223, 228, 223, 223, 223, 234, 223, 223, 223, 185, 221, 221, 221, 61, 221, 221, 221, 0, 223, 223, 223, 0, 223, 223, 223, 254, 223, 223, 223, 254, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 222, 222, 222, 0, 222, 222, 222, 118, 223, 223, 223, 253, 223, 223, 223, 254, 223, 223, 223, 254, 223, 223, 223, 254, 223, 223, 223, 254, 222, 222, 222, 0, 223, 223, 223, 0, 223, 223, 223, 0, 223, 223, 223, 254, 223, 223, 223, 254, 223, 223, 223, 0, 223, 223, 223, 0, 0, 0, 0, 0, 223, 223, 223, 0, 223, 223, 223, 56, 223, 223, 223, 251, 222, 222, 222, 247, 222, 222, 222, 116, 223, 223, 223, 24, 220, 220, 220, 22, 223, 223, 223, 115, 223, 223, 223, 0, 223, 223, 223, 254, 223, 223, 223, 254, 223, 223, 223, 254, 223, 223, 223, 254, 223, 223, 223, 254, 223, 223, 223, 254, 223, 223, 223, 0, 222, 222, 222, 0, 222, 222, 222, 174, 223, 223, 223, 254, 222, 222, 222, 116, 222, 222, 222, 0, 223, 223, 223, 0, 220, 220, 220, 0, 223, 223, 223, 0, 223, 223, 223, 0, 223, 223, 223, 254, 223, 223, 223, 254, 223, 223, 223, 254, 223, 223, 223, 254, 223, 223, 223, 254, 223, 223, 223, 254, 223, 223, 223, 0, 223, 223, 223, 0, 223, 223, 223, 224, 223, 223, 223, 254, 223, 223, 223, 24, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 223, 223, 223, 0, 223, 223, 223, 0, 223, 223, 223, 0, 223, 223, 223, 254, 223, 223, 223, 254, 223, 223, 223, 0, 223, 223, 223, 0, 0, 0, 0, 0, 223, 223, 223, 0, 223, 223, 223, 229, 223, 223, 223, 254, 214, 214, 214, 19, 214, 214, 214, 0, 0, 0, 0, 0, 0, 0, 0, 0, 223, 223, 223, 0, 223, 223, 223, 24, 223, 223, 223, 254, 223, 223, 223, 0, 223, 223, 223, 254, 223, 223, 223, 254, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 223, 223, 223, 0, 223, 223, 223, 179, 223, 223, 223, 254, 223, 223, 223, 115, 222, 222, 222, 0, 223, 223, 223, 0, 223, 223, 223, 0, 222, 222, 222, 0, 222, 222, 222, 116, 223, 223, 223, 254, 222, 222, 222, 0, 223, 223, 223, 0, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 223, 223, 223, 0, 223, 223, 223, 57, 223, 223, 223, 252, 223, 223, 223, 246, 222, 222, 222, 116, 223, 223, 223, 24, 223, 223, 223, 24, 222, 222, 222, 116, 223, 223, 223, 246, 223, 223, 223, 254, 222, 222, 222, 86, 218, 218, 218, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 222, 222, 222, 0, 222, 222, 222, 118, 223, 223, 223, 253, 223, 223, 223, 254, 223, 223, 223, 254, 223, 223, 223, 254, 223, 223, 223, 254, 223, 223, 223, 254, 223, 223, 223, 254, 223, 223, 223, 209, 214, 214, 214, 19, 214, 214, 214, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 220, 220, 220, 0, 219, 219, 219, 58, 223, 223, 223, 177, 223, 223, 223, 228, 223, 223, 223, 237, 222, 222, 222, 183, 223, 223, 223, 80, 223, 223, 223, 209, 223, 223, 223, 254, 223, 223, 223, 208, 214, 214, 214, 19, 214, 214, 214, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 219, 219, 219, 0, 223, 223, 223, 0, 223, 223, 223, 0, 223, 223, 223, 0, 222, 222, 222, 0, 220, 220, 220, 0, 218, 218, 218, 21, 223, 223, 223, 209, 223, 223, 223, 254, 222, 222, 222, 207, 214, 214, 214, 19, 214, 214, 214, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 218, 218, 218, 0, 218, 218, 218, 21, 223, 223, 223, 210, 223, 223, 223, 254, 222, 222, 222, 206, 214, 214, 214, 19, 214, 214, 214, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 218, 218, 218, 0, 218, 218, 218, 21, 223, 223, 223, 211, 223, 223, 223, 228, 219, 219, 219, 36, 219, 219, 219, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 218, 218, 218, 0, 218, 218, 218, 21, 218, 218, 218, 35, 218, 218, 218, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 218, 218, 218, 0, 218, 218, 218, 0, 0, 0, 0, 0, 0, 0, 0, 0 ),
+"format": "RGBA8",
+"height": 16,
+"mipmaps": false,
+"width": 16
+}
+
+[sub_resource type="ImageTexture" id=3]
+flags = 0
+flags = 0
+image = SubResource( 4 )
+size = Vector2( 16, 16 )
+
 [node name="FileSelectorPreview" type="Control"]
-margin_right = 392.0
-margin_bottom = 450.0
+margin_right = 393.0
+margin_bottom = 451.0
 rect_min_size = Vector2( 281, 265 )
 mouse_filter = 2
 size_flags_horizontal = 0
@@ -53,15 +68,15 @@ __meta__ = {
 }
 
 [node name="VBox" type="VBoxContainer" parent="Panel/Margin"]
-margin_right = 372.0
-margin_bottom = 430.0
+margin_right = 373.0
+margin_bottom = 431.0
 rect_clip_content = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="TitleBar" parent="Panel/Margin/VBox" instance=ExtResource( 3 )]
-margin_right = 372.0
+margin_right = 373.0
 margin_bottom = 40.0
 title_name = "Select an Image File"
 icon_texture = ExtResource( 6 )
@@ -69,7 +84,7 @@ window_path = NodePath("../../..")
 
 [node name="PathHBox" type="HBoxContainer" parent="Panel/Margin/VBox"]
 margin_top = 44.0
-margin_right = 372.0
+margin_right = 373.0
 margin_bottom = 74.0
 script = ExtResource( 7 )
 
@@ -84,15 +99,15 @@ stretch_mode = 5
 
 [node name="LineEdit" type="LineEdit" parent="Panel/Margin/VBox/PathHBox"]
 margin_left = 28.0
-margin_right = 372.0
+margin_right = 373.0
 margin_bottom = 30.0
 size_flags_horizontal = 3
 text = "res://"
 
 [node name="FilePanel" type="Panel" parent="Panel/Margin/VBox"]
 margin_top = 78.0
-margin_right = 372.0
-margin_bottom = 344.0
+margin_right = 373.0
+margin_bottom = 345.0
 rect_clip_content = true
 size_flags_vertical = 3
 custom_styles/panel = SubResource( 1 )
@@ -108,31 +123,31 @@ __meta__ = {
 
 [node name="FileContainer" type="GridContainer" parent="Panel/Margin/VBox/FilePanel/ScrollContainer"]
 margin_right = 320.0
-margin_bottom = 283.0
+margin_bottom = 438.0
 size_flags_stretch_ratio = 0.0
 columns = 3
 script = ExtResource( 9 )
 
 [node name="ZoomHbox" type="HBoxContainer" parent="Panel/Margin/VBox"]
-margin_top = 348.0
-margin_right = 372.0
-margin_bottom = 372.0
+margin_top = 349.0
+margin_right = 373.0
+margin_bottom = 373.0
 size_flags_horizontal = 3
 alignment = 2
 script = ExtResource( 4 )
 
 [node name="ZoomIcon" type="TextureRect" parent="Panel/Margin/VBox/ZoomHbox"]
-margin_left = 216.0
-margin_right = 240.0
+margin_left = 217.0
+margin_right = 241.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 24, 24 )
-texture = ExtResource( 6 )
+texture = SubResource( 3 )
 expand = true
 
 [node name="HSlider" type="HSlider" parent="Panel/Margin/VBox/ZoomHbox"]
-margin_left = 244.0
+margin_left = 245.0
 margin_top = 4.0
-margin_right = 372.0
+margin_right = 373.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 128, 0 )
 size_flags_vertical = 4
@@ -141,9 +156,9 @@ max_value = 50.0
 value = 13.0
 
 [node name="FileHBox" type="HBoxContainer" parent="Panel/Margin/VBox"]
-margin_top = 376.0
-margin_right = 372.0
-margin_bottom = 406.0
+margin_top = 377.0
+margin_right = 373.0
+margin_bottom = 407.0
 size_flags_horizontal = 3
 script = ExtResource( 10 )
 
@@ -155,18 +170,18 @@ text = "File:"
 
 [node name="LineEdit" type="LineEdit" parent="Panel/Margin/VBox/FileHBox"]
 margin_left = 54.0
-margin_right = 296.0
+margin_right = 245.0
 margin_bottom = 30.0
 size_flags_horizontal = 3
 
 [node name="ExtensionMenu" type="MenuButton" parent="Panel/Margin/VBox/FileHBox"]
-margin_left = 300.0
-margin_right = 372.0
+margin_left = 249.0
+margin_right = 373.0
 margin_bottom = 30.0
 rect_min_size = Vector2( 72, 24 )
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.3
-text = "* All"
+text = "* All Images"
 icon = ExtResource( 5 )
 flat = false
 expand_icon = true
@@ -175,9 +190,9 @@ __meta__ = {
 }
 
 [node name="ButtonHBox" type="HBoxContainer" parent="Panel/Margin/VBox"]
-margin_top = 410.0
-margin_right = 372.0
-margin_bottom = 430.0
+margin_top = 411.0
+margin_right = 373.0
+margin_bottom = 431.0
 size_flags_horizontal = 3
 size_flags_vertical = 0
 custom_constants/separation = 20
@@ -192,7 +207,7 @@ text = "Ok"
 
 [node name="CancelButton" type="Button" parent="Panel/Margin/VBox/ButtonHBox"]
 margin_left = 196.0
-margin_right = 372.0
+margin_right = 373.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 custom_constants/hseparation = 0
@@ -206,30 +221,30 @@ debug_mode = true
 
 [node name="HandlerTop" parent="Panel/RectHandlerContainer" index="0"]
 modulate = Color( 1, 1, 1, 1 )
-margin_right = 392.0
+margin_right = 393.0
 handler_direction = 0
 debug_mode = true
 _windowRect = NodePath("../../..")
 
 [node name="HandlerBottom" parent="Panel/RectHandlerContainer" index="1"]
 modulate = Color( 1, 1, 1, 1 )
-margin_top = 440.0
-margin_right = 392.0
-margin_bottom = 450.0
+margin_top = 441.0
+margin_right = 393.0
+margin_bottom = 451.0
 debug_mode = true
 _windowRect = NodePath("../../..")
 
 [node name="HandlerLeft" parent="Panel/RectHandlerContainer" index="2"]
 modulate = Color( 1, 1, 1, 1 )
-margin_bottom = 450.0
+margin_bottom = 451.0
 debug_mode = true
 _windowRect = NodePath("../../..")
 
 [node name="HandlerRight" parent="Panel/RectHandlerContainer" index="3"]
 modulate = Color( 1, 1, 1, 1 )
-margin_left = 382.0
-margin_right = 392.0
-margin_bottom = 450.0
+margin_left = 383.0
+margin_right = 393.0
+margin_bottom = 451.0
 debug_mode = true
 _windowRect = NodePath("../../..")
 

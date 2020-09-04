@@ -1,6 +1,8 @@
 tool
 extends VBoxContainer
 
+const SCN_FileSelectorPreview :PackedScene= preload("res://addons/rhubarb_lipsync_integration/file_selector_preview/FileSelectorPreview.tscn")
+
 export var _temp_texture :StreamTexture
 var mouthDB :Dictionary= {}
 var mouthIconDB :Dictionary= {}
@@ -34,26 +36,33 @@ func _enter_tree() -> void:
 
 
 var fileDialog :FileDialog
-
+var fileSelectorPreview :Control
 
 func _on_MouthIcon_pressed(mouthIcon :VBoxContainer) -> void:
 	var button :TextureButton= mouthIcon.textureButton
 #	ask_for_filepath(textureButton)
-	fileDialog = FileDialog.new()
-	fileDialog.connect("popup_hide", self, "_on_FileDialog_popup_hide")
-	owner.pluginInstance.add_child(fileDialog)
-	fileDialog.mode = fileDialog.MODE_OPEN_FILE
-	fileDialog.resizable = true
-	fileDialog.rect_min_size = Vector2(400, 300)
-	fileDialog.filters = PoolStringArray(['*.png','*.jpg'])
-#	fileDialog.access = fileDialog.ACCESS_FILESYSTEM
-	fileDialog.popup()
+	#if owner.pluginInstance.Settings.file_selection.file_dialog.to_lower() == "godot":
+	if owner.pluginInstance.Settings.file_selection.file_dialog.to_lower() == "file_selector_preview":
+		fileSelectorPreview = SCN_FileSelectorPreview.instance()
+		fileSelectorPreview.connect("file_selected", self, "_on_FileSelectorPreview_file_selected", [mouthIcon])
+		fileSelectorPreview.setup(FileDialog.ACCESS_RESOURCES, PoolStringArray(['png','jpg','jpeg']), "* All Images", "Please select an image for "+mouthIcon.mouth_shape)
+		fileSelectorPreview.rect_global_position = OS.window_size/2 - fileSelectorPreview.rect_size/2
+#		fileSelectorPreview.filters = PoolStringArray(['png','jpg','jpeg'])
+		owner.pluginInstance.add_child(fileSelectorPreview)
+	else:
 	
-	yield(fileDialog, "file_selected")
-#	print("file path =", fileDialog.current_path)
-	button.texture_normal = load(fileDialog.current_path)
-	mouthDB[mouthIcon.mouth_shape] = button.texture_normal
-#	print('mouthDB =', mouthDB)
+		fileDialog = FileDialog.new()
+		fileDialog.connect("popup_hide", self, "_on_FileDialog_popup_hide")
+		owner.pluginInstance.add_child(fileDialog)
+		fileDialog.mode = fileDialog.MODE_OPEN_FILE
+		fileDialog.resizable = true
+		fileDialog.rect_min_size = Vector2(400, 300)
+		fileDialog.filters = PoolStringArray(['*.png','*.jpg'])
+		fileDialog.popup()
+		
+		yield(fileDialog, "file_selected")
+		button.texture_normal = load(fileDialog.current_path)
+		mouthDB[mouthIcon.mouth_shape] = button.texture_normal
 
 ######################
 
@@ -62,3 +71,7 @@ func _on_MouthIcon_pressed(mouthIcon :VBoxContainer) -> void:
 func _on_FileDialog_popup_hide():
 	if !fileDialog.is_queued_for_deletion():
 		fileDialog.queue_free()
+
+func _on_FileSelectorPreview_file_selected(filepath :String, mouthIcon :VBoxContainer):
+	mouthIcon.get_node('Texture').texture_normal = load(filepath)
+	mouthDB[mouthIcon.mouth_shape] = mouthIcon.get_node('Texture').texture_normal

@@ -10,7 +10,7 @@ var current_dir :String setget _set_current_dir
 var dir_files :PoolStringArray= PoolStringArray()
 var dir_folders :PoolStringArray= PoolStringArray()
 
-var filters :PoolStringArray= PoolStringArray(['png','jpg'])
+var filters :PoolStringArray= PoolStringArray()
 var current_filter :String= "" setget _set_current_filter
 
 var editorControl :Control
@@ -35,10 +35,12 @@ func _ready() -> void:
 	
 	
 
-var filesystem_access :int
-func setup(access :int):
+var filesystem_access :int= FileDialog.ACCESS_RESOURCES
+func setup(access :int, _filters :PoolStringArray, all_filters_option :String= "* All files", dialog_title :String= "Please select a file."):
 	filesystem_access = access
-	
+	filters = _filters
+	$"Panel/Margin/VBox/FileHBox".all_filters_option = all_filters_option
+	$"Panel/Margin/VBox/TitleBar".title_name = dialog_title
 
 func _set_current_dir(new_dir :String):
 	if current_dir.get_base_dir() == new_dir.get_base_dir():

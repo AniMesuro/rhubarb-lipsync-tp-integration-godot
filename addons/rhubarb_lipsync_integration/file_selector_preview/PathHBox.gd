@@ -10,16 +10,16 @@ func _ready() -> void:
 func _on_ReturnButton_pressed():
 	var a:String
 	var subdir :PoolStringArray= owner.current_dir.get_base_dir().rsplit('/', false)
-	print('[subdir]=',subdir)
+	
 #	print("CURRENTDIR ",owner.current_dir,' ',owner.current_dir.get_base_dir())
 	
 	if subdir.size() <= 1: # If current_dir is root dir
 		return
 	
 	var suffix :String= owner.current_dir.right(owner.current_dir.find_last(subdir[subdir.size()-1]))
-	print('suffix ',suffix)
+	
 	owner.current_dir = owner.current_dir.trim_suffix(suffix)#subdir[subdir.size()-1]+'/')
-	print("currentdir return: ",owner.current_dir)#,owner.dir_folders,owner.dir_files)
+	
 	
 
 func _on_text_entered(new_text :String):

@@ -24,11 +24,11 @@ func update_file_list():
 			
 		var fileIcon :VBoxContainer= SCN_FileIcon.instance()
 		add_child(fileIcon)
-		fileIcon.get_node("Preview").texture_normal = TEX_IconFolder
-		fileIcon.file_name = folder
-		fileIcon.my_type = fileIcon.TYPE.folder
+		fileIcon.setup(folder, fileIcon.TYPE.folder)
+#		fileIcon.get_node("Preview").texture_normal = TEX_IconFolder
+#		fileIcon.file_name = folder
+#		fileIcon.my_type = fileIcon.TYPE.folder
 		fileIcon.connect("folder_selected", self, "_on_folder_selected") 
-		fileIcon.setup()
 		
 	for file in owner.dir_files:
 		if owner.current_filter != "*":
@@ -42,11 +42,11 @@ func update_file_list():
 			
 		var fileIcon :VBoxContainer= SCN_FileIcon.instance()
 		add_child(fileIcon)
+		fileIcon.setup(file, fileIcon.TYPE.file)
 #		fileIcon.get_node("Preview").texture_normal = load(file)
-		fileIcon.file_name = file
-		fileIcon.my_type = fileIcon.TYPE.file
+#		fileIcon.file_name = file
+#		fileIcon.my_type = fileIcon.TYPE.file
 		fileIcon.connect("file_selected", self, "_on_file_selected")
-		fileIcon.setup()
 	$"../../../ZoomHbox"._update_FileIcon_sizes()
 
 func _on_file_selected(file_name :String):

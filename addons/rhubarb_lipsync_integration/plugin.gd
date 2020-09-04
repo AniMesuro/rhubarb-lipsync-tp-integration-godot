@@ -151,6 +151,9 @@ func load_default_settings(keys :PoolStringArray= PoolStringArray([])):
 		'file_checks': {
 			'timer_max_calls': 200, # 10 min for 3 s.
 			'timer_sec': 3
+		},
+		'file_selection': {
+			'file_dialog': "file_selector_preview" #godot #file_selector_preview
 		}
 	}
 #	print('_defaultsettings ',_default_settings['output']['path'])
