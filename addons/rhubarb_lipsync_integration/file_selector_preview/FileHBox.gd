@@ -21,6 +21,11 @@ func _on_text_entered(new_text :String):
 	if Dir.file_exists(owner.current_dir + new_text):
 		if new_text.get_extension() in owner.filters:
 			owner.current_file = new_text
+			
+			for fileIcon in $"../FilePanel/ScrollContainer/FileContainer".get_children():
+				if fileIcon.file_name == owner.current_file:
+					$"../FilePanel/ScrollContainer/FileContainer".selectedFileIcon = fileIcon
+					break
 	else:
 		$LineEdit.text = owner.current_file
 
