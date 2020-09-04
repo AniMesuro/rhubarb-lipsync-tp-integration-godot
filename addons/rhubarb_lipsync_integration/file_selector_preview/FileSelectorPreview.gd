@@ -3,11 +3,12 @@ extends Control
 
 var starting_dir :String= "res://"
 
+var current_file :String= "" setget _set_current_file
 var current_dir :String setget _set_current_dir
 var dir_files :PoolStringArray= PoolStringArray()
 var dir_folders :PoolStringArray= PoolStringArray()
 
-var filters :PoolStringArray
+var filters :PoolStringArray= PoolStringArray(['png','jpg'])
 
 func _ready() -> void:
 	current_dir = starting_dir
@@ -25,6 +26,11 @@ func _set_current_dir(new_dir :String):
 	current_dir = new_dir
 	_list_files()
 	$"Panel/Margin/VBox/PathHBox/LineEdit".text = current_dir
+	self.current_file = ""
+
+func _set_current_file(new_file :String):
+	current_file = new_file
+	$"Panel/Margin/VBox/FileHBox/LineEdit".text = current_file
 
 func _list_files():
 	var Dir :Directory

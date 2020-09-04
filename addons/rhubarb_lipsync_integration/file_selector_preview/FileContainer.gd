@@ -5,6 +5,7 @@ const SCN_FileIcon :PackedScene= preload("res://addons/rhubarb_lipsync_integrati
 const TEX_IconFolder :StreamTexture= preload("res://addons/rhubarb_lipsync_integration/assets/icons/icon_folder.png")
 
 var fileSelectorPreview :Control
+var selectedFileIcon = null
 
 func _enter_tree() -> void:
 	fileSelectorPreview = owner
@@ -27,6 +28,7 @@ func update_file_list():
 		fileIcon.my_type = fileIcon.TYPE.folder
 		fileIcon.connect("folder_selected", self, "_on_folder_selected") 
 		fileIcon.setup()
+		
 	for file in owner.dir_files:
 		if !file.get_extension() in owner.filters:
 #			print(file,' is ',file.get_extension(),' not ',owner.filters)
@@ -41,11 +43,19 @@ func update_file_list():
 	$"../../../ZoomHbox"._update_FileIcon_sizes()
 
 func _on_file_selected(file_name :String):
-	print('current_dir =',owner.current_dir)
-	pass
+	owner.current_file = file_name
+#	print('current_file =',owner.current_file)
+	
+	if is_instance_valid(selectedFileIcon):
+		selectedFileIcon.selected = false
+	for icon in get_children():
+		if icon.file_name == file_name:
+			icon.selected = true
+			selectedFileIcon = icon
+			break
 
 func _on_folder_selected(file_name :String):
-	print('current_dir =',owner.current_dir)
+#	print('current_dir =',owner.current_dir)
 #	owner.Dir.change_dir(owner.current_dir + file_name)
 	owner.current_dir = owner.current_dir + file_name + "/"
 	
