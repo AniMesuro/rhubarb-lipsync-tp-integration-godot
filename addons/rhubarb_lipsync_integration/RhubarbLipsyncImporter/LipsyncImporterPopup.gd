@@ -174,7 +174,7 @@ func _on_AnimateButton_pressed() -> void:
 	var length = anim_audiokey.stream.get_length()
 	if anim_audiokey.has('sliced_path'):
 		length -= anim_audiokey.start_offset + anim_audiokey.end_offset
-		print('sliced len ',length)
+
 	pluginInstance.run_rhubarb_lipsync(path_audioclip, false, length)
 	
 	if $Panel/VBox/TabContainer.current_tab == 0:

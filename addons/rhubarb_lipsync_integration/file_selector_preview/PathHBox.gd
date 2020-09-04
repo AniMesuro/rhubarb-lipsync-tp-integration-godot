@@ -11,7 +11,6 @@ func _on_ReturnButton_pressed():
 	var a:String
 	var subdir :PoolStringArray= owner.current_dir.get_base_dir().rsplit('/', false)
 	
-#	print("CURRENTDIR ",owner.current_dir,' ',owner.current_dir.get_base_dir())
 	
 	if subdir.size() <= 1: # If current_dir is root dir
 		return
@@ -31,11 +30,8 @@ func _on_text_entered(new_text :String):
 		owner.current_file = new_text.get_file()
 		
 		var fileContainer :GridContainer= $"../FilePanel/ScrollContainer/FileContainer"
-#		if is_instance_valid(fileContainer.selectedFileIcon):
-#			fileContainer.selectedFileIcon.selected = false
 		for fileIcon in fileContainer.get_children():
 			if fileIcon.file_name == owner.current_file:
-#				fileIcon.selected = true
 				fileContainer.selectedFileIcon = fileIcon
 				break
 			
@@ -62,9 +58,6 @@ func _on_text_entered(new_text :String):
 				else:
 					$LineEdit.text = owner.current_dir
 				
-		
-#		match owner.filesystem_access:
-#			FileDialog.ACCESS_FILESYSTEM:
 				
 		
 	else:

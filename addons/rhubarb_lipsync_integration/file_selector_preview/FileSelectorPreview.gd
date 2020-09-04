@@ -1,3 +1,4 @@
+
 tool
 extends Control
 
@@ -85,6 +86,4 @@ func _list_files():
 			else:
 				dir_folders.append(file_name)
 			file_name = Dir.get_next()
-	else:
-		print('filepath not ok')
 	$"Panel/Margin/VBox/FilePanel/ScrollContainer/FileContainer".update_file_list()

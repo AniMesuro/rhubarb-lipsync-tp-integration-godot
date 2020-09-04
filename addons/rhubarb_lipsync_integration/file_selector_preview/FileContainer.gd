@@ -25,45 +25,29 @@ func update_file_list():
 		var fileIcon :VBoxContainer= SCN_FileIcon.instance()
 		add_child(fileIcon)
 		fileIcon.setup(folder, fileIcon.TYPE.folder)
-#		fileIcon.get_node("Preview").texture_normal = TEX_IconFolder
-#		fileIcon.file_name = folder
-#		fileIcon.my_type = fileIcon.TYPE.folder
 		fileIcon.connect("folder_selected", self, "_on_folder_selected") 
 		
 	for file in owner.dir_files:
 		if owner.current_filter != "*":
 			if !file.get_extension() == owner.current_filter:
 				continue
-	#			print(file,' is ',file.get_extension(),' not ',owner.filters)
 		else:
 			if !file.get_extension() in owner.filters:
-	#			print(file,' is ',file.get_extension(),' not ',owner.filters)
 				continue
 			
 		var fileIcon :VBoxContainer= SCN_FileIcon.instance()
 		add_child(fileIcon)
 		fileIcon.setup(file, fileIcon.TYPE.file)
-#		fileIcon.get_node("Preview").texture_normal = load(file)
-#		fileIcon.file_name = file
-#		fileIcon.my_type = fileIcon.TYPE.file
 		fileIcon.connect("file_selected", self, "_on_file_selected")
 	$"../../../ZoomHbox"._update_FileIcon_sizes()
 
 func _on_file_selected(file_name :String):
 	owner.current_file = file_name
-#	print('current_file =',owner.current_file)
-	
-#	if is_instance_valid(selectedFileIcon):
-#		selectedFileIcon.selected = false
 	for icon in get_children():
 		if icon.file_name == file_name:
-#			icon.selected = true
 			self.selectedFileIcon = icon
 
 func _set_selectedFileIcon(new_fileIcon :VBoxContainer):
-#	if new_fileIcon == selectedFileIcon:
-#		return
-	
 	if is_instance_valid(selectedFileIcon):
 		selectedFileIcon.selected = false
 				
@@ -71,8 +55,5 @@ func _set_selectedFileIcon(new_fileIcon :VBoxContainer):
 	selectedFileIcon = new_fileIcon
 
 func _on_folder_selected(file_name :String):
-#	print('current_dir =',owner.current_dir)
-#	owner.Dir.change_dir(owner.current_dir + file_name)
-	
 	owner.current_dir = owner.current_dir + file_name + "/"
 	

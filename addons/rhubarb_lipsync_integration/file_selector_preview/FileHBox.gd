@@ -7,7 +7,6 @@ func _ready() -> void:
 	$LineEdit.connect("text_entered", self, "_on_text_entered")
 	
 	var extensionMenu :MenuButton= $ExtensionMenu
-#	extensionMenu.connect("pressed", self, "_on_ExtensionMenu_pressed")
 	extensionMenu.get_popup().connect("id_pressed", self, "_on_ExtensionMenuPopup_pressed")
 	
 	extensionMenu.get_popup().add_item(all_filters_option)
@@ -29,10 +28,6 @@ func _on_text_entered(new_text :String):
 	else:
 		$LineEdit.text = owner.current_file
 
-#func _on_ExtensionMenu_pressed():
-#	var popupMenu :PopupMenu= $ExtensionMenu.get_popup()
-	
-	# Populate PopupMenu with extensions
 	
 
 func _on_ExtensionMenuPopup_pressed(id :int):

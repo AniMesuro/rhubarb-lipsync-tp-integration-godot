@@ -13,7 +13,7 @@ func _ready() -> void:
 	
 	filePanel.connect("resized", self, "_on_FilePanel_resized")
 	hSlider.connect( "value_changed", self, "_on_value_changed")
-#	call_deferred("_update_FileIcon_sizes")
+
 	
 func _on_value_changed(value :float):
 	_update_FileIcon_sizes()

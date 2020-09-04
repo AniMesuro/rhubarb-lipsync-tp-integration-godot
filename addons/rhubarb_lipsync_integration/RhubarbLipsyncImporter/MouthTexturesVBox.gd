@@ -13,8 +13,9 @@ func reload_mouthshape_textures(library :Dictionary):
 		if !library.has(mouthshape):
 			continue
 		mouthDB[mouthshape] = load(library[mouthshape])
-		if is_instance_valid(mouthIconDB[mouthshape].textureButton):
-			mouthIconDB[mouthshape].textureButton.texture_normal = load(library[mouthshape])
+		if is_instance_valid(mouthIconDB[mouthshape]):
+			if is_instance_valid(mouthIconDB[mouthshape].textureButton):
+				mouthIconDB[mouthshape].textureButton.texture_normal = load(library[mouthshape])
 
 func _enter_tree() -> void:
 	mouthDB = {
@@ -40,14 +41,15 @@ var fileSelectorPreview :Control
 
 func _on_MouthIcon_pressed(mouthIcon :VBoxContainer) -> void:
 	var button :TextureButton= mouthIcon.textureButton
-#	ask_for_filepath(textureButton)
-	#if owner.pluginInstance.Settings.file_selection.file_dialog.to_lower() == "godot":
+	
+	if !owner.pluginInstance.Settings.has('file_selection'):
+		owner.pluginInstance.Settings.file_selection = {}
+	
 	if owner.pluginInstance.Settings.file_selection.file_dialog.to_lower() == "file_selector_preview":
 		fileSelectorPreview = SCN_FileSelectorPreview.instance()
 		fileSelectorPreview.connect("file_selected", self, "_on_FileSelectorPreview_file_selected", [mouthIcon])
 		fileSelectorPreview.setup(FileDialog.ACCESS_RESOURCES, PoolStringArray(['png','jpg','jpeg']), "* All Images", "Please select an image for "+mouthIcon.mouth_shape)
 		fileSelectorPreview.rect_global_position = OS.window_size/2 - fileSelectorPreview.rect_size/2
-#		fileSelectorPreview.filters = PoolStringArray(['png','jpg','jpeg'])
 		owner.pluginInstance.add_child(fileSelectorPreview)
 	else:
 	
