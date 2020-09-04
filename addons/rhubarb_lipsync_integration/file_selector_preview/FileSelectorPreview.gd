@@ -1,6 +1,8 @@
 tool
 extends Control
 
+signal file_selected (filepath)
+
 var starting_dir :String= "res://"
 
 var current_file :String= "" setget _set_current_file
