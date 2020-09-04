@@ -4,6 +4,8 @@ extends HBoxContainer
 func _ready() -> void:
 	$ReturnButton.connect("pressed",self,"_on_ReturnButton_pressed")
 	$LineEdit.connect("text_entered", self, "_on_text_entered")
+	
+	
 
 func _on_ReturnButton_pressed():
 	var a:String

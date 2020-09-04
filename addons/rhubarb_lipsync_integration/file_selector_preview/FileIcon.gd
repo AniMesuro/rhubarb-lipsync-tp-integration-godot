@@ -20,11 +20,31 @@ func setup():
 	var label :Label= $Label
 	
 	label.text = file_name
+	var preview :TextureButton= $Preview
+	var eCtrl :Control = get_parent().fileSelectorPreview.editorControl
 	match file_name.get_extension():
 		'png','jpg':
-				var preview :TextureButton= $Preview
-				preview.texture_normal = load(get_parent().fileSelectorPreview.current_dir+ file_name)
-#				print(get_parent().fileSelectorPreview.current_dir+ file_name)
+			preview.texture_normal = load(get_parent().fileSelectorPreview.current_dir+ file_name)
+		'gd':
+			if is_instance_valid(eCtrl):
+				preview.texture_normal = eCtrl.get_icon("GDScript", "EditorIcons")
+		'tscn', 'scn':
+			if is_instance_valid(eCtrl):
+				preview.texture_normal = eCtrl.get_icon("PackedScene", "EditorIcons")
+		'txt':
+			if is_instance_valid(eCtrl):
+				preview.texture_normal = eCtrl.get_icon("RichTextLabel", "EditorIcons")
+		'ini', 'cfg':
+			if is_instance_valid(eCtrl):
+				preview.texture_normal = eCtrl.get_icon("TextFile", "EditorIcons")
+		_:
+			if file_name.get_extension() == "":
+				return
+			if is_instance_valid(eCtrl):
+				preview.texture_normal = eCtrl.get_icon("File", "EditorIcons")
+				
+#			if is_instance_valid(eCtrl):
+#				preview.texture_normal = eCtrl.
 
 func _set_selected(value :bool):
 	if selected == value:

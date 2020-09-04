@@ -7,6 +7,10 @@ func _ready() -> void:
 	hSlider = $HSlider
 	var filePanel :Panel= $"../FilePanel"
 	
+	
+	if is_instance_valid(owner.editorControl):
+		$ZoomIcon.texture = owner.editorControl.get_icon("Zoom", "EditorIcons")
+	
 	filePanel.connect("resized", self, "_on_FilePanel_resized")
 	hSlider.connect( "value_changed", self, "_on_value_changed")
 #	call_deferred("_update_FileIcon_sizes")

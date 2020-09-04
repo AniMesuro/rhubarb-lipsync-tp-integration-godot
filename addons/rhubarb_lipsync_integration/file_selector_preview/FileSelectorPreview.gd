@@ -13,6 +13,16 @@ var dir_folders :PoolStringArray= PoolStringArray()
 var filters :PoolStringArray= PoolStringArray(['png','jpg'])
 var current_filter :String= "" setget _set_current_filter
 
+var editorControl :Control
+func _enter_tree() -> void:
+	if is_instance_valid(editorControl):
+		return
+	# Gets any Control node from the Editor for getting Editor icons.
+	for child in get_tree().root.get_node("EditorNode").get_children():
+		if child is Control:
+			editorControl = child
+			break
+
 func _ready() -> void:
 	current_dir = starting_dir
 	_list_files()
@@ -22,6 +32,7 @@ func _ready() -> void:
 	# Hacky way to get anchors to update properly.
 	rect_size = rect_size+Vector2(1,1)
 	$Panel/RectHandlerContainer.handler_size = $Panel/RectHandlerContainer.handler_size
+	
 	
 
 var filesystem_access :int
