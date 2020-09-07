@@ -4,6 +4,7 @@ extends HBoxContainer
 const STR_ANIMATIONPLAYER_SELECTED :String = "Please select an Animation from AnimationPlayer"
 const STR_ANIMATIONPLAYER_NOT_SELECTED :String = "Please select an AnimationPlayer above before selecting animation."
 
+const TEX_IconExpand :StreamTexture= preload("res://addons/rhubarb_lipsync_integration/assets/icons/icon_expand.png")
 #const TEX_icon_not :StreamTexture= preload("res://addons/rhubarb_lipsync_importer/assets/icons/icon_not.png")
 #const TEX_icon_yes :StreamTexture= preload("res://addons/rhubarb_lipsync_importer/assets/icons/icon_yes.png")
 
@@ -28,10 +29,10 @@ func _ready() -> void:
 
 func _on_MenuButton_pressed():
 	var animPlayer :AnimationPlayer= owner.anim_animationPlayer
+	popupMenu.clear()
 	if !is_instance_valid(animPlayer):
 		return
 	
-	popupMenu.clear()
 	for animation in animPlayer.get_animation_list():
 		popupMenu.add_item(animation)
 	
@@ -47,16 +48,19 @@ func _on_PopupMenu_item_selected(id :int):
 
 
 func _on_owner_reference_updated(owner_reference :String):
+	menuButton = $MenuButton
 	if owner_reference != 'anim_animationPlayer':
 		return
 	if !is_instance_valid(owner.anim_animationPlayer):
 		menuButton.text = STR_ANIMATIONPLAYER_NOT_SELECTED
+		menuButton.icon = TEX_IconExpand
 		enable_warning("Selected AnimationPlayer isn't valid or failed to be called.")
 		return
 	menuButton.text = STR_ANIMATIONPLAYER_SELECTED
 	enable_warning("No Animation selected.")
 	
 func enable_warning(message :String):
+	warningIcon = $WarningIcon
 	warningIcon.visible = true
 	warningIcon.hint_tooltip = message
 

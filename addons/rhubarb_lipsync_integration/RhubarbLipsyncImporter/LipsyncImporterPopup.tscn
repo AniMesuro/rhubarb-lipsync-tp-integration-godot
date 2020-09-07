@@ -361,8 +361,9 @@ text = "NodePath to mouth Sprite:"
 [node name="Button" parent="Panel/VBox/TabContainer/Sprite/MouthSpriteHBox" instance=ExtResource( 2 )]
 margin_right = 738.0
 margin_bottom = 24.0
-text = "Please select a Sprite node."
+text = "No Sprite found at tree."
 expand_icon = true
+NO_NODE_FOUND = "No Sprite found at tree."
 owner_reference = "anim_mouthSprite"
 node_type = "Sprite"
 
@@ -403,7 +404,7 @@ text = "NodePath to AnimatedSprite:"
 margin_left = 274.0
 margin_right = 738.0
 margin_bottom = 24.0
-text = "Please select an AnimatedSprite."
+text = "No AnimatedSprite found at tree."
 expand_icon = true
 NO_NODE_FOUND = "No AnimatedSprite found at tree."
 owner_reference = "anim_mouthAnimSprite"
@@ -449,7 +450,7 @@ margin_left = 742.0
 margin_right = 766.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 24, 24 )
-hint_tooltip = "No AnimatedSprite node selected. Can't proceed"
+hint_tooltip = "Selected AnimatedSprite isn't valid or failed to be called."
 size_flags_horizontal = 0
 texture = ExtResource( 10 )
 expand = true
@@ -481,6 +482,8 @@ size_flags_vertical = 3
 [node name="RestMouth" parent="Panel/VBox/TabContainer/AnimatedSprite/Panel/MouthFrames/TopHBox" instance=ExtResource( 43 )]
 margin_right = 150.0
 margin_bottom = 90.0
+mouth_shape = "rest"
+default_mouth = 0
 
 [node name="MBPMouth" parent="Panel/VBox/TabContainer/AnimatedSprite/Panel/MouthFrames/TopHBox" instance=ExtResource( 43 )]
 margin_left = 154.0
@@ -563,8 +566,9 @@ text = "NodePath to AnimationPlayer:"
 margin_left = 284.0
 margin_right = 746.0
 margin_bottom = 24.0
-text = "Please select an AnimationPlayer node."
+text = "No AnimationPlayer found at tree."
 expand_icon = true
+NO_NODE_FOUND = "No AnimationPlayer found at tree."
 owner_reference = "anim_animationPlayer"
 node_type = "AnimationPlayer"
 
@@ -612,7 +616,7 @@ margin_left = 750.0
 margin_right = 774.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 24, 24 )
-hint_tooltip = "No AnimationPlayer node selected. Can't proceed"
+hint_tooltip = "Selected AnimationPlayer isn't valid or failed to be called."
 texture = ExtResource( 10 )
 expand = true
 __meta__ = {
@@ -638,8 +642,9 @@ text = "Nodepath to AudioStreamPlayer:"
 margin_left = 304.0
 margin_right = 746.0
 margin_bottom = 24.0
-text = "Please select an AudioStreamPlayer node."
+text = "No AudioStreamPlayer found at tree."
 expand_icon = true
+NO_NODE_FOUND = "No AudioStreamPlayer found at tree."
 owner_reference = "anim_audioPlayer"
 node_type = "AudioStreamPlayer"
 
@@ -676,7 +681,7 @@ margin_right = 746.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "Please select AudioStreamPlayer, AnimationPlayer and An..."
+text = "Please select an AnimationPlayer above before selecting animation."
 icon = ExtResource( 25 )
 flat = false
 clip_text = true
@@ -688,7 +693,7 @@ margin_left = 750.0
 margin_right = 774.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 24, 24 )
-hint_tooltip = "No AnimationPlayer node selected."
+hint_tooltip = "Selected AnimationPlayer isn't valid or failed to be called."
 texture = ExtResource( 10 )
 expand = true
 __meta__ = {
@@ -707,7 +712,6 @@ text = "Generate Lipsync Animation"
 [node name="RectHandlers" parent="Panel" instance=ExtResource( 35 )]
 modulate = Color( 1, 1, 1, 0 )
 _windowRect = NodePath("..")
-debug_mode = false
 
 [node name="HandlerTop" parent="Panel/RectHandlers" index="0"]
 margin_right = 794.0

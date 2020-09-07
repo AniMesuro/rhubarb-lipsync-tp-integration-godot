@@ -2,10 +2,13 @@ tool
 extends Control
 
 signal updated_reference (reference_name)
+signal parameters_reset
 
 const STR_ERROR_not_enough_references :String= "Can't proceed. Some references are missing."
 const STR_ERROR_plugin_reference_not_valid :String= "Can't proceeed. Rhubarb Lipsync TPI Plugin Reference not valid."
 const STR_ERROR_SpriteFrames_not_enough_frames :String= "Can't proceed. SpriteFrames has no frames."
+
+const TEX_IconExpand :StreamTexture= preload("res://addons/rhubarb_lipsync_integration/assets/icons/icon_expand.png")
 
 var handlerTop :ReferenceRect
 var handlerBottom :ReferenceRect
@@ -47,6 +50,8 @@ func _enter_tree() -> void:
 	pluginInstance = _get_pluginInstance()
 	pluginInstance.load_settings()
 	
+	if !pluginInstance.is_connected("scene_changed", self, "_on_scene_changed"):
+		pluginInstance.connect("scene_changed", self, "_on_scene_changed")
 
 func _get_pluginInstance() -> EditorPlugin:
 	if get_tree().has_group("plugin rhubarb_lipsync_integration"):
@@ -221,3 +226,14 @@ func slice_audio(anim_audiokey :Dictionary) -> String:
 	if new_stream.save_to_wav(output_path) == OK:
 		return output_path
 	return ""
+
+func _on_scene_changed(sceneRoot :Node):
+	anim_animationPlayer = null
+	anim_audioPlayer = null
+	anim_mouthAnimSprite = null
+	anim_mouthAnimSprite_anim = ""
+	anim_mouthSprite = null
+	anim_name = ""
+	anim_audiokey = {}
+	emit_signal("updated_reference", "anim_animationPlayer")
+	emit_signal("parameters_reset")

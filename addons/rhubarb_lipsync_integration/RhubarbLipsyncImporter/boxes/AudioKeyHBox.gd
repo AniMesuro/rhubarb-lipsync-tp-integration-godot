@@ -6,7 +6,8 @@ extends HBoxContainer
 const STR_ANIMATIONPLAYER_SELECTED :String = "Please select an Animation from AnimationPlayer"
 const STR_ANIMATIONPLAYER_NOT_SELECTED :String = "Please select an AnimationPlayer above before selecting animation."
 const STR_AUDIOPLAYER_SELECTED :String = "Please select an Audio Clip Keyframe from Audio track."
-const STR_AUDIOPLAYER_NOT_SELECTED :String = "Please select an AudioStreaamPlayer above before selecting animation."
+const STR_AUDIOPLAYER_NOT_SELECTED :String = "Please select an AudioStreamPlayer above before selecting animation."
+const TEX_IconExpand :StreamTexture= preload("res://addons/rhubarb_lipsync_integration/assets/icons/icon_expand.png")
 
 var is_safe_to_load :bool= false
 var clip_path :PoolStringArray= []
@@ -25,6 +26,7 @@ func _ready() -> void:
 	owner.connect("updated_reference", self, "_on_owner_reference_updated")
 	popupMenu.connect("id_pressed", self, '_on_PopupMenu_item_selected')
 	button.connect( "pressed", self, "_on_Button_pressed")
+	
 
 func _on_PopupMenu_item_selected(id :int):
 	if id != -1:
@@ -83,6 +85,7 @@ func _on_Button_pressed():
 		clip_path[clip_id] = clip.resource_path
 
 func enable_warning(message :String):
+	warningIcon = $WarningIcon
 	warningIcon.visible = true
 	warningIcon.hint_tooltip = message
 
@@ -91,6 +94,7 @@ func disable_warning():
 
 func _on_owner_reference_updated(owner_reference :String):
 #	ERROR CHECKING
+	if !is_instance_valid(button):button = $Button
 	if!(owner_reference == 'anim_animationPlayer'
 	or  owner_reference == 'anim_name'
 	or  owner_reference == 'anim_audioPlayer'):
@@ -98,6 +102,7 @@ func _on_owner_reference_updated(owner_reference :String):
 		
 	if !is_instance_valid(owner.anim_animationPlayer):
 		button.text = STR_ANIMATIONPLAYER_NOT_SELECTED
+		button.icon = TEX_IconExpand
 		enable_warning("Selected AnimationPlayer isn't valid or failed to be called.")
 		if is_safe_to_load: is_safe_to_load = false
 		return
@@ -128,6 +133,7 @@ func _on_owner_reference_updated(owner_reference :String):
 		return
 	
 	button.text = STR_AUDIOPLAYER_SELECTED
+	
 	disable_warning()
 	if !is_safe_to_load: is_safe_to_load = true
 #	Error checking end.
