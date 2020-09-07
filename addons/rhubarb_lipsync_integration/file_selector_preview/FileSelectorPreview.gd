@@ -12,7 +12,7 @@ var dir_files :PoolStringArray= PoolStringArray()
 var dir_folders :PoolStringArray= PoolStringArray()
 
 var filters :PoolStringArray= PoolStringArray()
-var current_filter :String= "" setget _set_current_filter
+var current_filter :String= "*" setget _set_current_filter
 
 var editorControl :Control
 func _enter_tree() -> void:
@@ -31,7 +31,8 @@ func _ready() -> void:
 	yield(get_tree(), "idle_frame")
 	
 	# Hacky way to get anchors to update properly.
-	rect_size = rect_size+Vector2(1,1)
+#	rect_size = rect_size-Vector2(1,1)
+	$Panel.rect_size = rect_size
 	$Panel/RectHandlerContainer.handler_size = $Panel/RectHandlerContainer.handler_size
 	
 	

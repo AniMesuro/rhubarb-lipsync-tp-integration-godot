@@ -9,9 +9,10 @@ func _ready() -> void:
 	var extensionMenu :MenuButton= $ExtensionMenu
 	extensionMenu.get_popup().connect("id_pressed", self, "_on_ExtensionMenuPopup_pressed")
 	
+	extensionMenu.get_popup().clear()
 	extensionMenu.get_popup().add_item(all_filters_option)
 	extensionMenu.text = all_filters_option
-	owner.current_filter = "*"
+#	owner.current_filter = "*"
 	for extension in owner.filters:
 		extensionMenu.get_popup().add_item(extension)
 

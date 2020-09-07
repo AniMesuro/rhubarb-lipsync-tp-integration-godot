@@ -6,7 +6,7 @@ export var _windowRect :NodePath setget _set_windowRect
 
 var _visible :bool= false setget set_pseudovisible
 
-export var debug_mode :bool= false
+export var debug_mode :bool= false setget _set_debug_mode
 
 var handlerTop :ReferenceRect
 var handlerBottom :ReferenceRect
@@ -88,3 +88,10 @@ func _on_visibility_changed():
 	self._visible = !_visible
 	if !visible: visible = true
 	connect( "visibility_changed", self, "_on_visibility_changed")
+
+func _set_debug_mode(value :bool):
+	debug_mode = value
+	
+	for child in get_children():
+		if child.debug_mode != debug_mode:
+			child.debug_mode = debug_mode
