@@ -56,7 +56,7 @@ func _on_PopupMenu_item_selected(id :int):
 
 func _clear_clip_path_array():
 	for i in clip_path.size():
-		clip_path.remove(i)
+		clip_path.remove(0)
 
 func _on_Button_pressed():
 	popupMenu.clear()
