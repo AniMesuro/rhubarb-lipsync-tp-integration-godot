@@ -48,7 +48,7 @@ func _load_default_mouthtexture_paths():
 		])
 	var f :File= File.new()
 	if !f.file_exists(default_mouthtexture[0]):
-		print("Error! Image doesn't exist at path ", default_mouthtexture[0])
+		print("[Rhubarb Lip Sync TPI] Error! Image doesn't exist at path ", default_mouthtexture[0])
 
 func load_mouthshape_library_file():
 	if !is_inside_tree():
@@ -58,12 +58,15 @@ func load_mouthshape_library_file():
 #	if mouthLibraryDB != {}: mouthLibraryDB = {}
 	create_new_mouthshape_library('default')
 	var library_file :ConfigFile= ConfigFile.new()
+	var file :File= File.new()
 	
 	var err = library_file.load(owner.path_plugin + PATH_MOUTHLIBRARIES + FILENAME_MOUTHLIBRARIES)
 	if err == OK:
 		if !library_file.has_section('default'):
 			save_mouthshape_library('default')
-			
+		
+		# Fill MouthLibraryDB with the data on MouthLibraries file.
+		# If key doesn't exist, defaults to default_mouthtexture[i]
 		for section in library_file.get_sections():
 			mouthLibraryDB[section] = {
 			'rest': library_file.get_value(section, 'rest', default_mouthtexture[0]), # need a default path value
@@ -76,7 +79,11 @@ func load_mouthshape_library_file():
 			'L': library_file.get_value(section, 'L', default_mouthtexture[7]),
 			'AI': library_file.get_value(section, 'AI', default_mouthtexture[8])
 			}
-		
+			
+			# If path at mouth library is invalid, defaults to default_mouthtexture[i]
+			for i in mouthLibraryDB[section].size():
+				if !file.file_exists(mouthLibraryDB[section][mouthLibraryDB[section].keys()[i]]):
+					mouthLibraryDB[section][mouthLibraryDB[section].keys()[i]] = default_mouthtexture[i]
 		
 	elif err == ERR_FILE_NOT_FOUND:
 		save_mouthshape_library('default')

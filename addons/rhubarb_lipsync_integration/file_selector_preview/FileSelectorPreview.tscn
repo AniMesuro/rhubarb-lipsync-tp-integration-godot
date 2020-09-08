@@ -217,13 +217,12 @@ text = "Cancel"
 size_flags_horizontal = 0
 size_flags_vertical = 0
 _windowRect = NodePath("../..")
-debug_mode = true
 
 [node name="HandlerTop" parent="Panel/RectHandlerContainer" index="0"]
 modulate = Color( 1, 1, 1, 1 )
 margin_right = 336.0
 handler_direction = 0
-debug_mode = true
+debug_mode = false
 _windowRect = NodePath("../../..")
 
 [node name="HandlerBottom" parent="Panel/RectHandlerContainer" index="1"]
@@ -231,13 +230,13 @@ modulate = Color( 1, 1, 1, 1 )
 margin_top = 443.0
 margin_right = 336.0
 margin_bottom = 453.0
-debug_mode = true
+debug_mode = false
 _windowRect = NodePath("../../..")
 
 [node name="HandlerLeft" parent="Panel/RectHandlerContainer" index="2"]
 modulate = Color( 1, 1, 1, 1 )
 margin_bottom = 453.0
-debug_mode = true
+debug_mode = false
 _windowRect = NodePath("../../..")
 
 [node name="HandlerRight" parent="Panel/RectHandlerContainer" index="3"]
@@ -245,7 +244,7 @@ modulate = Color( 1, 1, 1, 1 )
 margin_left = 326.0
 margin_right = 336.0
 margin_bottom = 453.0
-debug_mode = true
+debug_mode = false
 _windowRect = NodePath("../../..")
 
 [editable path="Panel/RectHandlerContainer"]

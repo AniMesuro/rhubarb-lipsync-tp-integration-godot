@@ -4,6 +4,8 @@ extends VBoxContainer
 export (String) var mouth_shape = "rest" setget _set_mouth_shape
 export (StreamTexture) var default_mouth setget _set_default_mouth
 
+const TEX_InvalidIcon :StreamTexture= preload("res://addons/rhubarb_lipsync_integration/assets/icons/icon_warning.png")
+
 var mouthTextures :Node
 var textureButton :TextureButton
 

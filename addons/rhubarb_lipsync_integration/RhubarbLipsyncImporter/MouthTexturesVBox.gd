@@ -13,6 +13,8 @@ func reload_mouthshape_textures(library :Dictionary):
 		if !library.has(mouthshape):
 			continue
 		mouthDB[mouthshape] = load(library[mouthshape])
+		if !mouthIconDB.has(mouthshape):
+			continue
 		if is_instance_valid(mouthIconDB[mouthshape]):
 			if is_instance_valid(mouthIconDB[mouthshape].textureButton):
 				mouthIconDB[mouthshape].textureButton.texture_normal = load(library[mouthshape])
