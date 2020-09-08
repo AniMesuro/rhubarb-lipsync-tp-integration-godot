@@ -22,11 +22,9 @@ func _ready() -> void:
 func _enter_tree() -> void:
 	closeButton = $CloseButton
 	
-#	set_process_input(false)
 	
 	if window_path == NodePath():
 		if get_tree().edited_scene_root != self:
-#			window_path = owner.get_path()
 			window_path = self.get_path_to(owner)
 		else:
 			return
@@ -49,8 +47,6 @@ func _set_title_name(value :String):
 	
 	label = $Label
 	
-#	if window_path == NodePath():
-#		print('window_path =',str(window_path),'= nodepath()')
 	title_name = value
 	label.text = value
 
@@ -92,7 +88,6 @@ func _input(event: InputEvent) -> void:
 	
 	if event is InputEventMouseButton:
 		if event.is_pressed():
-#			print('__mouse pressed')
 			if event.button_index == BUTTON_LEFT:
 				offset = get_global_mouse_position() - windowRect.rect_position 
 				moving_panel = true

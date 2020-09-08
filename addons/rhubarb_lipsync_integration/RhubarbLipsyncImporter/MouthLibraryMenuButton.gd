@@ -29,6 +29,7 @@ func _ready() -> void:
 	if !is_inside_tree():
 		yield(self, "tree_entered")
 	SCN_AskNamePopup = load(owner.pluginInstance.path_plugin + "interface/AskNamePopup.tscn")
+	
 ##################
 
 
@@ -44,6 +45,7 @@ func _set_current_library(value):
 func _on_PopupMenu_item_selected(id :int):
 	self.current_library = popupMenu.get_item_text(id)
 #	updates mouthTextures panel with the textures from the selected library.
+	
 	mouthTextures.reload_mouthshape_textures(mouthLibraryHBox.mouthLibraryDB[current_library])
 #	text = current_library
 

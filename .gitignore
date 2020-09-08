@@ -4,14 +4,17 @@
 export.cfg
 export_presets.cfg
 *.import
+icon.png
+*.godot
+
 
 # This project specific ignores
 *.tsv
 *.clip
 *.psd
-addons/rhubarb_lipsync_integration/settings.ini
 addons/rhubarb_lipsync_integration/mouthshape_libraries.ini
-addons/rhubarb_lipsync_integration/_temp/*.tsv
+addons/rhubarb_lipsync_integration/settings.ini
+addons/rhubarb_lipsync_integration/.temp/*.tsv
 
 # Mono-specific ignores
 .mono/

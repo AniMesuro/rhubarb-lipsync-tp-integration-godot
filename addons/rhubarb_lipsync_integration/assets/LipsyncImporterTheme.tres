@@ -17,6 +17,10 @@ corner_detail = 9
 
 [sub_resource type="StyleBoxFlat" id=3]
 bg_color = Color( 0.078732, 0.0785522, 0.101563, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
 
 [resource]
 default_font = ExtResource( 1 )

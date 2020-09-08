@@ -6,6 +6,8 @@ export var _windowRect :NodePath setget _set_windowRect
 
 var _visible :bool= false setget set_pseudovisible
 
+export var debug_mode :bool= false setget _set_debug_mode
+
 var handlerTop :ReferenceRect
 var handlerBottom :ReferenceRect
 var handlerLeft :ReferenceRect
@@ -49,7 +51,7 @@ func set_handler_size(value :int):
 		if !child is ReferenceRect:
 			continue
 		child.handler_size = value
-		
+		child._fix_handler_rect(child.handler_direction)
 
 #Istead of making the handlers visible/invisible, it will make the modulate alpha 0
 #ReferenceRect doesn't appear to execute when invisible.
@@ -59,6 +61,12 @@ func set_pseudovisible(value :bool):
 		yield(self, "tree_entered")
 	if !is_instance_valid(windowRect):
 		return
+	
+	if debug_mode:
+		modulate = Color.white
+		_visible = true
+		return
+	
 	_visible = value
 	if value:
 		#If window is being edited, toggle _visible, this node should not be visible from being instanced
@@ -72,9 +80,18 @@ func set_pseudovisible(value :bool):
 func _on_visibility_changed():
 	if !is_instance_valid(self):
 		return
+	if !is_inside_tree():
+		return
 	if is_connected( "visibility_changed", self, "_on_visibility_changed"):
 		disconnect( "visibility_changed", self, "_on_visibility_changed")
 #	print('visible ',visible)
 	self._visible = !_visible
 	if !visible: visible = true
 	connect( "visibility_changed", self, "_on_visibility_changed")
+
+func _set_debug_mode(value :bool):
+	debug_mode = value
+	
+	for child in get_children():
+		if child.debug_mode != debug_mode:
+			child.debug_mode = debug_mode

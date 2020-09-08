@@ -86,8 +86,12 @@ func _clean_files():
 		Dir.list_dir_end()
 		
 		for i in files.size():
+			# Remove lipsync and sliced audio files.
 			if files[i].get_extension() == "tsv":
 				Dir.remove(files[i])
+			elif files[i].get_extension() == "wav":
+				if "SLICED" in files[i]:
+					Dir.remove(files[i])
 	else:
 		return
 		
@@ -106,15 +110,23 @@ func load_settings():
 	var err = configFile.load(self.path_plugin + FILENAME_SETTINGS)
 	if err == OK:
 		for section in configFile.get_sections():
-			Settings[section] = {}
+#			Might be redundant as the default_settings already created the section
+#				Settings[section] = {}
+			
 			for key in configFile.get_section_keys(section):
 				Settings[section][key] = configFile.get_value(section, key)
+			if Settings[section].size() > configFile.get_section_keys(section).size():
+				save_settings()
 		
 		#Check if Settings file has empty sections
 		for section in Settings:
 			if !configFile.has_section(section):
 				save_settings()
 				break
+#			for key in Settings[section]:
+#				print('settings:',section,':',key)
+#				if !configFile.has_section_key(section, )
+				
 	elif err == ERR_FILE_NOT_FOUND:
 #		load_default_settings()
 		save_settings()
@@ -133,10 +145,19 @@ func load_default_settings(keys :PoolStringArray= PoolStringArray([])):
 			'recognizer': SpeechRecognizer.pocketSphinx
 		},
 		'output': {
-			'path': self.path_plugin+'_temp/',
+			'path': self.path_plugin+'.temp/',
 			'clean_mode': CleanMode.Never
+		},
+		'file_checks': {
+			'timer_max_calls': 200, # 10 min for 3 s.
+			'timer_sec': 3
+		},
+		'file_selection': {
+			'file_dialog': "file_selector_preview" #godot #file_selector_preview
 		}
 	}
+#	print('_defaultsettings ',_default_settings['output']['path'])
+	
 	
 	if keys == PoolStringArray([]):
 		Settings = _default_settings
@@ -168,7 +189,8 @@ func save_settings():
 func _on_importLipsync_Run(event) -> void:
 	lipsyncImporterPopup = load(self.path_plugin + "RhubarbLipsyncImporter/LipsyncImporterPopup.tscn").instance()
 	add_child(lipsyncImporterPopup)
-	lipsyncImporterPopup.find_node('Panel').rect_position = OS.window_position + OS.window_size*.5 - lipsyncImporterPopup.find_node('Panel').rect_size*.5
+#	lipsyncImporterPopup.find_node('Panel').rect_position = OS.window_position + OS.window_size*.5 - lipsyncImporterPopup.find_node('Panel').rect_size*.5
+	lipsyncImporterPopup.find_node('Panel').rect_position = OS.window_size*.5 - lipsyncImporterPopup.find_node('Panel').rect_size*.5
 	lipsyncImporterPopup.pluginInstance = self
 
 func get_plugin_name() -> String:
@@ -245,7 +267,6 @@ func run_rhubarb_lipsync(path_input_audio :String, are_paths_absolute :bool= fal
 	if pid == -1:
 		print("Error. Rhubarb binary file didn't execute successfully.")
 		return
-	print('Rhubarb binary file executed succesfully. Check Debug Console for Progress or Errors. ')
 	
 #	Gross and hacky workaround, ideally the progress bar should show in the Editor
 #	or at least printed also on the Editor Console.
@@ -264,10 +285,10 @@ func run_rhubarb_lipsync(path_input_audio :String, are_paths_absolute :bool= fal
 
 
 	var timer_max_calls :int= ceil(length * 0.33 * 2.5) #0.2 = portions of 5sec | 0.33 portions of 3sec
-	timer_max_calls = clamp(timer_max_calls, 20, 84) #20 calls = 1min | 84= 7min
+	timer_max_calls = clamp(timer_max_calls, 20, Settings.file_checks.timer_max_calls) #20 calls = 1min | 200 calls = 10 min | 84= 7min
 	
-	var timer_sec :int= 3
-	print("Rhubarb is generating lipsync... This may take up to a few minutes. (NOT A ESTIMATE) Plugin will wait for max. "+str(timer_sec * timer_max_calls)+' sec')
+	var timer_sec :int= Settings.file_checks.timer_sec # 3 sec default
+	print("Rhubarb is generating lipsync... This may take up to a few minutes. (NOT A ESTIMATE) Plugin will wait for max. "+str(timer_sec * timer_max_calls)+" sec. Check Debug Console for Progress or Errors.")
 	
 	rhubarbTimer.start(timer_sec)
 	timer_remainingcalls = timer_max_calls
@@ -279,7 +300,6 @@ func _on_RhubarbTimer_timeout(output_filepath :String, input_filename :String, t
 		
 	var Dir :Directory= Directory.new()
 	if Dir.file_exists(output_filepath):
-		print("Rhubarb finished generating "+input_filename+".tsv file.")
 		emit_signal("finished_generating_lipsync_data")
 		rhubarbTimer.disconnect("timeout", self, "_on_RhubarbTimer_timeout")
 		if !rhubarbTimer.is_queued_for_deletion():
@@ -329,25 +349,46 @@ func get_prestonblair_mouthtexture(rhubarb_shape :String, mouthDB :Dictionary) -
 #it can yield forever and cause a memory leak.
 func import_deferred_lipsync(
  audiokey :Dictionary,
- mouthSprite :Sprite,
+ extraParams :Array,
+# mouthSprite :Sprite,
  audioPlayer :AudioStreamPlayer,
  animationPlayer :AnimationPlayer,
  anim_name :String,
  mouthDB :Dictionary
  ): #override_region :bool= false
-
+	var mouthSprite :Sprite
+	var mouthAnimSprite :AnimatedSprite
+	var mouthAnimSprite_anim :String
+	
+	for param in extraParams:
+		if param is Sprite:
+			mouthSprite = param
+		elif param is AnimatedSprite:
+			mouthAnimSprite = param
+		elif param is String:
+			mouthAnimSprite_anim = param
+	
 	var anim = animationPlayer.get_animation(anim_name)
 	yield(self, "finished_generating_lipsync_data")
-	import_lipsync(
-		anim,
-		animationPlayer,
-		audiokey,
-		audioPlayer,
-		mouthDB,
-		mouthSprite
-	)
-	print("Importing Lipsync to " + anim_name + "...")
-	
+	if is_instance_valid(mouthSprite):
+		import_lipsync(
+			anim,
+			animationPlayer,
+			audiokey,
+			audioPlayer,
+			mouthDB,
+			[mouthSprite]
+		)
+	elif is_instance_valid(mouthAnimSprite):
+		import_lipsync(
+			anim,
+			animationPlayer,
+			audiokey,
+			audioPlayer,
+			mouthDB,
+			[mouthAnimSprite, mouthAnimSprite_anim]
+		)
+			
 	
 
 func import_lipsync(
@@ -356,23 +397,61 @@ func import_lipsync(
  audiokey :Dictionary,
  audioPlayer :AudioStreamPlayer,
  mouthDB :Dictionary,
- mouthSprite :Sprite
+ extraParams :Array
+# mouthSprite :Sprite
  ):
+	var mouthSprite :Sprite
+	var mouthAnimSprite :AnimatedSprite
+	var mouthAnimSprite_anim :String
+	
+	for param in extraParams:
+		if param is Sprite:
+			mouthSprite = param
+		elif param is AnimatedSprite:
+			mouthAnimSprite = param
+		elif param is String:
+			mouthAnimSprite_anim = param
+	
+	if !is_instance_valid(mouthSprite) && !is_instance_valid(mouthAnimSprite):
+		print("Rhubarb Lipsync TPI didn't find a Sprite nor an AnimatedSprite to continue importing lipsync.")
+		return
+	
+	
 	var anim_root :Node= animationPlayer.get_node(animationPlayer.root_node)
 	
-	var tr_mouth_texture :int= anim.find_track(str(anim_root.get_path_to(mouthSprite))+':texture')
+	
+	var tr_mouth_anim :int= -1
+	var tr_mouth_frame :int= -1
+	var tr_mouth_texture :int= -1
 	var tr_audio :int= anim.find_track(anim_root.get_path_to(audioPlayer))
+	if is_instance_valid(mouthSprite):
+		tr_mouth_texture = anim.find_track(str(anim_root.get_path_to(mouthSprite))+':texture')
+		
+		if tr_mouth_texture == -1: #If mouthSprite:texture track doesn't exist, create one.
+			tr_mouth_texture = anim.add_track(Animation.TYPE_VALUE)
+			anim.track_set_path(tr_mouth_texture, str(anim_root.get_path_to(mouthSprite))+':texture')
+	elif is_instance_valid(mouthAnimSprite):
+		tr_mouth_anim = anim.find_track(str(anim_root.get_path_to(mouthAnimSprite))+':animation')
+		if tr_mouth_anim == -1:
+			tr_mouth_anim = anim.add_track(Animation.TYPE_VALUE)
+			anim.track_set_path(tr_mouth_anim, str(anim_root.get_path_to(mouthAnimSprite))+':animation')
+			anim.value_track_set_update_mode(tr_mouth_anim, Animation.UPDATE_DISCRETE)
+		tr_mouth_frame = anim.find_track(str(anim_root.get_path_to(mouthAnimSprite))+':frame')
+		if tr_mouth_frame == -1:
+			tr_mouth_frame = anim.add_track(Animation.TYPE_VALUE)
+			anim.track_set_path(tr_mouth_frame, str(anim_root.get_path_to(mouthAnimSprite))+':frame')
+			anim.value_track_set_update_mode(tr_mouth_frame, Animation.UPDATE_DISCRETE)
 	
-	if tr_mouth_texture == -1: #If mouthSprite:texture track doesn't exist, create one.
-		tr_mouth_texture = anim.add_track(Animation.TYPE_VALUE)
-		anim.track_set_path(tr_mouth_texture, str(anim_root.get_path_to(mouthSprite))+':texture')
-	
-	
-	var lipsync_filepath = Settings.output.path + audiokey.stream.resource_path.get_basename().get_file()+'.tsv'
+	var lipsync_filepath :String= ""
+	if !audiokey.has('sliced_path'):
+		lipsync_filepath = Settings.output.path + audiokey.stream.resource_path.get_basename().get_file()+'.tsv'
+	else:
+		lipsync_filepath = Settings.output.path + audiokey.sliced_path.get_basename().get_file() + '.tsv'
 	var f = File.new()
 	if !f.file_exists(lipsync_filepath):
-		print("Rhubarb Lipsync TPI Importing tried to start, but lipsync file was not found.")
+		print("Rhubarb Lip Sync TPI Importing tried to start, but lipsync file was not found.")
 		return
+	print("[Rhubarb Lip Sync TPI] Importing Lip Sync to " + anim.resource_name)
 	f.open(lipsync_filepath, f.READ)
 	var ls_text :String= f.get_as_text() #lipsync_data
 	f.close()
@@ -381,8 +460,12 @@ func import_lipsync(
 	
 	var ls_line :PoolStringArray= ls_text.split("\n")
 	
-	var lipsync_start_time :float= audiokey.time - audiokey.start_offset
-	var lipsync_end_time :float= audiokey.time + audiokey.stream.get_length() - audiokey.start_offset - audiokey.end_offset
+	var lipsync_start_time :float= audiokey.time
+	var lipsync_end_time :float= audiokey.time + audiokey.stream.get_length()
+	if !audiokey.has('sliced_path'):
+		lipsync_start_time -= audiokey.start_offset #audiokey.time - audiokey.start_offset
+		lipsync_end_time -= audiokey.start_offset + audiokey.end_offset #audiokey.time + audiokey.stream.get_length() - audiokey.start_offset - audiokey.end_offset
+#	print("lipsync offset +",lipsync_start_time," -",lipsync_end_time)
 	
 	for line in ls_line.size():
 		var sample :PoolStringArray= ls_line[line].split("	", false, 2)
@@ -390,15 +473,59 @@ func import_lipsync(
 			break
 		
 		var cur_time :float= lipsync_start_time + float(sample[0])
+		
 		#If key happens before the audiokey, ignore key.
-		if cur_time < lipsync_start_time + audiokey.start_offset:
-			continue
+		if !audiokey.has('sliced_path'):
+			if cur_time < lipsync_start_time + audiokey.start_offset:
+				continue
+		else:
+			if cur_time < lipsync_start_time:
+				continue
 		#If key happens after the audiokey, ignore the rest of the keys.
 		if cur_time > lipsync_end_time:
 			break
-		var mouthshape :StreamTexture= get_prestonblair_mouthtexture(sample[1], mouthDB)
-		anim.track_insert_key(
-		 tr_mouth_texture,
-		 lipsync_start_time + float(sample[0]),
-		 mouthshape, 0)
+		if is_instance_valid(mouthSprite):
+			var mouthshape :StreamTexture= get_prestonblair_mouthtexture(sample[1], mouthDB)
+			anim.track_insert_key(
+			 tr_mouth_texture,
+			 lipsync_start_time + float(sample[0]),
+			 mouthshape, 0)
+		elif is_instance_valid(mouthAnimSprite):
+			if anim.track_find_key(tr_mouth_anim, 0.0) == -1:
+				anim.track_insert_key(
+						tr_mouth_anim,
+						0.0,
+						mouthAnimSprite_anim
+				)
+			
+			
+			var mouthshape_frame :int= 0
+			# In MouthFrames mouthDB is based on ints instead of StreamTextures
+			match sample[1]:
+				'A':
+					mouthshape_frame = mouthDB['MBP']
+				'B':
+					mouthshape_frame = mouthDB['etc']
+				'C':
+					mouthshape_frame = mouthDB['E']
+				'D':
+					mouthshape_frame = mouthDB['AI']
+				'E':
+					mouthshape_frame = mouthDB['O']
+				'F':
+					mouthshape_frame = mouthDB['U']
+				'G':
+					mouthshape_frame = mouthDB['FV']
+				'H':
+					mouthshape_frame = mouthDB['L']
+				'X':
+					mouthshape_frame = mouthDB['rest']
+				_:
+					mouthshape_frame = 0
+			
+			anim.track_insert_key( 
+			 tr_mouth_frame,
+			 lipsync_start_time + float(sample[0]),
+			 mouthshape_frame, 0
+			)
 	

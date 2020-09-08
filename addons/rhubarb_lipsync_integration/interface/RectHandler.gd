@@ -10,6 +10,7 @@ enum DIRECTION {
 }
 export (DIRECTION) var handler_direction  = DIRECTION.TOP setget _set_handler_direction
 
+export var debug_mode :bool= false # Will make recthandler always visible
 
 var following :bool= false
 var mouse_offset :Vector2
@@ -227,6 +228,12 @@ func set_pseudovisible(value :bool):
 		yield(self, "tree_entered")
 	if !is_instance_valid(windowRect):
 		return
+		
+	if debug_mode:
+		modulate = Color.white 
+		_visible = true
+		return
+	
 	_visible = value
 	if value:
 		if get_tree().edited_scene_root == windowRect.owner:

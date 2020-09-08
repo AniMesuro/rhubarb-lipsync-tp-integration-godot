@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://addons/rhubarb_lipsync_integration/assets/LipsyncImporterTheme.tres" type="Theme" id=1]
 [ext_resource path="res://addons/rhubarb_lipsync_integration/interface/Titlebar.tscn" type="PackedScene" id=2]
@@ -12,8 +12,7 @@
 [ext_resource path="res://addons/rhubarb_lipsync_integration/settings_popup/TempCleanHBox.gd" type="Script" id=10]
 [ext_resource path="res://addons/rhubarb_lipsync_integration/interface/RectHandlerContainer.tscn" type="PackedScene" id=11]
 [ext_resource path="res://addons/rhubarb_lipsync_integration/LipsyncAboutPopup/InfoRTLabel.gd" type="Script" id=12]
-
-
+[ext_resource path="res://addons/rhubarb_lipsync_integration/settings_popup/FileDialogHBox.gd" type="Script" id=13]
 
 [sub_resource type="GDScript" id=1]
 script/source = "tool
@@ -35,7 +34,7 @@ __meta__ = {
 
 [node name="Panel" type="Panel" parent="."]
 margin_right = 650.0
-margin_bottom = 400.0
+margin_bottom = 421.0
 rect_min_size = Vector2( 650, 400 )
 rect_clip_content = true
 __meta__ = {
@@ -48,6 +47,7 @@ anchor_bottom = 1.0
 margin_left = 20.0
 margin_top = 10.0
 margin_right = -20.0
+margin_bottom = 10.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 10
@@ -81,8 +81,8 @@ focus_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 bbcode_enabled = true
-bbcode_text = "This plugin requires that you download the appropriate [color=#2e7c9c][url=https://github.com/DanielSWolf/rhubarb-lip-sync/releases]Rhubarb Lipsync[/url][/color] release for your Operational System and call to its path externally."
-text = "This plugin requires that you download the appropriate Rhubarb Lipsync release for your Operational System and call to its path externally."
+bbcode_text = "This plugin requires that you download the appropriate [color=#2e7c9c][url=https://github.com/DanielSWolf/rhubarb-lip-sync/releases]Rhubarb Lip Sync[/url][/color] release for your Operational System and call to its path externally."
+text = "This plugin requires that you download the appropriate Rhubarb Lip Sync release for your Operational System and call to its path externally."
 selection_enabled = true
 script = ExtResource( 12 )
 
@@ -102,9 +102,9 @@ text = "Rhubarb binary File:"
 margin_left = 204.0
 margin_right = 610.0
 margin_bottom = 20.0
-hint_tooltip = "c:/git/rhubarb-lipsync-tp-integration-godot/addons/rhubarb_lipsync_integration/.rhubarb-lip-sync-1.10.0-win32/rhubarb.exe"
+hint_tooltip = "C:/git/rhubarb-lipsync-tp-integration-godot/addons/rhubarb_lipsync_integration/.rhubarb-lip-sync-1.10.0-win32/rhubarb.exe"
 size_flags_horizontal = 3
-text = "c:/git/rhubarb-lipsync-tp-integration-godot/addons/rhubarb_lipsync_integration/.rhubarb-lip-sync-1.10.0-win32/rhubarb.exe"
+text = "C:/git/rhubarb-lipsync-tp-integration-godot/addons/rhubarb_lipsync_integration/.rhubarb-lip-sync-1.10.0-win32/rhubarb.exe"
 clip_text = true
 
 [node name="WarningIcon" type="TextureRect" parent="Panel/VBox/RhubarbPathHBox"]
@@ -137,7 +137,7 @@ margin_bottom = 24.0
 hint_tooltip = "PocketSphinx: recommended for English audios.
 phonetic: recommended for non-English audios."
 size_flags_horizontal = 3
-text = "phonetic"
+text = "pocketSphinx"
 icon = ExtResource( 3 )
 flat = false
 expand_icon = true
@@ -177,7 +177,7 @@ margin_bottom = 20.0
 hint_tooltip = "Please note that some files in the directory may get overwritten or deleted, so it's recommended you select an empty folder.
 If the directory isn't valid id will be set to '_temp'"
 size_flags_horizontal = 3
-text = "res://addons/rhubarb_lipsync_integration/_temp/"
+text = "res://addons/rhubarb_lipsync_integration/.temp/"
 clip_text = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -214,16 +214,38 @@ margin_bottom = 45.0
 hint_tooltip = "If you use this plugin a lot there may be a lot of used lipsync data that you don't need anymore."
 size_flags_horizontal = 3
 size_flags_vertical = 4
-text = "Never"
+text = "OpenPlugin"
+icon = ExtResource( 3 )
+flat = false
+expand_icon = true
+
+[node name="FileDialogHBox" type="HBoxContainer" parent="Panel/VBox"]
+margin_top = 330.0
+margin_right = 610.0
+margin_bottom = 354.0
+script = ExtResource( 13 )
+
+[node name="Label" type="Label" parent="Panel/VBox/FileDialogHBox"]
+margin_top = 2.0
+margin_right = 250.0
+margin_bottom = 22.0
+text = "Image input File Dialog: "
+
+[node name="MenuButton" type="MenuButton" parent="Panel/VBox/FileDialogHBox"]
+margin_left = 254.0
+margin_right = 610.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+text = "Godot"
 icon = ExtResource( 3 )
 flat = false
 expand_icon = true
 
 [node name="OkButton" type="Button" parent="Panel/VBox"]
 margin_left = 185.0
-margin_top = 330.0
+margin_top = 364.0
 margin_right = 425.0
-margin_bottom = 370.0
+margin_bottom = 404.0
 rect_min_size = Vector2( 240, 40 )
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -231,6 +253,7 @@ text = "Save Settings."
 
 [node name="RectHandlerContainer" parent="Panel" instance=ExtResource( 11 )]
 _windowRect = NodePath("..")
+debug_mode = false
 
 [node name="FileDialog" type="FileDialog" parent="."]
 margin_left = 1.31516
@@ -241,8 +264,8 @@ rect_min_size = Vector2( 400, 400 )
 window_title = "Open a File"
 mode = 0
 access = 2
-current_dir = "c:/git"
-current_path = "c:/git/"
+current_dir = "/git"
+current_path = "/git/"
 script = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
