@@ -1,4 +1,4 @@
-tool
+@tool
 extends EditorPlugin
 
 #---------------------------------------------------------------------------------------------------------------#
@@ -20,7 +20,8 @@ enum CleanMode {
 	ClosePlugin
 }
 
-var path_plugin :String= "" setget ,get_pathplugin#Maybe better as a setget getter?
+var path_plugin :String= "":
+	get = get_pathplugin
 
 var group_plugin :String= "plugin rhubarb_lipsync_integration"
 
@@ -38,7 +39,7 @@ func _enter_tree():
 	
 	if !get_tree().has_group(group_plugin):
 		add_to_group(group_plugin)
-	add_tool_menu_item(IMPORT_LIPSYNC_SCRIPTNAME, self, "_on_importLipsync_Run")
+	add_tool_menu_item(IMPORT_LIPSYNC_SCRIPTNAME, _on_importLipsync_Run)
 	_do_cleaning_routine(CleanMode.OpenPlugin)
 
 func _do_cleaning_routine(event :int):
@@ -75,9 +76,9 @@ func _clean_files():
 		Dir.make_dir(Settings.output.path)
 		return
 	
-	var files :PoolStringArray = PoolStringArray([])
+	var files :Array
 	if Dir.open(Settings.output.path) == OK:
-		Dir.list_dir_begin(false, true)
+		Dir.list_dir_begin()
 		
 		var file_path :String= Dir.get_next()
 		while file_path != "":
@@ -99,7 +100,7 @@ func _clean_files():
 func _notification(what: int) -> void:
 	match what:
 		#Called when you quit to Godot Project List or call close project window (doesn't have to be confirmed quit)
-		NOTIFICATION_WM_QUIT_REQUEST:
+		NOTIFICATION_WM_CLOSE_REQUEST:		
 			_do_cleaning_routine(CleanMode.ClosePlugin)
 
 
@@ -133,12 +134,12 @@ func load_settings():
 
 func get_pathplugin():
 	if !is_inside_tree():
-		yield(self, "tree_entered")
+		await tree_entered
 	var scr :Script= get_script()
 	path_plugin = scr.resource_path.get_base_dir()+'/'
 	return path_plugin
 
-func load_default_settings(keys :PoolStringArray= PoolStringArray([])):
+func load_default_settings(keys :Array = []):
 	var _default_settings :Dictionary= {
 		'rhubarb_lipsync': {
 			'path': "",
@@ -157,9 +158,8 @@ func load_default_settings(keys :PoolStringArray= PoolStringArray([])):
 		}
 	}
 #	print('_defaultsettings ',_default_settings['output']['path'])
-	
-	
-	if keys == PoolStringArray([]):
+		
+	if keys == null or keys==[]:
 		Settings = _default_settings
 		return
 	else:
@@ -186,11 +186,12 @@ func save_settings():
 	configFile.save(self.path_plugin + FILENAME_SETTINGS)
 	
 
-func _on_importLipsync_Run(event) -> void:
-	lipsyncImporterPopup = load(self.path_plugin + "RhubarbLipsyncImporter/LipsyncImporterPopup.tscn").instance()
+func _on_importLipsync_Run(event = null) -> void:
+	lipsyncImporterPopup = load(self.path_plugin + "RhubarbLipsyncImporter/LipsyncImporterPopup.tscn").instantiate()
 	add_child(lipsyncImporterPopup)
 #	lipsyncImporterPopup.find_node('Panel').rect_position = OS.window_position + OS.window_size*.5 - lipsyncImporterPopup.find_node('Panel').rect_size*.5
-	lipsyncImporterPopup.find_node('Panel').rect_position = OS.window_size*.5 - lipsyncImporterPopup.find_node('Panel').rect_size*.5
+	var size = get_viewport().get_visible_rect().size
+	lipsyncImporterPopup.find_node('Panel').rect_position = size*.5 - lipsyncImporterPopup.find_node('Panel').rect_size*.5
 	lipsyncImporterPopup.pluginInstance = self
 
 func get_plugin_name() -> String:
@@ -250,8 +251,6 @@ func run_rhubarb_lipsync(path_input_audio :String, are_paths_absolute :bool= fal
 	var gpath_input_audio :String= ProjectSettings.globalize_path(path_input_audio)
 	var gpath_output_data :String= ProjectSettings.globalize_path(Settings.output.path + input_filename + '.tsv')
 
-	
-	
 	#Seems a bit innaccessible for Linux systems as Godot doesn't start with a Debug Console like in Windows.
 	var pid = OS.execute(
 		gpath_rhubarb,[
@@ -261,8 +260,7 @@ func run_rhubarb_lipsync(path_input_audio :String, are_paths_absolute :bool= fal
 			"-r", Settings.rhubarb_lipsync.recognizer,#Speech Recognizer
 			"-f", "tsv",#File format
 			"--extendedShapes", "GHX"#Additional Mouthshapes
-		],
-		false
+		]
 	)
 	if pid == -1:
 		print("Error. Rhubarb binary file didn't execute successfully.")
@@ -291,8 +289,8 @@ func run_rhubarb_lipsync(path_input_audio :String, are_paths_absolute :bool= fal
 	print("Rhubarb is generating lipsync... This may take up to a few minutes. (NOT A ESTIMATE) Plugin will wait for max. "+str(timer_sec * timer_max_calls)+" sec. Check Debug Console for Progress or Errors.")
 	
 	rhubarbTimer.start(timer_sec)
-	timer_remainingcalls = timer_max_calls
-	rhubarbTimer.connect( "timeout", self, "_on_RhubarbTimer_timeout", [gpath_output_data, input_filename, timer_sec, timer_max_calls])
+	timer_remainingcalls = timer_max_calls	
+	rhubarbTimer.timeout.connect(_on_RhubarbTimer_timeout.bind(gpath_output_data, input_filename, timer_sec, timer_max_calls))
 	
 	
 func _on_RhubarbTimer_timeout(output_filepath :String, input_filename :String, timer_sec :int, timer_max_calls :int= 12):
@@ -301,17 +299,17 @@ func _on_RhubarbTimer_timeout(output_filepath :String, input_filename :String, t
 	var Dir :Directory= Directory.new()
 	if Dir.file_exists(output_filepath):
 		emit_signal("finished_generating_lipsync_data")
-		rhubarbTimer.disconnect("timeout", self, "_on_RhubarbTimer_timeout")
+		rhubarbTimer.timeout.disconnect(_on_RhubarbTimer_timeout)
 		if !rhubarbTimer.is_queued_for_deletion():
 			rhubarbTimer.queue_free()
 		return
 	if timer_remainingcalls <= 0:
-		rhubarbTimer.disconnect("timeout", self, "_on_RhubarbTimer_timeout")
+		rhubarbTimer.timeout.disconnect(_on_RhubarbTimer_timeout)
 		print("Plugin gave up on waiting for Rhubarb to generate file. This could be because there was an error with Rhubarb generating lipsync, but is probably just because it's taking more than the Timer limit ("+str(timer_sec * timer_max_calls)+" seconds)")
 		if !rhubarbTimer.is_queued_for_deletion():
 			rhubarbTimer.queue_free()
 		return
-	if !rhubarbTimer.is_connected("timeout", self, "_on_RhubarbTimer_timeout"):
+	if !rhubarbTimer.timeout.is_connected(_on_RhubarbTimer_timeout):
 		if !rhubarbTimer.is_queued_for_deletion():
 			rhubarbTimer.queue_free()
 		return
@@ -320,7 +318,7 @@ func _on_RhubarbTimer_timeout(output_filepath :String, input_filename :String, t
 #Converts a Rhubarb mouthshape (A,B,C) to a Mouthshape Texture
 #(It used to convert a rhubarb mouthshape "A" to a prestonblair mouthshape "MBP", but the function changed functionality)
 #Maybe rename to remove the "prestonblair" in function name in the future.
-func get_prestonblair_mouthtexture(rhubarb_shape :String, mouthDB :Dictionary) -> StreamTexture:
+func get_prestonblair_mouthtexture(rhubarb_shape :String, mouthDB :Dictionary) -> StreamTexture2D:
 	var shape :String
 	match rhubarb_shape:
 		'A':
@@ -351,25 +349,25 @@ func import_deferred_lipsync(
  audiokey :Dictionary,
  extraParams :Array,
 # mouthSprite :Sprite,
- audioPlayer :AudioStreamPlayer,
+ audioPlayer,
  animationPlayer :AnimationPlayer,
  anim_name :String,
  mouthDB :Dictionary
  ): #override_region :bool= false
-	var mouthSprite :Sprite
-	var mouthAnimSprite :AnimatedSprite
+	var mouthSprite
+	var mouthAnimSprite
 	var mouthAnimSprite_anim :String
 	
 	for param in extraParams:
-		if param is Sprite:
+		if param is Sprite2D or param is Sprite3D:
 			mouthSprite = param
-		elif param is AnimatedSprite:
+		elif param is AnimatedSprite2D:
 			mouthAnimSprite = param
 		elif param is String:
 			mouthAnimSprite_anim = param
 	
 	var anim = animationPlayer.get_animation(anim_name)
-	yield(self, "finished_generating_lipsync_data")
+	await finished_generating_lipsync_data
 	if is_instance_valid(mouthSprite):
 		import_lipsync(
 			anim,
@@ -395,19 +393,19 @@ func import_lipsync(
  anim :Animation,
  animationPlayer :AnimationPlayer,
  audiokey :Dictionary,
- audioPlayer :AudioStreamPlayer,
+ audioPlayer,
  mouthDB :Dictionary,
  extraParams :Array
 # mouthSprite :Sprite
  ):
-	var mouthSprite :Sprite
-	var mouthAnimSprite :AnimatedSprite
+	var mouthSprite 
+	var mouthAnimSprite :AnimatedSprite2D
 	var mouthAnimSprite_anim :String
 	
 	for param in extraParams:
-		if param is Sprite:
+		if param is Sprite2D or param is Sprite3D:
 			mouthSprite = param
-		elif param is AnimatedSprite:
+		elif param is AnimatedSprite2D:
 			mouthAnimSprite = param
 		elif param is String:
 			mouthAnimSprite_anim = param
@@ -423,20 +421,20 @@ func import_lipsync(
 	var tr_mouth_anim :int= -1
 	var tr_mouth_frame :int= -1
 	var tr_mouth_texture :int= -1
-	var tr_audio :int= anim.find_track(anim_root.get_path_to(audioPlayer))
+	var tr_audio :int= anim.find_track(anim_root.get_path_to(audioPlayer), Animation.TYPE_AUDIO)
 	if is_instance_valid(mouthSprite):
-		tr_mouth_texture = anim.find_track(str(anim_root.get_path_to(mouthSprite))+':texture')
+		tr_mouth_texture = anim.find_track(str(anim_root.get_path_to(mouthSprite))+':texture', Animation.TYPE_VALUE)
 		
 		if tr_mouth_texture == -1: #If mouthSprite:texture track doesn't exist, create one.
 			tr_mouth_texture = anim.add_track(Animation.TYPE_VALUE)
 			anim.track_set_path(tr_mouth_texture, str(anim_root.get_path_to(mouthSprite))+':texture')
 	elif is_instance_valid(mouthAnimSprite):
-		tr_mouth_anim = anim.find_track(str(anim_root.get_path_to(mouthAnimSprite))+':animation')
+		tr_mouth_anim = anim.find_track(str(anim_root.get_path_to(mouthAnimSprite))+':animation', Animation.TYPE_ANIMATION)
 		if tr_mouth_anim == -1:
 			tr_mouth_anim = anim.add_track(Animation.TYPE_VALUE)
 			anim.track_set_path(tr_mouth_anim, str(anim_root.get_path_to(mouthAnimSprite))+':animation')
 			anim.value_track_set_update_mode(tr_mouth_anim, Animation.UPDATE_DISCRETE)
-		tr_mouth_frame = anim.find_track(str(anim_root.get_path_to(mouthAnimSprite))+':frame')
+		tr_mouth_frame = anim.find_track(str(anim_root.get_path_to(mouthAnimSprite))+':frame', Animation.TYPE_VALUE)
 		if tr_mouth_frame == -1:
 			tr_mouth_frame = anim.add_track(Animation.TYPE_VALUE)
 			anim.track_set_path(tr_mouth_frame, str(anim_root.get_path_to(mouthAnimSprite))+':frame')
@@ -458,7 +456,7 @@ func import_lipsync(
 	
 
 	
-	var ls_line :PoolStringArray= ls_text.split("\n")
+	var ls_line = ls_text.split("\n")
 	
 	var lipsync_start_time :float= audiokey.time
 	var lipsync_end_time :float= audiokey.time + audiokey.stream.get_length()
@@ -468,11 +466,11 @@ func import_lipsync(
 #	print("lipsync offset +",lipsync_start_time," -",lipsync_end_time)
 	
 	for line in ls_line.size():
-		var sample :PoolStringArray= ls_line[line].split("	", false, 2)
+		var sample = ls_line[line].split("	", false, 2)
 		if sample.size() <= 1:
 			break
 		
-		var cur_time :float= lipsync_start_time + float(sample[0])
+		var cur_time :float= lipsync_start_time + float(str2var(sample[0]))
 		
 		#If key happens before the audiokey, ignore key.
 		if !audiokey.has('sliced_path'):
@@ -485,11 +483,8 @@ func import_lipsync(
 		if cur_time > lipsync_end_time:
 			break
 		if is_instance_valid(mouthSprite):
-			var mouthshape :StreamTexture= get_prestonblair_mouthtexture(sample[1], mouthDB)
-			anim.track_insert_key(
-			 tr_mouth_texture,
-			 lipsync_start_time + float(sample[0]),
-			 mouthshape, 0)
+			var mouthshape :StreamTexture2D= get_prestonblair_mouthtexture(sample[1], mouthDB)
+			anim.track_insert_key( tr_mouth_texture, lipsync_start_time + float(str2var(sample[0])), mouthshape, 0)
 		elif is_instance_valid(mouthAnimSprite):
 			if anim.track_find_key(tr_mouth_anim, 0.0) == -1:
 				anim.track_insert_key(
@@ -523,9 +518,5 @@ func import_lipsync(
 				_:
 					mouthshape_frame = 0
 			
-			anim.track_insert_key( 
-			 tr_mouth_frame,
-			 lipsync_start_time + float(sample[0]),
-			 mouthshape_frame, 0
-			)
+			anim.track_insert_key( tr_mouth_frame, lipsync_start_time + float(str2var(sample[0])),	 mouthshape_frame, 0	)
 	

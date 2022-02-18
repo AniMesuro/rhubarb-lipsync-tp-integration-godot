@@ -1,4 +1,4 @@
-tool
+@tool
 extends HBoxContainer
 
 var menuButton :MenuButton
@@ -8,8 +8,8 @@ func _ready() -> void:
 	menuButton = $MenuButton
 	popupMenu = menuButton.get_popup()
 	
-	menuButton.connect( "pressed", self, "_on_MenuButton_pressed")
-	popupMenu.connect( "id_pressed", self, "_on_PopupMenu_item_selected")
+	menuButton.connect( "pressed", _on_MenuButton_pressed)
+	popupMenu.connect( "id_pressed", _on_PopupMenu_item_selected)
 	
 	if !is_instance_valid(owner.pluginInstance):
 		return

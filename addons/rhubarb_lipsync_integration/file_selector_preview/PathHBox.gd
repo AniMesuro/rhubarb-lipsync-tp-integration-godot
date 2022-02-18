@@ -1,15 +1,15 @@
-tool
+@tool
 extends HBoxContainer
 
 func _ready() -> void:
-	$ReturnButton.connect("pressed",self,"_on_ReturnButton_pressed")
-	$LineEdit.connect("text_entered", self, "_on_text_entered")
+	$ReturnButton.connect("pressed",_on_ReturnButton_pressed)
+	$LineEdit.connect("text_entered", _on_text_entered)
 	
 	
 
 func _on_ReturnButton_pressed():
 	var a:String
-	var subdir :PoolStringArray= owner.current_dir.get_base_dir().rsplit('/', false)
+	var subdir :Array= owner.current_dir.get_base_dir().rsplit('/', false)
 	
 	
 	if subdir.size() <= 1: # If current_dir is root dir
@@ -39,7 +39,7 @@ func _on_text_entered(new_text :String):
 	
 	
 	if Dir.open(new_text) == OK:
-		var subdir :PoolStringArray= new_text.rsplit("/", false)
+		var subdir :Array= new_text.rsplit("/", false)
 		
 		match subdir[0]:
 			'res:':

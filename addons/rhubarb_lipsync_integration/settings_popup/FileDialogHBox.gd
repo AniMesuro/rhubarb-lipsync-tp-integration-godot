@@ -1,4 +1,4 @@
-tool
+@tool
 extends HBoxContainer
 
 const file_dialog_option :Dictionary= {
@@ -10,7 +10,7 @@ func _ready() -> void:
 	var popupMenu :PopupMenu= $MenuButton.get_popup()
 	for option in file_dialog_option:
 		popupMenu.add_item(file_dialog_option[option])
-	popupMenu.connect("id_pressed", self, "_on_popupMenu_id_pressed")
+	popupMenu.connect("id_pressed", _on_popupMenu_id_pressed)
 	
 	if !is_instance_valid(owner.pluginInstance):
 		return

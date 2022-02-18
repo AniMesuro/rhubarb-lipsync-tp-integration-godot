@@ -1,18 +1,20 @@
-
-tool
+@tool
 extends Control
 
 signal file_selected (filepath)
 
 var starting_dir :String= "res://"
 
-var current_file :String= "" setget _set_current_file
-var current_dir :String setget _set_current_dir
-var dir_files :PoolStringArray= PoolStringArray()
-var dir_folders :PoolStringArray= PoolStringArray()
+var current_file :String= "":
+	set =_set_current_file
+var current_dir :String:
+	set = _set_current_dir
+var dir_files = []
+var dir_folders = []
 
-var filters :PoolStringArray= PoolStringArray()
-var current_filter :String= "*" setget _set_current_filter
+var filters = []
+var current_filter :String= "*":
+	set = _set_current_filter
 
 var editorControl :Control
 func _enter_tree() -> void:
@@ -28,7 +30,7 @@ func _ready() -> void:
 	current_dir = starting_dir
 	_list_files()
 	
-	yield(get_tree(), "idle_frame")
+	#await get_tree().idle_frame
 	
 	# Hacky way to get anchors to update properly.
 #	rect_size = rect_size-Vector2(1,1)
@@ -38,7 +40,7 @@ func _ready() -> void:
 	
 
 var filesystem_access :int= FileDialog.ACCESS_RESOURCES
-func setup(access :int, _filters :PoolStringArray, all_filters_option :String= "* All files", dialog_title :String= "Please select a file."):
+func setup(access :int, _filters :Array, all_filters_option :String= "* All files", dialog_title :String= "Please select a file."):
 	filesystem_access = access
 	filters = _filters
 	$"Panel/Margin/VBox/FileHBox".all_filters_option = all_filters_option

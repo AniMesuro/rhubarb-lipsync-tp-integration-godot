@@ -1,41 +1,36 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=15 format=3 uid="uid://dbatkni8dlvxp"]
 
-[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/LipsyncImporterTheme.tres" type="Theme" id=1]
-[ext_resource path="res://addons/rhubarb_lipsync_integration/interface/Titlebar.tscn" type="PackedScene" id=2]
-[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/icons/icon_expand.png" type="Texture" id=3]
-[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/icons/icon_warning.png" type="Texture" id=4]
-[ext_resource path="res://addons/rhubarb_lipsync_integration/settings_popup/RhubarbPathHBox.gd" type="Script" id=5]
-[ext_resource path="res://addons/rhubarb_lipsync_integration/settings_popup/LipsyncSettingsPopup.gd" type="Script" id=6]
-[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/icons/icon_settings.png" type="Texture" id=7]
-[ext_resource path="res://addons/rhubarb_lipsync_integration/settings_popup/RecognizerHBox.gd" type="Script" id=8]
-[ext_resource path="res://addons/rhubarb_lipsync_integration/settings_popup/TempFolderHBox.gd" type="Script" id=9]
-[ext_resource path="res://addons/rhubarb_lipsync_integration/settings_popup/TempCleanHBox.gd" type="Script" id=10]
-[ext_resource path="res://addons/rhubarb_lipsync_integration/interface/RectHandlerContainer.tscn" type="PackedScene" id=11]
-[ext_resource path="res://addons/rhubarb_lipsync_integration/LipsyncAboutPopup/InfoRTLabel.gd" type="Script" id=12]
-[ext_resource path="res://addons/rhubarb_lipsync_integration/settings_popup/FileDialogHBox.gd" type="Script" id=13]
+[ext_resource type="Theme" uid="uid://bqc7yaggmcr18" path="res://addons/rhubarb_lipsync_integration/assets/LipsyncImporterTheme.tres" id="1"]
+[ext_resource type="PackedScene" path="res://addons/rhubarb_lipsync_integration/interface/Titlebar.tscn" id="2"]
+[ext_resource type="Texture2D" uid="uid://40mgq351yx2v" path="res://addons/rhubarb_lipsync_integration/assets/icons/icon_expand.png" id="3"]
+[ext_resource type="Texture2D" uid="uid://cmvqf8155k21d" path="res://addons/rhubarb_lipsync_integration/assets/icons/icon_warning.png" id="4"]
+[ext_resource type="Script" path="res://addons/rhubarb_lipsync_integration/settings_popup/RhubarbPathHBox.gd" id="5"]
+[ext_resource type="Script" path="res://addons/rhubarb_lipsync_integration/settings_popup/LipsyncSettingsPopup.gd" id="6"]
+[ext_resource type="Texture2D" uid="uid://dr6xj4ihs6xkq" path="res://addons/rhubarb_lipsync_integration/assets/icons/icon_settings.png" id="7"]
+[ext_resource type="Script" path="res://addons/rhubarb_lipsync_integration/settings_popup/RecognizerHBox.gd" id="8"]
+[ext_resource type="Script" path="res://addons/rhubarb_lipsync_integration/settings_popup/TempFolderHBox.gd" id="9"]
+[ext_resource type="Script" path="res://addons/rhubarb_lipsync_integration/settings_popup/TempCleanHBox.gd" id="10"]
+[ext_resource type="PackedScene" uid="uid://dkxi3tvsri3tv" path="res://addons/rhubarb_lipsync_integration/interface/RectHandlerContainer.tscn" id="11"]
+[ext_resource type="Script" path="res://addons/rhubarb_lipsync_integration/LipsyncAboutPopup/InfoRTLabel.gd" id="12"]
+[ext_resource type="Script" path="res://addons/rhubarb_lipsync_integration/settings_popup/FileDialogHBox.gd" id="13"]
 
-[sub_resource type="GDScript" id=1]
+[sub_resource type="GDScript" id="1"]
 script/source = "tool
 extends FileDialog
 
 "
 
 [node name="LipsyncSettingsPopup" type="Popup"]
-visible = true
-anchor_right = 1.0
-anchor_bottom = 1.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme = ExtResource( 1 )
-script = ExtResource( 6 )
+size = Vector2i(1000, 600)
+unresizable = false
+theme = ExtResource( "1" )
+script = ExtResource( "6" )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Panel" type="Panel" parent="."]
-margin_right = 650.0
-margin_bottom = 421.0
-rect_min_size = Vector2( 650, 400 )
+rect_min_size = Vector2(650, 400)
 rect_clip_content = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -44,136 +39,128 @@ __meta__ = {
 [node name="VBox" type="VBoxContainer" parent="Panel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 20.0
-margin_top = 10.0
-margin_right = -20.0
-margin_bottom = 10.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_constants/separation = 10
+theme_override_constants/separation = 10
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TitleBar" parent="Panel/VBox" instance=ExtResource( 2 )]
-margin_right = 610.0
-margin_bottom = 40.0
+[node name="TitleBar" parent="Panel/VBox" instance=ExtResource( "2" )]
+offset_right = 778.0
+offset_bottom = 40.0
 mouse_filter = 0
 title_name = "Settings"
-icon_texture = ExtResource( 7 )
+icon_texture = ExtResource( "7" )
 window_path = NodePath("../..")
 
 [node name="HSeparator" type="HSeparator" parent="Panel/VBox"]
-margin_top = 50.0
-margin_right = 610.0
-margin_bottom = 54.0
+offset_top = 50.0
+offset_right = 778.0
+offset_bottom = 54.0
 
 [node name="WarningHBox" type="HBoxContainer" parent="Panel/VBox"]
-margin_top = 64.0
-margin_right = 610.0
-margin_bottom = 136.0
-rect_min_size = Vector2( 0, 72 )
+offset_top = 64.0
+offset_right = 778.0
+offset_bottom = 136.0
+rect_min_size = Vector2(0, 72)
 
 [node name="InfoRTLabel" type="RichTextLabel" parent="Panel/VBox/WarningHBox"]
-margin_right = 610.0
-margin_bottom = 72.0
+offset_right = 778.0
+offset_bottom = 72.0
 focus_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-bbcode_enabled = true
-bbcode_text = "This plugin requires that you download the appropriate [color=#2e7c9c][url=https://github.com/DanielSWolf/rhubarb-lip-sync/releases]Rhubarb Lip Sync[/url][/color] release for your Operational System and call to its path externally."
 text = "This plugin requires that you download the appropriate Rhubarb Lip Sync release for your Operational System and call to its path externally."
+bbcode_enabled = true
 selection_enabled = true
-script = ExtResource( 12 )
+script = ExtResource( "12" )
 
 [node name="RhubarbPathHBox" type="HBoxContainer" parent="Panel/VBox"]
-margin_top = 146.0
-margin_right = 610.0
-margin_bottom = 166.0
+offset_top = 146.0
+offset_right = 778.0
+offset_bottom = 169.0
 rect_clip_content = true
-script = ExtResource( 5 )
+script = ExtResource( "5" )
 
 [node name="Label" type="Label" parent="Panel/VBox/RhubarbPathHBox"]
-margin_right = 200.0
-margin_bottom = 20.0
+offset_right = 200.0
+offset_bottom = 23.0
 text = "Rhubarb binary File:"
 
 [node name="Button" type="Button" parent="Panel/VBox/RhubarbPathHBox"]
-margin_left = 204.0
-margin_right = 610.0
-margin_bottom = 20.0
-hint_tooltip = "C:/git/rhubarb-lipsync-tp-integration-godot/addons/rhubarb_lipsync_integration/.rhubarb-lip-sync-1.10.0-win32/rhubarb.exe"
+offset_left = 204.0
+offset_right = 778.0
+offset_bottom = 23.0
+hint_tooltip = "D:/GAMEDEV/Godot/Godot4/TestProject/addons/rhubarb_lipsync_integration/.Rhubarb/rhubarb.exe"
 size_flags_horizontal = 3
-text = "C:/git/rhubarb-lipsync-tp-integration-godot/addons/rhubarb_lipsync_integration/.rhubarb-lip-sync-1.10.0-win32/rhubarb.exe"
+text = "D:/GAMEDEV/Godot/Godot4/TestProject/addons/rhubarb_lipsync_integration/.Rhubarb/rhubarb.exe"
 clip_text = true
 
 [node name="WarningIcon" type="TextureRect" parent="Panel/VBox/RhubarbPathHBox"]
 visible = false
-margin_left = 570.0
-margin_right = 610.0
-margin_bottom = 40.0
+offset_left = 738.0
+offset_right = 778.0
+offset_bottom = 40.0
 hint_tooltip = "Can't proceed. Rhubarb binary doesnt exist at path "
-texture = ExtResource( 4 )
+texture = ExtResource( "4" )
 
 [node name="RecognizerHBox" type="HBoxContainer" parent="Panel/VBox"]
-margin_top = 176.0
-margin_right = 610.0
-margin_bottom = 200.0
-script = ExtResource( 8 )
+offset_top = 179.0
+offset_right = 778.0
+offset_bottom = 203.0
+script = ExtResource( "8" )
 
 [node name="Label" type="Label" parent="Panel/VBox/RecognizerHBox"]
-margin_top = 2.0
-margin_right = 110.0
-margin_bottom = 22.0
+offset_right = 110.0
+offset_bottom = 23.0
 text = "Recognizer:"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="MenuButton" type="MenuButton" parent="Panel/VBox/RecognizerHBox"]
-margin_left = 114.0
-margin_right = 610.0
-margin_bottom = 24.0
+offset_left = 114.0
+offset_right = 778.0
+offset_bottom = 24.0
 hint_tooltip = "PocketSphinx: recommended for English audios.
 phonetic: recommended for non-English audios."
 size_flags_horizontal = 3
 text = "pocketSphinx"
-icon = ExtResource( 3 )
+icon = ExtResource( "3" )
 flat = false
 expand_icon = true
-items = [ "pocketSphinx", null, 0, true, false, 0, 0, null, "", false, "phonetic", null, 0, false, false, 1, 0, null, "", false ]
 
 [node name="WarningIcon" type="TextureRect" parent="Panel/VBox/RecognizerHBox"]
 visible = false
-margin_left = 586.0
-margin_right = 610.0
-margin_bottom = 24.0
-rect_min_size = Vector2( 24, 24 )
-hint_tooltip = "babababacu is not a valid Speech Recognizer. Save settings to fix."
-texture = ExtResource( 4 )
-expand = true
+offset_left = 788.0
+offset_right = 828.0
+offset_bottom = 40.0
+rect_min_size = Vector2(24, 24)
+hint_tooltip = "'rhubarb_lipsync' section not found at Settings Dict."
+texture = ExtResource( "4" )
 
 [node name="HSeparator2" type="HSeparator" parent="Panel/VBox"]
-margin_top = 210.0
-margin_right = 610.0
-margin_bottom = 214.0
+offset_top = 213.0
+offset_right = 778.0
+offset_bottom = 217.0
 
 [node name="TempFolderHBox" type="HBoxContainer" parent="Panel/VBox"]
-margin_top = 224.0
-margin_right = 610.0
-margin_bottom = 244.0
+offset_top = 227.0
+offset_right = 778.0
+offset_bottom = 250.0
 rect_clip_content = true
-script = ExtResource( 9 )
+script = ExtResource( "9" )
 
 [node name="Label" type="Label" parent="Panel/VBox/TempFolderHBox"]
-margin_right = 130.0
-margin_bottom = 20.0
+offset_right = 130.0
+offset_bottom = 23.0
 text = "Temp Folder: "
 
 [node name="Button" type="Button" parent="Panel/VBox/TempFolderHBox"]
-margin_left = 134.0
-margin_right = 610.0
-margin_bottom = 20.0
+offset_left = 134.0
+offset_right = 778.0
+offset_bottom = 23.0
 hint_tooltip = "Please note that some files in the directory may get overwritten or deleted, so it's recommended you select an empty folder.
 If the directory isn't valid id will be set to '_temp'"
 size_flags_horizontal = 3
@@ -185,88 +172,87 @@ __meta__ = {
 
 [node name="WarningIcon" type="TextureRect" parent="Panel/VBox/TempFolderHBox"]
 visible = false
-margin_left = 586.0
-margin_right = 610.0
-margin_bottom = 24.0
-rect_min_size = Vector2( 24, 24 )
+rect_min_size = Vector2(24, 24)
 hint_tooltip = "babababacu is not a valid Speech Recognizer. Save settings to fix."
-texture = ExtResource( 4 )
-expand = true
+texture = ExtResource( "4" )
 
 [node name="TempCleanHBox" type="HBoxContainer" parent="Panel/VBox"]
-margin_top = 254.0
-margin_right = 610.0
-margin_bottom = 320.0
-script = ExtResource( 10 )
+offset_top = 260.0
+offset_right = 778.0
+offset_bottom = 284.0
+script = ExtResource( "10" )
 
 [node name="Label" type="Label" parent="Panel/VBox/TempCleanHBox"]
-margin_right = 303.0
-margin_bottom = 66.0
+offset_right = 720.0
+offset_bottom = 23.0
 size_flags_horizontal = 3
 text = "When is Rhubarb for Godot plugin supposed to cleanup used lipsync files?"
-autowrap = true
 
 [node name="MenuButton" type="MenuButton" parent="Panel/VBox/TempCleanHBox"]
-margin_left = 307.0
-margin_top = 21.0
-margin_right = 610.0
-margin_bottom = 45.0
+offset_left = 724.0
+offset_right = 778.0
+offset_bottom = 24.0
 hint_tooltip = "If you use this plugin a lot there may be a lot of used lipsync data that you don't need anymore."
 size_flags_horizontal = 3
 size_flags_vertical = 4
-text = "OpenPlugin"
-icon = ExtResource( 3 )
+text = "Never"
+icon = ExtResource( "3" )
 flat = false
 expand_icon = true
 
 [node name="FileDialogHBox" type="HBoxContainer" parent="Panel/VBox"]
-margin_top = 330.0
-margin_right = 610.0
-margin_bottom = 354.0
-script = ExtResource( 13 )
+offset_top = 294.0
+offset_right = 778.0
+offset_bottom = 318.0
+script = ExtResource( "13" )
 
 [node name="Label" type="Label" parent="Panel/VBox/FileDialogHBox"]
-margin_top = 2.0
-margin_right = 250.0
-margin_bottom = 22.0
+offset_right = 250.0
+offset_bottom = 23.0
 text = "Image input File Dialog: "
 
 [node name="MenuButton" type="MenuButton" parent="Panel/VBox/FileDialogHBox"]
-margin_left = 254.0
-margin_right = 610.0
-margin_bottom = 24.0
+offset_left = 254.0
+offset_right = 778.0
+offset_bottom = 24.0
 size_flags_horizontal = 3
-text = "Godot"
-icon = ExtResource( 3 )
+text = "Godot - FileDialog"
+icon = ExtResource( "3" )
 flat = false
 expand_icon = true
+item_count = 6
+popup/item_0/text = "Godot - FileDialog"
+popup/item_0/id = 0
+popup/item_1/text = "Custom - FileSelectorPreview"
+popup/item_1/id = 1
+popup/item_2/text = "Godot - FileDialog"
+popup/item_2/id = 2
+popup/item_3/text = "Custom - FileSelectorPreview"
+popup/item_3/id = 3
+popup/item_4/text = "Godot - FileDialog"
+popup/item_4/id = 4
+popup/item_5/text = "Custom - FileSelectorPreview"
+popup/item_5/id = 5
 
 [node name="OkButton" type="Button" parent="Panel/VBox"]
-margin_left = 185.0
-margin_top = 364.0
-margin_right = 425.0
-margin_bottom = 404.0
-rect_min_size = Vector2( 240, 40 )
+offset_left = 269.0
+offset_top = 328.0
+offset_right = 509.0
+offset_bottom = 368.0
+rect_min_size = Vector2(240, 40)
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "Save Settings."
 
-[node name="RectHandlerContainer" parent="Panel" instance=ExtResource( 11 )]
+[node name="RectHandlerContainer" parent="Panel" instance=ExtResource( "11" )]
+modulate = Color(1, 1, 1, 0)
 _windowRect = NodePath("..")
-debug_mode = false
 
 [node name="FileDialog" type="FileDialog" parent="."]
-margin_left = 1.31516
-margin_top = 58.8471
-margin_right = 478.315
-margin_bottom = 458.847
-rect_min_size = Vector2( 400, 400 )
-window_title = "Open a File"
-mode = 0
 access = 2
-current_dir = "/git"
-current_path = "/git/"
-script = SubResource( 1 )
+current_dir = "/GAMEDEV/Godot/Godot4/TestProject"
+current_path = "/GAMEDEV/Godot/Godot4/TestProject/"
+script = SubResource( "1" )
 __meta__ = {
 "_edit_use_anchors_": false
 }

@@ -1,33 +1,33 @@
-[gd_resource type="Theme" load_steps=5 format=2]
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://bqc7yaggmcr18"]
 
-[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/JetBrainsMono-Bold.tres" type="DynamicFont" id=1]
+[ext_resource type="Font" path="res://addons/rhubarb_lipsync_integration/assets/JetBrainsMono-Bold.tres" id="1"]
 
-[sub_resource type="StyleBoxFlat" id=1]
-bg_color = Color( 0.27451, 0.27451, 0.384314, 1 )
+[sub_resource type="StyleBoxFlat" id="1"]
+bg_color = Color(0.27451, 0.27451, 0.384314, 1)
 
-[sub_resource type="StyleBoxFlat" id=2]
-bg_color = Color( 0.207843, 0.207843, 0.278431, 1 )
+[sub_resource type="StyleBoxFlat" id="2"]
+bg_color = Color(0.207843, 0.207843, 0.278431, 1)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
-border_color = Color( 1, 1, 1, 1 )
+border_color = Color(1, 1, 1, 1)
 border_blend = true
 corner_detail = 9
 
-[sub_resource type="StyleBoxFlat" id=3]
-bg_color = Color( 0.078732, 0.0785522, 0.101563, 1 )
+[sub_resource type="StyleBoxFlat" id="3"]
+bg_color = Color(0.078732, 0.0785522, 0.101563, 1)
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
 
 [resource]
-default_font = ExtResource( 1 )
-Button/colors/font_color = Color( 0.0784314, 0.0784314, 0.101961, 1 )
-Button/fonts/font = ExtResource( 1 )
-Button/styles/normal = SubResource( 1 )
-Label/fonts/font = ExtResource( 1 )
-MenuButton/colors/font_color = Color( 0.996078, 0.984314, 0.984314, 1 )
-MenuButton/styles/normal = SubResource( 2 )
-Panel/styles/panel = SubResource( 3 )
+default_font = ExtResource( "1" )
+Button/colors/font_color = Color(0.0784314, 0.0784314, 0.101961, 1)
+Button/fonts/font = ExtResource( "1" )
+Button/styles/normal = SubResource( "1" )
+Label/fonts/font = ExtResource( "1" )
+MenuButton/colors/font_color = Color(0.996078, 0.984314, 0.984314, 1)
+MenuButton/styles/normal = SubResource( "2" )
+Panel/styles/panel = SubResource( "3" )

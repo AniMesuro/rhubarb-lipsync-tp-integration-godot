@@ -1,18 +1,18 @@
-tool
+@tool
 extends HBoxContainer
 
 #AudioTrackHBox
 
-onready var button :MenuButton= $Button
-onready var popupMenu :PopupMenu
-onready var warningIcon :TextureRect= $WarningIcon
+@onready var button :MenuButton= $Button
+@onready var popupMenu :PopupMenu
+@onready var warningIcon :TextureRect= $WarningIcon
 
 func _ready() -> void:
 	popupMenu = button.get_popup()
 	if button.last_index == -1:
 		enable_warning("No AudioStreamPlayer node selected. Can't proceed")
 	
-	popupMenu.connect("id_pressed", self, '_on_PopupMenu_item_selected')
+	popupMenu.connect("id_pressed", _on_PopupMenu_item_selected)
 
 func _on_PopupMenu_item_selected(id :int):
 	if id != -1:

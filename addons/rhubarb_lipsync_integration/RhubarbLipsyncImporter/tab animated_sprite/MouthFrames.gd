@@ -1,4 +1,4 @@
-tool
+@tool
 extends VBoxContainer
 
 const SCN_FrameSelectorPopup :PackedScene= preload("res://addons/rhubarb_lipsync_integration/RhubarbLipsyncImporter/tab animated_sprite/FrameSelectorPopup.tscn")

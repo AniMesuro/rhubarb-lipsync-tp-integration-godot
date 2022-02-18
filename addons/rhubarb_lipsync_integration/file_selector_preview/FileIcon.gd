@@ -1,4 +1,4 @@
-tool
+@tool
 extends VBoxContainer
 
 signal file_selected (filepath)
@@ -9,12 +9,12 @@ enum TYPE {
 	folder
 }
 var my_type :int
-var selected :bool= false setget _set_selected
+var selected :bool= false: set = _set_selected
 var file_name :String= "icon.png"
 
 func _ready() -> void:
 	var preview :TextureButton= $Preview
-	preview.connect("pressed", self, "_on_Preview_pressed")
+	preview.connect("pressed", _on_Preview_pressed)
 
 func setup(_file_name :String, _type :int= TYPE.file):
 	var label :Label= $Label
@@ -60,7 +60,7 @@ func _set_selected(value :bool):
 	if value:
 		modulate = Color(0.5,0.5,2, 1)
 	else:
-		modulate = Color.white
+		modulate = Color.WHITE
 	selected = value
 
 func _on_Preview_pressed():

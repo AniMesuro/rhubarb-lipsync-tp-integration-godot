@@ -1,4 +1,4 @@
-tool
+@tool
 extends HBoxContainer
 
 #AudioKeyHBox
@@ -7,25 +7,25 @@ const STR_ANIMATIONPLAYER_SELECTED :String = "Please select an Animation from An
 const STR_ANIMATIONPLAYER_NOT_SELECTED :String = "Please select an AnimationPlayer above before selecting animation."
 const STR_AUDIOPLAYER_SELECTED :String = "Please select an Audio Clip Keyframe from Audio track."
 const STR_AUDIOPLAYER_NOT_SELECTED :String = "Please select an AudioStreamPlayer above before selecting animation."
-const TEX_IconExpand :StreamTexture= preload("res://addons/rhubarb_lipsync_integration/assets/icons/icon_expand.png")
+const TEX_IconExpand :StreamTexture2D= preload("res://addons/rhubarb_lipsync_integration/assets/icons/icon_expand.png")
 
 var is_safe_to_load :bool= false
-var clip_path :PoolStringArray= []
+var clip_path = []
 
 var last_index :int= -1
 
-onready var button :MenuButton= $Button
-onready var popupMenu :PopupMenu
-onready var warningIcon :TextureRect= $WarningIcon
+@onready var button :MenuButton= $Button
+@onready var popupMenu :PopupMenu
+@onready var warningIcon :TextureRect= $WarningIcon
 
 func _ready() -> void:
 	popupMenu = button.get_popup()
 	if last_index == -1:
 		enable_warning("No AnimationPlayer node selected.")
 	
-	owner.connect("updated_reference", self, "_on_owner_reference_updated")
-	popupMenu.connect("id_pressed", self, '_on_PopupMenu_item_selected')
-	button.connect( "pressed", self, "_on_Button_pressed")
+	owner.connect("updated_reference", _on_owner_reference_updated)
+	popupMenu.connect("id_pressed", _on_PopupMenu_item_selected)
+	button.connect( "pressed", _on_Button_pressed)
 	
 
 func _on_PopupMenu_item_selected(id :int):
@@ -34,16 +34,16 @@ func _on_PopupMenu_item_selected(id :int):
 	var item_name :String= popupMenu.get_item_text(id)
 	var item_path :String= clip_path[id]
 	button.text = item_name
-	button.icon = owner.pluginInstance.get_editor_interface().get_inspector().get_icon("AudioStreamSample", "EditorIcons")
+	#button.icon = owner.pluginInstance.get_editor_interface().get_inspector().get_icon("AudioStreamSample", "EditorIcons")
 	
 	if !is_safe_to_load:
 		return
 	
 	var animPlayer :AnimationPlayer= owner.anim_animationPlayer
 	var anim :Animation= owner.anim_animationPlayer.get_animation(owner.anim_name)
-	var animAudio :AudioStreamPlayer= owner.anim_audioPlayer
+	var animAudio = owner.anim_audioPlayer
 	var animRoot :Node= animPlayer.get_node(animPlayer.root_node)
-	var tr_audio :int= anim.find_track(animRoot.get_path_to(animAudio))
+	var tr_audio :int= anim.find_track(animRoot.get_path_to(animAudio), Animation.TYPE_AUDIO)
 	
 	owner.anim_audiokey = {
 		'time': anim.track_get_key_time(tr_audio, id),
@@ -60,7 +60,7 @@ func _clear_clip_path_array():
 
 func _on_Button_pressed():
 	popupMenu.clear()
-	if !clip_path.empty():
+	if !clip_path.is_empty():
 		_clear_clip_path_array()
 	
 	if !is_safe_to_load:
@@ -68,16 +68,16 @@ func _on_Button_pressed():
 	
 	var animPlayer :AnimationPlayer= owner.anim_animationPlayer
 	var anim :Animation= owner.anim_animationPlayer.get_animation(owner.anim_name)
-	var animAudio :AudioStreamPlayer= owner.anim_audioPlayer
+	var animAudio = owner.anim_audioPlayer
 	var animRoot = animPlayer.get_node(animPlayer.root_node)
 	
-	var tr_audio = anim.find_track(animRoot.get_path_to(animAudio))
+	var tr_audio = anim.find_track(animRoot.get_path_to(animAudio), Animation.TYPE_AUDIO)
 	
 	clip_path.resize(anim.track_get_key_count(tr_audio))
 	for clip_id in anim.track_get_key_count(tr_audio):
 		var clip :AudioStream= anim.audio_track_get_key_stream(tr_audio, clip_id)
 		
-		var _time_sec :float= stepify(anim.track_get_key_time(tr_audio, clip_id), .01)
+		var _time_sec :float= snapped(anim.track_get_key_time(tr_audio, clip_id), .01)
 		var _count_min :int= floor(_time_sec / 60)
 		var _count_sec :int= int(_time_sec) % 60
 		var key_timeformatted :String= str(_count_min)+":"+str(_count_sec)
@@ -90,7 +90,8 @@ func enable_warning(message :String):
 	warningIcon.hint_tooltip = message
 
 func disable_warning():
-	warningIcon.visible = false
+	if is_instance_valid(warningIcon):
+		warningIcon.visible = false
 
 func _on_owner_reference_updated(owner_reference :String):
 #	ERROR CHECKING
@@ -119,7 +120,7 @@ func _on_owner_reference_updated(owner_reference :String):
 		
 	var anim :Animation= owner.anim_animationPlayer.get_animation(owner.anim_name)
 	var anim_root :Node= owner.anim_animationPlayer.get_node(owner.anim_animationPlayer.root_node)
-	var tr_audio :int= anim.find_track(anim_root.get_path_to(owner.anim_audioPlayer))
+	var tr_audio :int= anim.find_track(anim_root.get_path_to(owner.anim_audioPlayer), Animation.TYPE_AUDIO)
 	if tr_audio == -1:
 		button.text = "Audio track not found at Animation."
 		enable_warning("Can't procceed. Please add an 'Audio Playback Track' and insert an AudioStream to the selected Animation.")

@@ -1,4 +1,4 @@
-tool
+@tool
 extends Control
 
 signal updated_reference (reference_name)
@@ -8,7 +8,7 @@ const STR_ERROR_not_enough_references :String= "Can't proceed. Some references a
 const STR_ERROR_plugin_reference_not_valid :String= "Can't proceeed. Rhubarb Lipsync TPI Plugin Reference not valid."
 const STR_ERROR_SpriteFrames_not_enough_frames :String= "Can't proceed. SpriteFrames has no frames."
 
-const TEX_IconExpand :StreamTexture= preload("res://addons/rhubarb_lipsync_integration/assets/icons/icon_expand.png")
+const TEX_IconExpand :StreamTexture2D= preload("res://addons/rhubarb_lipsync_integration/assets/icons/icon_expand.png")
 
 var handlerTop :ReferenceRect
 var handlerBottom :ReferenceRect
@@ -16,12 +16,12 @@ var handlerLeft :ReferenceRect
 var handlerRight :ReferenceRect
 
 # Sprite Tab
-var anim_mouthSprite :Sprite
+var anim_mouthSprite 
 # AnimatedSprite Tab
-var anim_mouthAnimSprite :AnimatedSprite
+var anim_mouthAnimSprite
 var anim_mouthAnimSprite_anim :String
 
-var anim_audioPlayer :AudioStreamPlayer
+var anim_audioPlayer
 var anim_animationPlayer :AnimationPlayer
 var anim_name :String
 var anim_audiokey :Dictionary
@@ -33,16 +33,16 @@ var pluginInstance :EditorPlugin
 var path_plugin :String
 
 # Sprite tab
-onready var mouthTextures :VBoxContainer= $Panel/VBox/TabContainer/Sprite.find_node('MouthTextures')
-onready var mouthFrames :VBoxContainer= $Panel/VBox/TabContainer/AnimatedSprite.find_node('MouthFrames')
-onready var mouthSpriteHBox = $Panel/VBox/TabContainer/Sprite.find_node("MouthSpriteHBox")
+@onready var mouthTextures :VBoxContainer= $Panel/VBox/TabContainer/Sprite.find_node('MouthTextures')
+@onready var mouthFrames :VBoxContainer= $Panel/VBox/TabContainer/AnimatedSprite.find_node('MouthFrames')
+@onready var mouthSpriteHBox = $Panel/VBox/TabContainer/Sprite.find_node("MouthSpriteHBox")
 
-onready var animateButton = find_node("AnimateButton")
+@onready var animateButton = find_node("AnimateButton")
 
-onready var animationPlayerHBox = find_node("AnimationPlayerHBox")
-onready var animationNameHBox = find_node("AnimationNameHBox")
-onready var audioTrackHBox = find_node("AudioTrackHBox")
-onready var audioKeyHBox = find_node("AudioKeyHBox")
+@onready var animationPlayerHBox = find_node("AnimationPlayerHBox")
+@onready var animationNameHBox = find_node("AnimationNameHBox")
+@onready var audioTrackHBox = find_node("AudioTrackHBox")
+@onready var audioKeyHBox = find_node("AudioKeyHBox")
 
 #Change scene in Editor
 #Open scene in Editor (executes first than _ready)
@@ -50,8 +50,8 @@ func _enter_tree() -> void:
 	pluginInstance = _get_pluginInstance()
 	pluginInstance.load_settings()
 	
-	if !pluginInstance.is_connected("scene_changed", self, "_on_scene_changed"):
-		pluginInstance.connect("scene_changed", self, "_on_scene_changed")
+	if !pluginInstance.is_connected("scene_changed", _on_scene_changed):
+		pluginInstance.connect("scene_changed", _on_scene_changed)
 
 func _get_pluginInstance() -> EditorPlugin:
 	if get_tree().has_group("plugin rhubarb_lipsync_integration"):
@@ -92,7 +92,7 @@ func get_relevant_children() -> Array:
 
 
 #Same function as plugin.gd - Get a texture from a Rhubarb Mouthshape "A, B, C"
-func get_prestonblair_mouthtexture(rhubarb_shape :String) -> StreamTexture:
+func get_prestonblair_mouthtexture(rhubarb_shape :String) -> StreamTexture2D:
 	var shape :String
 	match rhubarb_shape:
 		'A':
@@ -126,13 +126,14 @@ func _on_AnimateButton_pressed() -> void:
 #	Makes sure all references are called for importing.
 	
 	if $Panel/VBox/TabContainer.current_tab == 0: # Sprite Tab
+		print(anim_mouthSprite)
 		if !is_instance_valid(anim_mouthSprite):
 			print(STR_ERROR_not_enough_references)
 			queue_free()
 			return
 	elif $Panel/VBox/TabContainer.current_tab == 1: #AnimatedSprite Tab
 		if !is_instance_valid(anim_mouthAnimSprite):
-			print(STR_ERROR_not_enough_references)
+			print(STR_ERROR_not_enough_references )
 			queue_free()
 			return
 		if !anim_mouthAnimSprite.frames.has_animation(anim_mouthAnimSprite_anim):
@@ -195,7 +196,7 @@ func slice_audio(anim_audiokey :Dictionary) -> String:
 		print('sample not valid')
 		return ""
 	var new_stream :AudioStreamSample= AudioStreamSample.new()
-	var new_data :PoolByteArray= PoolByteArray([]) + anim_audiokey.stream.data
+	var new_data = [] + anim_audiokey.stream.data
 	
 	if !anim_audiokey.stream is AudioStreamSample:
 		return ""
@@ -222,7 +223,7 @@ func slice_audio(anim_audiokey :Dictionary) -> String:
 	
 #		print(anim_audiokey)
 	new_stream.data = new_data
-	var output_path :String= pluginInstance.Settings.output.path + "SLICED +"+str(stepify(anim_audiokey.start_offset, 0.01))+" -"+str(stepify(anim_audiokey.end_offset, 0.01))+" = "+anim_audiokey.stream.resource_path.get_file()
+	var output_path :String= pluginInstance.Settings.output.path + "SLICED +"+str(snapped(anim_audiokey.start_offset, 0.01))+" -"+str(snapped(anim_audiokey.end_offset, 0.01))+" = "+anim_audiokey.stream.resource_path.get_file()
 	if new_stream.save_to_wav(output_path) == OK:
 		return output_path
 	return ""

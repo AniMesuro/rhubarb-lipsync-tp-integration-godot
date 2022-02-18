@@ -1,25 +1,25 @@
-tool
+@tool
 extends Popup
 
 signal name_settled
 
 var new_name :String= ""
 
-onready var titlebar :HBoxContainer= $Panel/VBox/Titlebar
-onready var label :Label= $Panel/VBox/Label
+@onready var titlebar :HBoxContainer= $Panel/VBox/Titlebar
+@onready var label :Label= $Panel/VBox/Label
 var parent :Node
 var lineEdit :LineEdit
 var button :Button
 
 func _ready() -> void:
-	popup_centered(rect_min_size)
+	popup_centered($Panel.rect_min_size)
 	button = $Panel/VBox/Button
 	lineEdit = $Panel/VBox/LineEdit
 
-	if !button.is_connected("pressed", self, '_on_Button_pressed'):
-		button.connect("pressed", self, '_on_Button_pressed')
-	if !lineEdit.is_connected("text_entered", self, '_on_LineEdit_entered'):
-		lineEdit.connect("text_entered", self, '_on_LineEdit_entered')
+	if !button.is_connected("pressed", _on_Button_pressed):
+		button.connect("pressed", _on_Button_pressed)
+	if !lineEdit.is_connected("text_entered", _on_LineEdit_entered):
+		lineEdit.connect("text_entered", _on_LineEdit_entered)
 	
 	lineEdit.grab_focus()
 	

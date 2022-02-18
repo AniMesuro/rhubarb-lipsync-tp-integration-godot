@@ -1,9 +1,9 @@
-tool
+@tool
 extends VBoxContainer
 
 const SCN_FileSelectorPreview :PackedScene= preload("res://addons/rhubarb_lipsync_integration/file_selector_preview/FileSelectorPreview.tscn")
 
-export var _temp_texture :StreamTexture
+@export var _temp_texture :StreamTexture2D
 var mouthDB :Dictionary= {}
 var mouthIconDB :Dictionary= {}
 
@@ -50,23 +50,23 @@ func _on_MouthIcon_pressed(mouthIcon :VBoxContainer) -> void:
 	if owner.pluginInstance.Settings.file_selection.file_dialog.to_lower() == "file_selector_preview":
 		if is_instance_valid(fileSelectorPreview):
 			return
-		fileSelectorPreview = SCN_FileSelectorPreview.instance()
-		fileSelectorPreview.connect("file_selected", self, "_on_FileSelectorPreview_file_selected", [mouthIcon])
-		fileSelectorPreview.setup(FileDialog.ACCESS_RESOURCES, PoolStringArray(['png','jpg','jpeg']), "* All Images", "Please select an image for "+mouthIcon.mouth_shape)
+		fileSelectorPreview = SCN_FileSelectorPreview.instantiate()
+		fileSelectorPreview.connect("file_selected", _on_FileSelectorPreview_file_selected, [mouthIcon])
+		fileSelectorPreview.setup(FileDialog.ACCESS_RESOURCES, ['png','jpg','jpeg'], "* All Images", "Please select an image for "+mouthIcon.mouth_shape)
 		fileSelectorPreview.rect_global_position = OS.window_size/2 - fileSelectorPreview.rect_size/2
 		owner.pluginInstance.add_child(fileSelectorPreview)
 	else:
 	
 		fileDialog = FileDialog.new()
-		fileDialog.connect("popup_hide", self, "_on_FileDialog_popup_hide")
+		fileDialog.connect("popup_hide", _on_FileDialog_popup_hide)
 		owner.pluginInstance.add_child(fileDialog)
-		fileDialog.mode = fileDialog.MODE_OPEN_FILE
-		fileDialog.resizable = true
-		fileDialog.rect_min_size = Vector2(400, 300)
-		fileDialog.filters = PoolStringArray(['*.png','*.jpg'])
+		fileDialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE
+		fileDialog.unresizable = false
+		fileDialog.min_size = Vector2(400, 300)
+		fileDialog.filters = ['*.png','*.jpg']
 		fileDialog.popup()
 		
-		yield(fileDialog, "file_selected")
+		await fileDialog.file_selected
 		button.texture_normal = load(fileDialog.current_path)
 		mouthDB[mouthIcon.mouth_shape] = button.texture_normal
 

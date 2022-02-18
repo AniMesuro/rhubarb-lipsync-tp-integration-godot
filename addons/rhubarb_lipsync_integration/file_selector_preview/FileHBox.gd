@@ -1,13 +1,13 @@
-tool
+@tool
 extends HBoxContainer
 
 var all_filters_option :String= "* All Images"
 
 func _ready() -> void:
-	$LineEdit.connect("text_entered", self, "_on_text_entered")
+	$LineEdit.connect("text_entered", _on_text_entered)
 	
 	var extensionMenu :MenuButton= $ExtensionMenu
-	extensionMenu.get_popup().connect("id_pressed", self, "_on_ExtensionMenuPopup_pressed")
+	extensionMenu.get_popup().connect("id_pressed", _on_ExtensionMenuPopup_pressed)
 	
 	extensionMenu.get_popup().clear()
 	extensionMenu.get_popup().add_item(all_filters_option)

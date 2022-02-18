@@ -1,29 +1,22 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=4 format=3 uid="uid://iwbvelb0fsdp"]
 
-[ext_resource path="res://addons/rhubarb_lipsync_integration/assets/LipsyncImporterTheme.tres" type="Theme" id=1]
-[ext_resource path="res://addons/rhubarb_lipsync_integration/interface/Titlebar.tscn" type="PackedScene" id=2]
-[ext_resource path="res://addons/rhubarb_lipsync_integration/interface/AskNamePopup.gd" type="Script" id=3]
-
+[ext_resource type="Theme" uid="uid://bqc7yaggmcr18" path="res://addons/rhubarb_lipsync_integration/assets/LipsyncImporterTheme.tres" id="1"]
+[ext_resource type="PackedScene" path="res://addons/rhubarb_lipsync_integration/interface/Titlebar.tscn" id="2"]
+[ext_resource type="Script" path="res://addons/rhubarb_lipsync_integration/interface/AskNamePopup.gd" id="3"]
 
 [node name="AskNamePopup" type="Popup"]
+size = Vector2i(400, 200)
+mode = 2
 visible = true
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 440.0
-margin_top = 260.0
-margin_right = -440.0
-margin_bottom = -260.0
-rect_min_size = Vector2( 400, 200 )
-theme = ExtResource( 1 )
-script = ExtResource( 3 )
+unresizable = false
+theme = ExtResource( "1" )
+script = ExtResource( "3" )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Panel" type="Panel" parent="."]
-margin_right = 400.0
-margin_bottom = 200.0
-rect_min_size = Vector2( 400, 200 )
+rect_min_size = Vector2(400, 200)
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -31,37 +24,32 @@ __meta__ = {
 [node name="VBox" type="VBoxContainer" parent="Panel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 20.0
-margin_top = 10.0
-margin_right = -20.0
-margin_bottom = -20.0
 size_flags_horizontal = 4
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Titlebar" parent="Panel/VBox" instance=ExtResource( 2 )]
-margin_right = 360.0
+[node name="Titlebar" parent="Panel/VBox" instance=ExtResource( "2" )]
+offset_right = 400.0
+offset_bottom = 40.0
 grow_horizontal = 0
-title_name = "Title Name"
 window_path = NodePath("../../..")
 
 [node name="HSeparator" type="HSeparator" parent="Panel/VBox"]
-margin_top = 44.0
-margin_right = 360.0
-margin_bottom = 48.0
+offset_top = 44.0
+offset_right = 400.0
+offset_bottom = 48.0
 
 [node name="Label" type="Label" parent="Panel/VBox"]
-margin_top = 52.0
-margin_right = 360.0
-margin_bottom = 72.0
+offset_top = 52.0
+offset_right = 400.0
+offset_bottom = 75.0
 text = "New name:"
-autowrap = true
 
 [node name="LineEdit" type="LineEdit" parent="Panel/VBox"]
-margin_top = 76.0
-margin_right = 360.0
-margin_bottom = 106.0
+offset_top = 79.0
+offset_right = 400.0
+offset_bottom = 107.0
 placeholder_text = "Please insert new name here."
 caret_blink = true
 caret_blink_speed = 0.5
@@ -70,7 +58,7 @@ __meta__ = {
 }
 
 [node name="Button" type="Button" parent="Panel/VBox"]
-margin_top = 110.0
-margin_right = 360.0
-margin_bottom = 130.0
+offset_top = 111.0
+offset_right = 400.0
+offset_bottom = 131.0
 text = "Done"

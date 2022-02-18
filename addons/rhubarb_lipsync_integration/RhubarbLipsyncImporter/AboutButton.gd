@@ -1,11 +1,11 @@
-tool
+@tool
 extends TextureButton
 
-export (PackedScene) var SCN_LipsyncAboutPopup
+@export var SCN_LipsyncAboutPopup:PackedScene
 var lipsyncAboutPopup :Popup
 
 func _ready() -> void:
-	connect("pressed", self, "_on_pressed")
+	connect("pressed", _on_pressed)
 	
 
 func _on_hide():
@@ -14,7 +14,7 @@ func _on_hide():
 	queue_free()
 
 func _on_pressed() -> void:
-	lipsyncAboutPopup = SCN_LipsyncAboutPopup.instance()
+	lipsyncAboutPopup = SCN_LipsyncAboutPopup.instantiate()
 	owner.add_child(lipsyncAboutPopup)
 #	lipsyncAboutPopup.connect("tree_exited", self, "_on_LipsyncAboutPopup_tree_exited")
 	lipsyncAboutPopup.popup()
