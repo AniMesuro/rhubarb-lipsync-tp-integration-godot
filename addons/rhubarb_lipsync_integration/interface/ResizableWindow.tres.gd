@@ -1,4 +1,4 @@
-tool
+@tool
 extends Panel
 
 var handlerTop :ReferenceRect

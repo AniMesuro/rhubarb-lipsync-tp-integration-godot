@@ -1,4 +1,4 @@
-tool
+@tool
 extends Popup
 
 const GROUP_PLUGIN :String= "plugin rhubarb_lipsync_integration"
@@ -9,17 +9,17 @@ func _enter_tree() -> void:
 		visible = true
 		
 func _ready() -> void:
-	connect("hide", self, "_on_hide")
+	connect("hide", _on_hide)
 	
 	if !is_inside_tree():
-		yield(self, "tree_entered")
+		await tree_entered
 		
 	
-	$"Panel/VBox/VersionLabel".text = "Version: " + get_plugin_version()
+	$"Panel/VBox/VersionLabel".text = "Version: " + await get_plugin_version()
 
 func get_plugin_version() -> String:
-	if !is_instance_valid(self):
-		yield(get_tree(), "idle_frame")
+	#if !is_instance_valid(self):
+		#await get_tree().idle_frame
 	pluginInstance = _get_pluginInstance()
 	
 	var pluginConfig :ConfigFile= ConfigFile.new()

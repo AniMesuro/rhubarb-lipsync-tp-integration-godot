@@ -1,4 +1,4 @@
-tool
+@tool
 extends HBoxContainer
 
 const STR_DEFAULT :String= "Please select Lipsync output's desired directory."
@@ -12,7 +12,7 @@ var ForbiddenDirectory :Dictionary
 var fileDialog :FileDialog
 
 func _ready() -> void:
-	button.connect( "pressed", self, "_on_Button_pressed")
+	button.pressed.connect( _on_Button_pressed)
 	
 	path_plugin = owner.pluginInstance.path_plugin
 	ForbiddenDirectory = {
@@ -56,8 +56,8 @@ func _on_Button_pressed():
 	
 #	fileDialog.current_path
 	
-	fileDialog.connect( "dir_selected", self, "_on_FileDialog_dir_selected")
-	fileDialog.connect( "hide", self, "_on_FileDialog_hide")
+	fileDialog.dir_selected.connect(_on_FileDialog_dir_selected)
+	fileDialog.connect("popup_hide", _on_FileDialog_hide)
 
 func _on_FileDialog_dir_selected(dir :String):
 	if !is_instance_valid(owner.pluginInstance):
@@ -84,8 +84,8 @@ func _on_FileDialog_dir_selected(dir :String):
 	
 
 func _on_FileDialog_hide():
-	fileDialog.disconnect("dir_selected", self, '_on_FileDialog_dir_selected')
-	fileDialog.disconnect("hide", self, '_on_FileDialog_hide')
+	fileDialog.disconnect("dir_selected", _on_FileDialog_dir_selected)
+	fileDialog.disconnect("popup_hide", _on_FileDialog_hide)
 
 func enable_warning(message :String):
 	warningIcon.visible = true

@@ -1,4 +1,4 @@
-tool
+@tool
 extends HBoxContainer
 
 const STR_DEFAULT :String= "Please select Rhubarb's filepath."
@@ -8,7 +8,7 @@ var button :Button
 var warningIcon :TextureRect
 
 func _ready() -> void:
-	button.connect("pressed", self, '_on_button_pressed')
+	button.connect("pressed", _on_button_pressed)
 #	owner.connect("updated_settings", self, '_on_updated_settings()')
 
 func _on_updated_settings():
@@ -77,19 +77,19 @@ func _on_button_pressed():
 	fileDialog.popup()
 	var bin_extension :String= OS.get_executable_path().get_extension()
 	var os_name :String= OS.get_name()
-	fileDialog.filters = PoolStringArray(['rhubarb.'+bin_extension+' ; Rhubarb Binary file for ' + os_name + ' OS'])
-	fileDialog.mode = FileDialog.MODE_OPEN_FILE
+	fileDialog.filters = ['rhubarb.'+bin_extension+' ; Rhubarb Binary file for ' + os_name + ' OS']
+	
+	fileDialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE
 	fileDialog.access = FileDialog.ACCESS_FILESYSTEM
 	
 	var global_pluginpath = ProjectSettings.globalize_path(owner.pluginInstance.path_plugin) 
 	fileDialog.current_dir = global_pluginpath
 	
-	fileDialog.connect("file_selected", self, '_on_fileDialog_file_selected')
-	fileDialog.connect("hide", self, '_on_fileDialog_hide')
+	fileDialog.connect("file_selected", _on_fileDialog_file_selected)
+	fileDialog.connect("popup_hide", _on_fileDialog_hide)
 
 
 func _on_fileDialog_file_selected(filepath :String):
-	
 	
 	var f :File= File.new()
 	if !f.file_exists(filepath):
@@ -110,8 +110,8 @@ func _on_fileDialog_file_selected(filepath :String):
 	owner.emit_signal('updated_settings')
 
 func _on_fileDialog_hide():
-	fileDialog.disconnect("file_selected", self, '_on_fileDialog_file_selected')
-	fileDialog.disconnect("hide", self, '_on_fileDialog_hide')
+	fileDialog.disconnect("file_selected", _on_fileDialog_file_selected)
+	fileDialog.disconnect("popup_hide", _on_fileDialog_hide)
 
 func enable_warning(message :String):
 	warningIcon.visible = true

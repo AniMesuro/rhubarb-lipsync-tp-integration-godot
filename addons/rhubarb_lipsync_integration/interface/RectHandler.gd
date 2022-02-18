@@ -1,16 +1,17 @@
-tool
+@tool
 extends ReferenceRect
 
-export var handler_size :int
+@export var handler_size :int
 enum DIRECTION {
 	TOP,
 	BOTTOM,
 	LEFT,
 	RIGHT
 }
-export (DIRECTION) var handler_direction  = DIRECTION.TOP setget _set_handler_direction
+@export var handler_direction: DIRECTION = DIRECTION.TOP:
+	set = _set_handler_direction
 
-export var debug_mode :bool= false # Will make recthandler always visible
+@export var debug_mode :bool= false # Will make recthandler always visible
 
 var following :bool= false
 var mouse_offset :Vector2
@@ -22,17 +23,19 @@ var window_distance :Vector2
 var last_mouse_position :Vector2
 var last_size :Vector2
 
-var _visible :bool= false setget set_pseudovisible
+var _visible :bool= false:
+	set = set_pseudovisible
 #var window_distance_tl :Vector2 #topleft
 #var window_distance_br :Vector2 #bottomright
 
 var handlerContainer :Control
-export var _windowRect :NodePath setget _set_windowRect
+@export_node_path var _windowRect :NodePath:
+	set = _set_windowRect
 var windowRect :Control 
 
 func _ready() -> void:
-	connect( "gui_input", self, "_on_RectHandler_gui_input")
-	connect( "visibility_changed", self, "_on_visibility_changed")
+	connect( "gui_input", _on_RectHandler_gui_input)
+	connect( "visibility_changed", _on_visibility_changed)
 
 func _enter_tree() -> void:
 	if get_tree().edited_scene_root == self:
@@ -55,14 +58,14 @@ func _set_handler_direction(value :int):
 	if !is_instance_valid(self):
 		return
 	if !is_inside_tree():
-		yield(self, "tree_entered")
+		await tree_entered
 	_fix_handler_rect(value)
 
 func _fix_handler_rect(direction :int):
 	if !is_instance_valid(self):
 		return
 	if !is_inside_tree():
-		yield(self, "tree_entered")
+		await tree_entered
 	if !is_instance_valid(windowRect):
 		return
 	
@@ -109,7 +112,7 @@ func _set_windowRect(value :NodePath= _windowRect):
 	if !is_instance_valid(self):
 		return
 	if !is_inside_tree():
-		yield(self, "tree_entered")
+		await tree_entered
 	if get_tree().edited_scene_root == self:
 		return
 	
@@ -162,13 +165,13 @@ func _set_windowRect(value :NodePath= _windowRect):
 				return
 	_fix_handler_rect(handler_direction)
 	if get_tree().edited_scene_root == windowRect.owner:
-		if modulate == Color.transparent:
-			modulate = Color.white
+		if modulate == Color.TRANSPARENT:
+			modulate = Color.WHITE
 #	print("windowRect doesn't have handler reference variables. Please define references on ",windowRect.name," or use another Control node")
 
 func _on_RectHandler_gui_input(event :InputEvent):
 	if event is InputEventMouseButton:
-		if event.get_button_index() == BUTTON_LEFT:
+		if event.get_button_index() == MOUSE_BUTTON_LEFT:
 			mouse_offset = get_local_mouse_position()
 			#assumes Scene owner is a window.
 			
@@ -225,12 +228,12 @@ func _process(delta: float) -> void:
 
 func set_pseudovisible(value :bool):
 	if !is_inside_tree():
-		yield(self, "tree_entered")
+		await tree_entered
 	if !is_instance_valid(windowRect):
 		return
 		
 	if debug_mode:
-		modulate = Color.white 
+		modulate = Color.WHITE 
 		_visible = true
 		return
 	
@@ -238,18 +241,18 @@ func set_pseudovisible(value :bool):
 	if value:
 		if get_tree().edited_scene_root == windowRect.owner:
 #			if modulate == Color.transparent:
-			modulate = Color.white
+			modulate = Color.WHITE
 		else:
-			modulate = Color.transparent
+			modulate = Color.TRANSPARENT
 	else:
 	#	if get_tree().edited_scene_root == windowRect.owner:
-		modulate = Color.transparent
+		modulate = Color.TRANSPARENT
 
 func _on_visibility_changed():
 	if !is_instance_valid(self):
 		return
-	if is_connected( "visibility_changed", self, "_on_visibility_changed"):
-		disconnect( "visibility_changed", self, "_on_visibility_changed")
+	if is_connected( "visibility_changed", _on_visibility_changed):
+		disconnect( "visibility_changed",_on_visibility_changed)
 	self._visible = !_visible
 	if !visible: visible = true
-	connect( "visibility_changed", self, "_on_visibility_changed")
+	connect( "visibility_changed", _on_visibility_changed)

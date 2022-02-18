@@ -1,10 +1,12 @@
-tool
+@tool
 extends VBoxContainer
 #meio inutil, vou ter que mudar a textura de qualquer jeito
-export (String) var mouth_shape = "rest" setget _set_mouth_shape
-export (StreamTexture) var default_mouth setget _set_default_mouth
+@export var mouth_shape:String = "rest":
+	set = _set_mouth_shape
+@export var default_mouth: StreamTexture2D:
+	set = _set_default_mouth
 
-const TEX_InvalidIcon :StreamTexture= preload("res://addons/rhubarb_lipsync_integration/assets/icons/icon_warning.png")
+const TEX_InvalidIcon :StreamTexture2D= preload("res://addons/rhubarb_lipsync_integration/assets/icons/icon_warning.png")
 
 var mouthTextures :Node
 var textureButton :TextureButton
@@ -15,7 +17,7 @@ func _ready() -> void:
 	
 	mouthTextures = get_parent()
 	if !is_inside_tree():
-		yield(self, "tree_entered")
+		await tree_entered
 	if !is_instance_valid(mouthTextures):
 		return
 	if mouthTextures.name != "MouthTextures":
@@ -29,19 +31,19 @@ func _ready() -> void:
 		return
 	mouthTextures.mouthDB[mouth_shape] = textureButton.texture_normal
 	mouthTextures.mouthIconDB[mouth_shape] = self
-	textureButton.connect("pressed", mouthTextures, "_on_MouthIcon_pressed", [self])
+	textureButton.connect("pressed", mouthTextures._on_MouthIcon_pressed, [self])
 
 func _set_mouth_shape(value):
 	mouth_shape = value
 	$Label.text = value
 
-func _set_default_mouth(value :StreamTexture):
+func _set_default_mouth(value :StreamTexture2D):
 	if value == null:
 		return
 	
 	if !is_inside_tree():
 		if is_instance_valid(self):
-			yield(self, "tree_entered")
+			await tree_entered
 		
 	
 	default_mouth = value

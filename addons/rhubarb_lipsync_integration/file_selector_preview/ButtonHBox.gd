@@ -1,9 +1,9 @@
-tool
+@tool
 extends HBoxContainer
 
 func _ready() -> void:
-	$OkButton.connect("pressed", self,"_on_OkButton_pressed")
-	$CancelButton.connect("pressed", self, "_on_CancelButton_pressed")
+	$OkButton.connect("pressed", _on_OkButton_pressed)
+	$CancelButton.connect("pressed", _on_CancelButton_pressed)
 
 func _on_OkButton_pressed():
 	var Dir :Directory= Directory.new()

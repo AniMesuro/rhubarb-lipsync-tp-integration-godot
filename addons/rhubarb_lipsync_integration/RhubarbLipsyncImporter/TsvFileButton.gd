@@ -1,4 +1,4 @@
-tool
+@tool
 extends Button
 
 var lipsync_data :String= ""
@@ -11,13 +11,13 @@ func _on_Button_pressed() -> void:
 	print(owner)
 	owner.pluginInstance.add_child(fileDialog)
 	fileDialog.mode = FileDialog.MODE_OPEN_FILE
-	fileDialog.connect("popup_hide", self, "_on_FileDialog_hide")
-	fileDialog.filters = PoolStringArray(['*.tsv'])
-	fileDialog.rect_min_size = Vector2(400,300)
-	fileDialog.resizable = true
+	fileDialog.connect("popup_hide", _on_FileDialog_hide)
+	fileDialog.filters = ['*.tsv']
+	fileDialog.min_size = Vector2(400,300)
+	fileDialog.unresizable = false
 	fileDialog.popup()
 	
-	yield(fileDialog, "file_selected")
+	await(fileDialog.file_selected)
 	var f = File.new()
 	f.open(fileDialog.current_path, File.READ)
 	text = fileDialog.current_file

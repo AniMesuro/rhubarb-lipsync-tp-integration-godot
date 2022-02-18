@@ -1,12 +1,16 @@
-tool
+@tool
 extends Control
 
-export var handler_size :int setget set_handler_size
-export var _windowRect :NodePath setget _set_windowRect
+@export var handler_size :int:
+	set = set_handler_size
+@export_node_path var _windowRect :NodePath:
+	set = _set_windowRect
 
-var _visible :bool= false setget set_pseudovisible
+var _visible :bool= false:
+	set = set_pseudovisible
 
-export var debug_mode :bool= false setget _set_debug_mode
+@export var debug_mode :bool= false:
+	set = _set_debug_mode
 
 var handlerTop :ReferenceRect
 var handlerBottom :ReferenceRect
@@ -15,11 +19,11 @@ var handlerRight :ReferenceRect
 
 
 func _ready() -> void:
-	connect("visibility_changed", self, "_on_visibility_changed")
+	connect("visibility_changed", _on_visibility_changed)
 
 func _enter_tree() -> void:
-	if !is_instance_valid(self):
-		yield(get_tree(), "idle_frame")
+	#if !is_instance_valid(self):
+		#await get_tree().idle_frame
 	handlerTop = $HandlerTop
 	handlerBottom = $HandlerBottom
 	handlerLeft = $HandlerLeft
@@ -31,7 +35,7 @@ func _enter_tree() -> void:
 
 func _set_windowRect(value :NodePath):
 	if !is_inside_tree():
-		yield(self, "tree_entered")
+		await tree_entered
 	if !is_instance_valid(self):
 		return
 	var _window = get_node(value)
@@ -58,12 +62,12 @@ func set_handler_size(value :int):
 func set_pseudovisible(value :bool):
 	var windowRect = get_node(_windowRect)
 	if !is_inside_tree():
-		yield(self, "tree_entered")
+		await tree_entered
 	if !is_instance_valid(windowRect):
 		return
 	
 	if debug_mode:
-		modulate = Color.white
+		modulate = Color.WHITE
 		_visible = true
 		return
 	
@@ -71,23 +75,23 @@ func set_pseudovisible(value :bool):
 	if value:
 		#If window is being edited, toggle _visible, this node should not be visible from being instanced
 		if get_tree().edited_scene_root == windowRect.owner:
-			modulate = Color.white
+			modulate = Color.WHITE
 		else:
-			modulate = Color.transparent
+			modulate = Color.TRANSPARENT
 	else:
-		modulate = Color.transparent
+		modulate = Color.TRANSPARENT
 
 func _on_visibility_changed():
 	if !is_instance_valid(self):
 		return
 	if !is_inside_tree():
 		return
-	if is_connected( "visibility_changed", self, "_on_visibility_changed"):
-		disconnect( "visibility_changed", self, "_on_visibility_changed")
+	if is_connected( "visibility_changed", _on_visibility_changed):
+		disconnect( "visibility_changed", _on_visibility_changed)
 #	print('visible ',visible)
 	self._visible = !_visible
 	if !visible: visible = true
-	connect( "visibility_changed", self, "_on_visibility_changed")
+	connect( "visibility_changed", _on_visibility_changed)
 
 func _set_debug_mode(value :bool):
 	debug_mode = value

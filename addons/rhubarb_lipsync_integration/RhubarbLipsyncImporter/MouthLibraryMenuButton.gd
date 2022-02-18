@@ -1,33 +1,34 @@
-tool
+@tool
 extends MenuButton
 
 var SCN_AskNamePopup :PackedScene
 
-var current_library :String= "default" setget _set_current_library
+var current_library :String= "default":
+	set = _set_current_library
 
-onready var mouthLibraryHBox :HBoxContainer= get_parent()
+@onready var mouthLibraryHBox :HBoxContainer= get_parent()
 var mouthTextures :VBoxContainer
 
-onready var saveButton :TextureButton= $'../SaveButton'
-onready var renameButton :TextureButton= $'../RenameButton'
-onready var newButton :TextureButton= $'../NewButton'
-onready var deleteButton :TextureButton= $'../DeleteButton'
+@onready var saveButton :TextureButton= $'../SaveButton'
+@onready var renameButton :TextureButton= $'../RenameButton'
+@onready var newButton :TextureButton= $'../NewButton'
+@onready var deleteButton :TextureButton= $'../DeleteButton'
 
-onready var popupMenu :PopupMenu
+@onready var popupMenu :PopupMenu
 
 func _ready() -> void:
 	
-	saveButton.connect("pressed", self, '_on_SaveButton_pressed')
-	renameButton.connect("pressed", self, '_on_RenameButton_pressed')
-	newButton.connect("pressed", self, '_on_NewButton_pressed')
-	deleteButton.connect("pressed", self, '_on_DeleteButton_pressed')
+	saveButton.connect("pressed", _on_SaveButton_pressed)
+	renameButton.connect("pressed", _on_RenameButton_pressed)
+	newButton.connect("pressed", _on_NewButton_pressed)
+	deleteButton.connect("pressed", _on_DeleteButton_pressed)
 	
 	popupMenu = get_popup()
-	popupMenu.connect("id_pressed", self, '_on_PopupMenu_item_selected')
+	popupMenu.connect("id_pressed", _on_PopupMenu_item_selected)
 	mouthTextures = owner.find_node('MouthTextures')
 	
 	if !is_inside_tree():
-		yield(self, "tree_entered")
+		await tree_entered
 	SCN_AskNamePopup = load(owner.pluginInstance.path_plugin + "interface/AskNamePopup.tscn")
 	
 ##################
@@ -74,7 +75,7 @@ func _on_RenameButton_pressed():
 	var askNamePopup = ask_for_name()
 	var library_name :String= ""
 	
-	yield(askNamePopup, 'name_settled')
+	await askNamePopup.name_settled
 	library_name = askNamePopup.new_name
 	askNamePopup.queue_free()
 	
@@ -99,7 +100,7 @@ func _on_NewButton_pressed():
 	var askNamePopup = ask_for_name()
 	var library_name :String= ""
 	
-	yield(askNamePopup, 'name_settled')
+	await askNamePopup.name_settled
 	library_name = askNamePopup.new_name
 	askNamePopup.queue_free()
 	
@@ -118,7 +119,7 @@ func _on_NewButton_pressed():
 #	text = current_library
 
 func ask_for_name() -> Popup:
-	var askNamePopup :Popup= SCN_AskNamePopup.instance()
+	var askNamePopup :Popup= SCN_AskNamePopup.instantiate()
 	owner.pluginInstance.add_child(askNamePopup)
 	askNamePopup.titlebar.title_name = "Please insert the name of the new library."
 	askNamePopup.label.text = "Please avoid special characters (ex: !@*-=óü~/?;| etc.) and replace spaces with underscores " +'"(_)"'

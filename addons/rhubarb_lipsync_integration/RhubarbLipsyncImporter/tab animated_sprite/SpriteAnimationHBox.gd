@@ -1,26 +1,26 @@
-tool
+@tool
 extends HBoxContainer
 
 const STR_ANIMATEDSPRITE_SELECTED :String = "Please select an Animation from AnimatedSprite"
 const STR_ANIMATEDSPRITE_NOT_SELECTED :String = "Please select an AnimatedSprite above before selecting animation."
 
-const TEX_IconExpand :StreamTexture= preload("res://addons/rhubarb_lipsync_integration/assets/icons/icon_expand.png")
+const TEX_IconExpand :StreamTexture2D= preload("res://addons/rhubarb_lipsync_integration/assets/icons/icon_expand.png")
 #const TEX_icon_not :StreamTexture= preload("res://addons/rhubarb_lipsync_importer/assets/icons/icon_not.png")
 #const TEX_icon_yes :StreamTexture= preload("res://addons/rhubarb_lipsync_importer/assets/icons/icon_yes.png")
 
 
 var last_index :int= -1
 
-onready var warningIcon :TextureRect= $WarningIcon
-onready var menuButton :MenuButton= $MenuButton
+@onready var warningIcon :TextureRect= $WarningIcon
+@onready var menuButton :MenuButton= $MenuButton
 var popupMenu :PopupMenu
 	
 func _ready() -> void:
 	menuButton.text = STR_ANIMATEDSPRITE_NOT_SELECTED
 	popupMenu = menuButton.get_popup()
-	menuButton.connect( "pressed", self, "_on_MenuButton_pressed")
-	popupMenu.connect( "id_pressed", self, "_on_PopupMenu_item_selected")
-	owner.connect("updated_reference", self, "_on_owner_reference_updated")
+	menuButton.connect( "pressed", _on_MenuButton_pressed)
+	popupMenu.connect( "id_pressed",_on_PopupMenu_item_selected)
+	owner.connect("updated_reference", _on_owner_reference_updated)
 	
 	if last_index == -1:
 		enable_warning("No AnimatedSprite node selected. Can't proceed")
@@ -28,7 +28,7 @@ func _ready() -> void:
 	
 
 func _on_MenuButton_pressed():
-	var animSprite :AnimatedSprite= owner.anim_mouthAnimSprite
+	var animSprite = owner.anim_mouthAnimSprite
 	popupMenu.clear()
 	if !is_instance_valid(animSprite):
 		return

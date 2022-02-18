@@ -1,4 +1,4 @@
-tool
+@tool
 extends HBoxContainer
 
 
@@ -22,7 +22,7 @@ func _enter_tree() -> void:
 
 func validate_rhubarb_path() -> void:
 	if !is_inside_tree():
-		yield(self, "tree_entered")
+		await tree_entered
 	var Settings :Dictionary= owner.pluginInstance.Settings
 	if Settings == {}:
 		return

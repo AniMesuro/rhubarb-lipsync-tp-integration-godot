@@ -1,18 +1,18 @@
-tool
+@tool
 extends HBoxContainer
 
 const PATH_MOUTHLIBRARIES :String= ""#res://addons/rhubarb_lipsync_importer/"
 const FILENAME_MOUTHLIBRARIES :String= "mouthshape_libraries.ini"
 
-var default_mouthtexture :PoolStringArray
+var default_mouthtexture :Array
 
 var mouthLibraryDB :Dictionary= {}
 
-onready var menuButton :MenuButton= $MenuButton
+@onready var menuButton :MenuButton= $MenuButton
 var popupMenu :PopupMenu
 
 func _enter_tree() -> void:
-	yield(get_tree(), "idle_frame")
+	#await get_tree().idle_frame
 	_load_default_mouthtexture_paths()
 	load_mouthshape_library_file()
 	$"../MouthPanel/MouthTextures".reload_mouthshape_textures(mouthLibraryDB[$"MenuButton".current_library])
@@ -20,8 +20,8 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
 	if !is_inside_tree():
-		yield(self, "tree_entered")
-	yield(get_tree(), "idle_frame")
+		await tree_entered
+	#await get_tree().idle_frame
 	
 	popupMenu = menuButton.get_popup()
 	_load_default_mouthtexture_paths()
@@ -35,7 +35,7 @@ func _load_default_mouthtexture_paths():
 	var path_plugin :String= owner.path_plugin
 	if path_plugin == "":
 		path_plugin = "res://addons/rhubarb_lipsync_integration/"
-	default_mouthtexture = PoolStringArray([
+	default_mouthtexture = [
 		path_plugin + "assets/lipsync default mouthshapes/rest.png",
 		path_plugin + "assets/lipsync default mouthshapes/MBP.png",
 		path_plugin + "assets/lipsync default mouthshapes/O.png",
@@ -45,14 +45,14 @@ func _load_default_mouthtexture_paths():
 		path_plugin + "assets/lipsync default mouthshapes/E.png",
 		path_plugin + "assets/lipsync default mouthshapes/L.png",
 		path_plugin + "assets/lipsync default mouthshapes/AI.png"
-		])
+		]
 	var f :File= File.new()
 	if !f.file_exists(default_mouthtexture[0]):
 		print("[Rhubarb Lip Sync TPI] Error! Image doesn't exist at path ", default_mouthtexture[0])
 
 func load_mouthshape_library_file():
 	if !is_inside_tree():
-		yield(self, "tree_entered")
+		await tree_entered
 		
 	
 #	if mouthLibraryDB != {}: mouthLibraryDB = {}

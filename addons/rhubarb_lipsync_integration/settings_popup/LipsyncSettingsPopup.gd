@@ -1,4 +1,4 @@
-tool
+@tool
 extends Popup
 
 signal updated_settings
@@ -13,8 +13,8 @@ var okButton :Button
 
 func _ready() -> void:
 	okButton = $Panel/VBox/OkButton
-	okButton.connect( "pressed", self, '_on_OkButton_pressed')
-	connect("hide", self, "_on_hide")
+	okButton.connect( "pressed", _on_OkButton_pressed)
+	connect("popup_hide", _on_hide)
 	
 	
 

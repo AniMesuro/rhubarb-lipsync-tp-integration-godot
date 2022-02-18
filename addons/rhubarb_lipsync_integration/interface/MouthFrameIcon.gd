@@ -1,10 +1,12 @@
-tool
+@tool
 extends VBoxContainer
 #meio inutil, vou ter que mudar a textura de qualquer jeito
-export (String) var mouth_shape = "rest" setget _set_mouth_shape
-export (int) var default_mouth = 0 setget _set_default_mouth
+@export var mouth_shape:String = "rest":
+	set = _set_mouth_shape
+@export var default_mouth:int = 0:
+	set = _set_default_mouth
 
-const TEX_InvalidFrame :StreamTexture= preload("res://addons/rhubarb_lipsync_integration/assets/icons/icon_warning.png")
+const TEX_InvalidFrame :StreamTexture2D= preload("res://addons/rhubarb_lipsync_integration/assets/icons/icon_warning.png")
 
 var mouthFrames :Control
 var textureButton :TextureButton
@@ -17,7 +19,7 @@ func _ready() -> void:
 	
 	mouthFrames = get_parent()
 	if !is_inside_tree():
-		yield(self, "tree_entered")
+		await tree_entered
 	if !is_instance_valid(mouthFrames):
 		return
 	if mouthFrames.name != "MouthFrames":
@@ -28,16 +30,16 @@ func _ready() -> void:
 	
 	mouthFrames.mouthDB[mouth_shape] = default_mouth
 	textureButton.hint_tooltip = "Click to change the " + mouth_shape+" mouthshape frame"
-	textureButton.connect("pressed", self, "_on_MouthIcon_pressed")
-	owner.connect("updated_reference", self, "_on_owner_reference_updated")
+	textureButton.connect("pressed", _on_MouthIcon_pressed)
+	owner.connect("updated_reference", _on_owner_reference_updated)
 
 var frameSelectorPopup :PopupPanel
 func _on_MouthIcon_pressed():
 	if is_instance_valid(frameSelectorPopup):
 		frameSelectorPopup.queue_free()
-	frameSelectorPopup = mouthFrames.SCN_FrameSelectorPopup.instance()
+	frameSelectorPopup = mouthFrames.SCN_FrameSelectorPopup.instantiate()
 	owner.pluginInstance.add_child(frameSelectorPopup)
-	frameSelectorPopup.connect("frame_selected", self, "_on_frame_selected")
+	frameSelectorPopup.connect("frame_selected", _on_frame_selected)
 	frameSelectorPopup.popup(Rect2(get_global_mouse_position(), get_local_mouse_position()))
 	frameSelectorPopup.animSprite = owner.anim_mouthAnimSprite
 	frameSelectorPopup.anim = owner.anim_mouthAnimSprite_anim

@@ -1,11 +1,13 @@
-tool
+@tool
 extends HBoxContainer
 
-export (String) var title_name setget _set_title_name
-export (StreamTexture) var icon_texture setget _set_icon_texture
+@export var title_name: String:
+	set = _set_title_name
+@export var icon_texture: StreamTexture2D:
+	set = _set_icon_texture
 
 #Node which will move along with mouse.
-export (NodePath) var window_path = NodePath()
+@export_node_path var window_path
 var windowRect :Control
 
 var offset :Vector2
@@ -29,20 +31,20 @@ func _enter_tree() -> void:
 		else:
 			return
 	windowRect = get_node(window_path)
-	if !closeButton.is_connected("pressed", self, '_on_CloseButton_pressed'):
-		closeButton.connect("pressed", self, '_on_CloseButton_pressed', [owner])
+	if !closeButton.is_connected("pressed", _on_CloseButton_pressed):
+		closeButton.connect("pressed", _on_CloseButton_pressed, [owner])
 	
-	if !is_connected( "mouse_entered", self, '_on_mouse_entered'):
-		connect( "mouse_entered", self, '_on_mouse_entered')
-	if !is_connected( "mouse_exited", self, '_on_mouse_exited'):
-		connect( "mouse_exited", self, '_on_mouse_exited')
+	if !is_connected( "mouse_entered", _on_mouse_entered):
+		connect( "mouse_entered", _on_mouse_entered)
+	if !is_connected( "mouse_exited", _on_mouse_exited):
+		connect( "mouse_exited",  _on_mouse_exited)
 	
 func _set_title_name(value :String):
 	if value == null:
 		return
 	if !is_inside_tree():
 		if is_instance_valid(self):
-			yield(self, "tree_entered")
+			await tree_entered
 		
 	
 	label = $Label
@@ -50,10 +52,10 @@ func _set_title_name(value :String):
 	title_name = value
 	label.text = value
 
-func _set_icon_texture(value :StreamTexture):
+func _set_icon_texture(value :StreamTexture2D):
 	if !is_inside_tree():
 		if is_instance_valid(self):
-			yield(self, "tree_entered")
+			await tree_entered
 	iconRect = $IconRect
 	if value == null:
 		iconRect.visible = false
@@ -88,7 +90,7 @@ func _input(event: InputEvent) -> void:
 	
 	if event is InputEventMouseButton:
 		if event.is_pressed():
-			if event.button_index == BUTTON_LEFT:
+			if event.button_index == MOUSE_BUTTON_LEFT:
 				offset = get_global_mouse_position() - windowRect.rect_position 
 				moving_panel = true
 	

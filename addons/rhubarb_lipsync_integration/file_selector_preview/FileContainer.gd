@@ -1,11 +1,11 @@
-tool
+@tool
 extends GridContainer
 
 const SCN_FileIcon :PackedScene= preload("res://addons/rhubarb_lipsync_integration/file_selector_preview/FileIcon.tscn")
-const TEX_IconFolder :StreamTexture= preload("res://addons/rhubarb_lipsync_integration/assets/icons/icon_folder.png")
+const TEX_IconFolder :StreamTexture2D= preload("res://addons/rhubarb_lipsync_integration/assets/icons/icon_folder.png")
 
 var fileSelectorPreview :Control
-var selectedFileIcon = null setget _set_selectedFileIcon
+var selectedFileIcon = null: set = _set_selectedFileIcon
 
 func _enter_tree() -> void:
 	fileSelectorPreview = owner
@@ -22,10 +22,10 @@ func update_file_list():
 		if folder == '.' or folder == '..':
 			continue
 			
-		var fileIcon :VBoxContainer= SCN_FileIcon.instance()
+		var fileIcon :VBoxContainer= SCN_FileIcon.instantiate()
 		add_child(fileIcon)
 		fileIcon.setup(folder, fileIcon.TYPE.folder)
-		fileIcon.connect("folder_selected", self, "_on_folder_selected") 
+		fileIcon.connect("folder_selected", _on_folder_selected) 
 		
 	for file in owner.dir_files:
 		if owner.current_filter != "*":
@@ -35,10 +35,10 @@ func update_file_list():
 			if !file.get_extension() in owner.filters:
 				continue
 			
-		var fileIcon :VBoxContainer= SCN_FileIcon.instance()
+		var fileIcon :VBoxContainer= SCN_FileIcon.instantiate()
 		add_child(fileIcon)
 		fileIcon.setup(file, fileIcon.TYPE.file)
-		fileIcon.connect("file_selected", self, "_on_file_selected")
+		fileIcon.connect("file_selected", _on_file_selected)
 	$"../../../ZoomHbox"._update_FileIcon_sizes()
 
 func _on_file_selected(file_name :String):
